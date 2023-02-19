@@ -826,5 +826,6 @@ export default App;
 // TODO: check alternate jewels default, normal boss
 // TODO: Go mode
 // TODO: skip seal tasks when having all 4
+// TODO: fix endless one-way direction
 
 // Feather isn't logic for Coin: Mauso???

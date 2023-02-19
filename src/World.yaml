@@ -28,7 +28,7 @@ connections:
     short: "8F L "
     logic: "Transition: Endless L1"
     key: endless-l1
-    type: right
+    type: left
   - human: 🠔 Graveyard (mirai.exe)
     short: "2B L "
     logic: "Transition: Graveyard L1"
