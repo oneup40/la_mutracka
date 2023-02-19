@@ -179,16 +179,16 @@ export function NPCTask({id, location, onSubmit}) {
                 newSleepingPhilosophers.push(location);
                 break;
             case 'Giltoriyo':
-                newRoots.push('NPC: Giltoriyo');
+                newRoots.push('NPC: Philosopher Giltoriyo');
                 break;
             case 'Alsedana':
-                newRoots.push('NPC: Alsedana');
+                newRoots.push('NPC: Philosopher Alsedana');
                 break;
             case 'Samaranta':
-                newRoots.push('NPC: Samaranta');
+                newRoots.push('NPC: Philosopher Samaranta');
                 break;
             case 'Fobos':
-                newRoots.push('NPC: Fobos');
+                newRoots.push('NPC: Philosopher Fobos');
                 break;
             case 'Fairy Queen':
                 newRoots.push('NPC: The Fairy Queen');
