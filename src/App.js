@@ -179,6 +179,20 @@ function calculateSettingsRoots({settings}) {
     return [roots, notRoots];
 }
 
+function calculateInitialRoots({settings}) {
+    let [roots, notRoots] = calculateSettingsRoots({settings});
+
+    // TODO: exit logic is confusing
+    for (let frontback of ['F','B']) {
+        for (let i = 1; i < 10; ++i) {
+            let root = `Exit: Door ${frontback}${i}`;
+            roots.add(root);
+        }
+    }
+
+    return roots;
+}
+
 let settings = new Set([
     "Boost: Enemy",
     "Boost: Environment",
@@ -592,7 +606,7 @@ function App() {
     {
         reqs: new Map(),
         difficulty: 'medium',
-        roots: calculateSettingsRoots({settings: defaultSettings})[0],
+        roots: calculateInitialRoots({settings: defaultSettings}),
         access: new Set(),
         ankhJewels: 0,
         sacredOrbs: 0,
@@ -813,7 +827,7 @@ export default App;
 // TODO: remove SealCheck tasks when last seal is found
 // TODO: lint
 // TODO: nebur shop 4+ item
-// TODO: Exit: Door XX
+// TODO: understand exit logic, specifically DC
 
 // done:
 // TODO: philosopher visited events
