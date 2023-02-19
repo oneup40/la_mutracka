@@ -191,7 +191,7 @@ export function NPCTask({id, location, onSubmit}) {
                 newRoots.push('NPC: Fobos');
                 break;
             case 'Fairy Queen':
-                newRoots.push('NPC: Fairy Queen');
+                newRoots.push('NPC: The Fairy Queen');
                 break;
             case 'Nebur Shop':
                 newRoots.push('NPC: Nebur');

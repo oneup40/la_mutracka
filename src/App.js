@@ -813,7 +813,6 @@ export default App;
 // TODO: remove SealCheck tasks when last seal is found
 // TODO: lint
 // TODO: nebur shop 4+ item
-// TODO: fix NPC: The Fairy Queen
 // TODO: Exit: Door XX
 
 // done:
@@ -830,6 +829,7 @@ export default App;
 // TODO: Go mode
 // TODO: skip seal tasks when having all 4
 // TODO: fix endless one-way direction
+// TODO: fix NPC: The Fairy Queen
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather
