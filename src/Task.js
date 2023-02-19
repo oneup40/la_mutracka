@@ -3,31 +3,7 @@ import {useCallback, useState} from 'react';
 import {Planet} from 'react-planet';
 
 import {connections, items, doorLocations} from './World.js';
-
-// https://github.com/thezerothcat/LaMulanaRandomizer/blob/master/src/main/java/lmr/randomizer/DataFromFile.java
-// public static List<Integer> STARTING_LOCATIONS = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, -7, 8, 10, 11, 12, 13, 16, 21);
-
-// https://github.com/thezerothcat/LaMulanaRandomizer/blob/master/src/main/java/lmr/randomizer/util/LocationCoordinateMapper.java
-// cf: getStartingLocation()
-
-let startingLocations = new Map([
-    [' S : Surface', 'Location: Surface [Main]'],
-    ['1F : Guidance', 'Location: Gate of Guidance [Main]'],
-    ['2F : Mausoleum', 'Location: Mausoleum of the Giants'],
-    ['3F : Sun (3F)', 'Location: Temple of the Sun [Main]'],
-    ['4F : Spring (4F)', 'Location: Spring in the Sky [Main]'],
-    ['5F : Inferno (5F)', 'Location: Inferno Cavern [Main]'],
-    ['6F : Extinction (6F)', 'Location: Chamber of Extinction [Main]'],
-    ['7F : TL Upper (7F)', 'Location: Twin Labyrinths [Poison 1]'],
-    ['7B : TL Lower (7B)', 'Location: Twin Labyrinths [Lower]'],
-    ['8F : Endless (8F)', 'Location: Endless Corridor [1F]'],
-    ['1B : Illusion', 'Location: Gate of Illusion [Grail]'],
-    ['2B : Graveyard', 'Location: Graveyard of the Giants [Grail]'],
-    ['3B : Moonlight', 'Location: Temple of Moonlight [Grail]'],
-    ['4B : Goddess', 'Location: Tower of the Goddess [Grail]'],
-    ['6B : Birth', 'Location: Chamber of Birth [West Entrance]'],
-    [' ST: Surface of Time', 'Location: Gate of Time [Surface]']
-]);
+import World from './World.yaml';
 
 function StartLocationTaskSatellite({name, value, onClick}) {
     return (
@@ -66,8 +42,9 @@ export function StartLocationTask({id, onSubmit}) {
                 autoClose
                 orbitRadius={180}
             >
-                {Array.from(startingLocations.entries()).map(([key, value]) => {
-                    return <StartLocationTaskSatellite key={key} name={key} value={value} onClick={onClick} />;
+                {Array.from(World.startingLocations).map(loc => {
+                    let name = `${loc.short} ${loc.human}`;
+                    return <StartLocationTaskSatellite key={loc.key} name={name} value={loc.logic} onClick={onClick} />;
                 })}
             </Planet>
         </div>

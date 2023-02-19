@@ -1497,3 +1497,83 @@ doorLocations:
     location: "Location: Chamber of Extinction [Main]"
     logic: "Door: B9"
     key: door-b9
+startingLocations:
+  - human: Surface
+    logic: 'Location: Surface [Main]'
+    short: ' S '
+    key: start-surface
+
+  - human: Guidance
+    logic: 'Location: Gate of Guidance [Main]'
+    short: '1F '
+    key: start-guidance
+
+  - human: Mausoleum
+    logic: 'Location: Mausoleum of the Giants'
+    short: '2F '
+    key: start-mausoleum
+
+  - human: Sun
+    logic: 'Location: Temple of the Sun [Main]'
+    short: '3F '
+    key: start-sun
+
+  - human: Spring
+    logic: 'Location: Spring in the Sky [Main]'
+    short: '4F '
+    key: start-spring
+
+  - human: Inferno
+    logic: 'Location: Inferno Cavern [Main]'
+    short: '5F '
+    key: start-inferno
+
+  - human: Extinction
+    logic: 'Location: Chamber of Extinction [Main]'
+    short: '6F '
+    key: start-extinction
+
+  - human: Twin Upper
+    logic: 'Location: Twin Labyrinths [Poison 1]'
+    short: '7F '
+    key: start-twin-upper
+
+  - human: Twin Lower
+    logic: 'Location: Twin Labyrinths [Lower]'
+    short: '7B '
+    key: start-twin-lower
+
+  - human: Endless
+    logic: 'Location: Endless Corridor [1F]'
+    short: '8F '
+    key: start-endless
+
+  - human: Illusion
+    logic: 'Location: Gate of Illusion [Grail]'
+    short: '1B '
+    key: start-illusion
+
+  - human: Graveyard
+    logic: 'Location: Graveyard of the Giants [Grail]'
+    short: '2B '
+    key: start-graveyard
+
+  - human: Moonlight
+    logic: 'Location: Temple of Moonlight [Grail]'
+    short: '3B '
+    key: start-moonlight
+
+  - human: Goddess
+    logic: 'Location: Tower of the Goddess [Grail]'
+    short: '4B '
+    key: start-goddess
+
+  - human: Birth
+    logic: 'Location: Chamber of Birth [West Entrance]'
+    short: '6B '
+    key: start-birth
+
+  - human: Surface of Time
+    logic: 'Location: Gate of Time [Surface]'
+    short: '  ST'
+    key: start-surface-time
