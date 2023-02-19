@@ -812,6 +812,9 @@ export default App;
 // TODO: fix settings startup
 // TODO: remove SealCheck tasks when last seal is found
 // TODO: lint
+// TODO: nebur shop 4+ item
+// TODO: fix NPC: The Fairy Queen
+// TODO: Exit: Door XX
 
 // done:
 // TODO: philosopher visited events
@@ -829,3 +832,4 @@ export default App;
 // TODO: fix endless one-way direction
 
 // Feather isn't logic for Coin: Mauso???
+// Test Flail Whip check w/, w/o feather
