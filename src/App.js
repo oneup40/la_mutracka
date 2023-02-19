@@ -820,7 +820,6 @@ export default App;
 // TODO: show ammo locations
 // TODO: show seal locations
 // TODO: show transitions
-// TODO: starting shop
 // TODO: reciprocal connections
 // TODO: connection choiecs
 // TODO: fix settings startup
@@ -844,6 +843,7 @@ export default App;
 // TODO: skip seal tasks when having all 4
 // TODO: fix endless one-way direction
 // TODO: fix NPC: The Fairy Queen
+// TODO: starting shop
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather
