@@ -124,33 +124,45 @@ items.byCategory = (cat) => items.all.filter(item => item.category === cat);
 items.withTag = (tag) => items.all.filter(item => item.tags.has(tag));
 
 class Connection {
-    constructor({name, region, root, key, type, usable}) {
+    constructor({name, region, root, key, type, tags}) {
+        let tagValues = (tags === undefined ? [] : Array.from(tags));
+        let tagSet = new Set(tagValues);
+
         this.name = name;
         this.region = (region === undefined ? null : region);
         this.root = root;
         this.key = key;
         this.type = type;
-        this.usable = (usable === undefined ? true : usable);
+        this.tags = tagSet;
 
         this._didConnect = false;
     }
 
     candidates() {
+        let conns = [];
+
         switch (this.type) {
             case 'left':
-                return connections.byType('right');
+                conns = connections.byType('right');
+                break;
             case 'right':
-                return connections.byType('left');
+                conns = connections.byType('left');
+                break;
             case 'up':
-                return connections.byType('down');
+                conns = connections.byType('down');
+                break;
             case 'down':
-                return connections.byType('up');
+                conns = connections.byType('up');
+                break;
             case 'door':
-                return connections.byType('door');
+                conns = connections.byType('door');
+                break;
             default:
                 console.error(`Unknown Connection type ${this.type}`);
-                return [];
+                break;
         }
+
+        return conns.filter(conn => conn.isDestination());
     }
 
     doConnect() {
@@ -169,6 +181,9 @@ class Connection {
 
         this._didConnect = true;
     }
+
+    isSource() { return !this.tags.has('destination-only'); }
+    isDestination() { return !this.tags.has('source-only'); }
 }
 let connections = {}
 connections.all = connectionDefs.map(def => new Connection(def));

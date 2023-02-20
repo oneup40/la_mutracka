@@ -303,11 +303,13 @@ function App() {
                 if (conn === undefined) {
                     console.error(`Unknown transition '${value}'`);
                 }
-                newTasks.push({
-                    type: 'transition',
-                    key: 'trans-' + conn.key,
-                    connection: conn
-                });
+                if (conn.isSource()) {
+                    newTasks.push({
+                        type: 'transition',
+                        key: 'trans-' + conn.key,
+                        connection: conn
+                    });
+                }
             });
             Array.from(newAccess).filter(value => value.startsWith('NPCL:')).forEach(value => {
                 let loc = Universe.locations.byRoot.get(value);
@@ -346,7 +348,7 @@ function App() {
                 }));
 
                 let connections = Universe.connections.byType('door').filter(conn => conn.region === region);
-                connections.forEach(conn => {
+                connections.filter(conn => conn.isSource()).forEach(conn => {
                     newTasks.push({
                         type: 'door-check',
                         key: 'door-' + conn.key,

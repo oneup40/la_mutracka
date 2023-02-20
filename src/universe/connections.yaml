@@ -27,6 +27,8 @@
   root: "Transition: Endless L1"
   key: endless-l1
   type: left
+  tags:
+    - source-only
 
 - name: Graveyard (mirai.exe)
   root: "Transition: Graveyard L1"
@@ -212,7 +214,8 @@
   root: "Transition: Goddess W1"
   key: goddess-w1
   type: up
-  usable: false
+  tags:
+    - destination-only
 
 - name: Birth (Backside Door)
   root: "Transition: Birth U1"
@@ -263,7 +266,8 @@
   root: "Transition: Inferno W1"
   key: inferno-w1
   type: down
-  usable: false
+  tags:
+    - destination-only
 
 - name: TL (Fairy Point)
   root: "Transition: Twin D1"
@@ -309,7 +313,8 @@
   root: "Transition: Dimensional D1"
   key: dimensional-d1
   type: down
-  usable: false
+  tags:
+    - destination-only
 
 - name: Shrine (Elevator)
   root: "Transition: Shrine D1"
@@ -438,7 +443,8 @@
   root: "Door: B8"
   key: door-b8
   type: door
-  usable: false
+  tags:
+    - destination-only
 
 - name: Extinction Lower (Main)
   region: region-extinction-main
