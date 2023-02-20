@@ -790,6 +790,7 @@ export default App;
 // TODO: other location randomization options?
 // TODO: starting shop
 // TODO: save/clear state
+// TODO: break up more blockable tasks (door checks, shop purchases, etc.)
 
 // done:
 // TODO: philosopher visited events
