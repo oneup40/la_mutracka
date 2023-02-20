@@ -526,8 +526,14 @@ function App() {
 
         function connect(state, action) {
             let nextConnectionMap = new Map(state.connectionMap);
-            nextConnectionMap.set(action.src.key, action.dst);
-            nextConnectionMap.set(action.dst.key, action.src);
+
+            if (action.src.isSource() && action.dst.isDestination()) {
+                nextConnectionMap.set(action.src.key, action.dst);
+            }
+
+            if (action.dst.isSource() && action.src.isDestination()) {
+                nextConnectionMap.set(action.dst.key, action.src);
+            }
 
             return {
                 ...state,
