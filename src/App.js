@@ -769,7 +769,6 @@ export default App;
 // TODO: understand exit logic, specifically DC
 // TODO: other location randomization options?
 // TODO: starting shop
-// TODO: check Spring NPC Hidden Priest with knife+shuriken
 // TODO: save/clear state
 
 // done:
@@ -791,3 +790,4 @@ export default App;
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather
+// Test Hidlyda with knife
