@@ -367,6 +367,11 @@ export function ShopItemTask({id, location, index, onSubmit}) {
                 }
 
                 e.newRoots = [item.root];
+
+                if (item.category === 'ammo') {
+                    e.newAmmos = [[item, location]];
+                }
+
                 break;
             }
         }
@@ -374,7 +379,7 @@ export function ShopItemTask({id, location, index, onSubmit}) {
         if (onSubmit) {
             onSubmit(e);
         }
-    }, [id, onSubmit]);
+    }, [id, location, onSubmit]);
 
     function getCategoryItemChoices(cat) {
         return Universe.items.byCategory(cat).map(item => new ItemChoice(item));
@@ -385,7 +390,7 @@ export function ShopItemTask({id, location, index, onSubmit}) {
             className='Task ShopItemTask'
         >
             <Planet
-                centerContent={<button>{location} Shop Item {index}</button>}
+                centerContent={<button>{location.name} Shop Item {index}</button>}
                 autoClose
                 orbitRadius={80}
             >

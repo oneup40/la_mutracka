@@ -1,4 +1,4 @@
-.status {
+.field-status-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
 }
@@ -68,5 +68,69 @@
 }
 
 .connection-item {
+    padding: 0;
+}
+
+.ammo-status-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.ammo-status {
+    border: solid 2px;
+    margin: 0 0 -2px -2px;
+    justify-content: center;
+}
+
+.ammo-name {
+    font-weight: bold;
+}
+
+.ammo-status.shuriken-ammo {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.ammo-status.rolling-shuriken-ammo {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.ammo-status.earth-spear-ammo {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+.ammo-status.flare-gun-ammo {
+    grid-column: 4;
+    grid-row: 1;
+}
+
+.ammo-status.bomb-ammo {
+    grid-column: 5;
+    grid-row: 1;
+}
+
+.ammo-status.chakram-ammo {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.ammo-status.caltrops-ammo {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.ammo-status.pistol-ammo {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+.ammo-sources-list {
+    padding: 0 0 0 1em;
+    margin: 0.2em;
+}
+
+.ammo-sources-item {
     padding: 0;
 }

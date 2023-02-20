@@ -541,6 +541,23 @@ function App() {
             };
         }
 
+        function newAmmo(state, action) {
+            let nextAmmoSources = new Map(state.ammoSources);
+
+            let sourceList = nextAmmoSources.get(action.item.key);
+            if (sourceList === undefined) {
+                sourceList = [];
+                nextAmmoSources.set(action.item.key, sourceList);
+            }
+
+            sourceList.push(action.location);
+
+            return {
+                ...state,
+                ammoSources: nextAmmoSources
+            };
+        }
+
         switch (action.type) {
             case 'setReqs':
                 return setReqs(state, action);
@@ -566,6 +583,8 @@ function App() {
                 return addSealMapping(state, action);
             case 'connect':
                 return connect(state, action);
+            case 'newAmmo':
+                return newAmmo(state, action);
             default:
                 console.error(`unexpected action.type '${action.type}'`);
         }
@@ -593,6 +612,7 @@ function App() {
         ]),
         bossesDefeated: 0,
         connectionMap: new Map(),
+        ammoSources: new Map()
     });
 
     let onTaskSubmit = useCallback((args) => {
@@ -624,7 +644,7 @@ function App() {
                     newTasks.push({
                         type: 'shop-item',
                         key: `shop-${location.key}-${i}`,
-                        location: location.name,
+                        location: location,
                         index: i
                     });
                 }
@@ -679,6 +699,16 @@ function App() {
                     type: 'connect',
                     src,
                     dst
+                });
+            });
+        }
+
+        if (args.newAmmos !== undefined) {
+            args.newAmmos.forEach(([item, location]) => {
+                dispatch({
+                    type: 'newAmmo',
+                    item,
+                    location
                 });
             });
         }
@@ -746,7 +776,7 @@ function App() {
                 <div>Max HP: {32 * (1 + state.sacredOrbs)}</div>
             </fieldset>
             <RequirementsLoader onLoaded={onReqsLoaded} />
-            <Status connectionMap={state.connectionMap} />
+            <Status connectionMap={state.connectionMap} ammoSources={state.ammoSources} />
             {state.tasks.map(task => {
                 switch (task.type) {
                     case 'start-location':
@@ -783,7 +813,6 @@ function App() {
 export default App;
 
 // TODO: escape route
-// TODO: show ammo locations
 // TODO: show seal locations
 // TODO: fix settings startup
 // TODO: nebur shop 4+ item
@@ -816,6 +845,7 @@ export default App;
 // TODO: door tasks
 // TODO: lint
 // TODO: starting shop
+// TODO: show ammo locations
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather
