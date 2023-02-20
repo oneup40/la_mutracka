@@ -748,7 +748,7 @@ function App() {
                     case 'start-weapon':
                         return <StartWeaponTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
                     case 'transition':
-                        return <TransitionTask key={task.key} id={task.key} connection={task.connection} onSubmit={onTaskSubmit}/>;
+                        return <TransitionTask key={task.key} id={task.key} connection={task.connection} connectionMap={state.connectionMap} onSubmit={onTaskSubmit}/>;
                     case 'npc':
                         return <NPCTask key={task.key} id={task.key} location={task.location} onSubmit={onTaskSubmit}/>;
                     case 'sleeping-philosopher':
@@ -760,7 +760,7 @@ function App() {
                     case 'seal-check':
                         return <SealCheckTask key={task.key} id={task.key} location={task.location} access={state.access} onSubmit={onTaskSubmit}/>;
                     case 'door-check':
-                        return <DoorCheckTask key={task.key} id={task.key} connection={task.connection} onSubmit={onTaskSubmit}/>;
+                        return <DoorCheckTask key={task.key} id={task.key} connection={task.connection} connectionMap={state.connectionMap} onSubmit={onTaskSubmit}/>;
                     case 'win':
                         return <WinTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
                     default:
@@ -783,7 +783,6 @@ export default App;
 // TODO: escape route
 // TODO: show ammo locations
 // TODO: show seal locations
-// TODO: reciprocal connections
 // TODO: connection choiecs
 // TODO: fix settings startup
 // TODO: lint
@@ -811,6 +810,7 @@ export default App;
 // TODO: escape chest default
 // TODO: remove SealCheck tasks when last seal is found
 // TODO: show transitions
+// TODO: reciprocal connections
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather

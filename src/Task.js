@@ -83,7 +83,7 @@ function TransitionTaskSatellite({connection, onClick}) {
     );
 }
 
-export function TransitionTask({id, connection, onSubmit}) {
+export function TransitionTask({id, connection, connectionMap, onSubmit}) {
     let onClick = useCallback(dstConn => {
         if (onSubmit) {
             onSubmit({
@@ -94,21 +94,25 @@ export function TransitionTask({id, connection, onSubmit}) {
         }
     }, [connection, id, onSubmit]);
 
-    return (
-        <div
-            className='Task TransitionTask'
-        >
-            <Planet
-                centerContent={<button>Transition: {connection.name}</button>}
-                autoClose
-                orbitRadius={180}
+    if (connectionMap.has(connection.key)) {
+        return null;
+    } else {
+        return (
+            <div
+                className='Task TransitionTask'
             >
-                {connection.candidates().map(conn => {
-                    return <TransitionTaskSatellite key={conn.key} connection={conn} onClick={onClick} />;
-                })}
-            </Planet>
-        </div>
-    );
+                <Planet
+                    centerContent={<button>Transition: {connection.name}</button>}
+                    autoClose
+                    orbitRadius={180}
+                >
+                    {connection.candidates().map(conn => {
+                        return <TransitionTaskSatellite key={conn.key} connection={conn} onClick={onClick} />;
+                    })}
+                </Planet>
+            </div>
+        );
+    }
 }
 
 class NPCChoice {
@@ -448,7 +452,7 @@ function DoorCheckTaskSatellite({connection, onClick}) {
     );
 }
 
-export function DoorCheckTask({id, connection, onSubmit}) {
+export function DoorCheckTask({id, connection, connectionMap, onSubmit}) {
     let onClick = useCallback(dstConn => {
         if (onSubmit) {
             onSubmit({
@@ -459,21 +463,25 @@ export function DoorCheckTask({id, connection, onSubmit}) {
         }
     }, [connection, id, onSubmit]);
 
-    return (
-        <div
-            className='Task DoorCheckTask'
-        >
-            <Planet
-                centerContent={<button>Door: {connection.name}</button>}
-                autoClose
-                orbitRadius={180}
+    if (connectionMap.has(connection.key)) {
+        return null;
+    } else {
+        return (
+            <div
+                className='Task DoorCheckTask'
             >
-                {connection.candidates().map(conn => {
-                    return <DoorCheckTaskSatellite key={conn.key} connection={conn} onClick={onClick} />;
-                })}
-            </Planet>
-        </div>
-    );
+                <Planet
+                    centerContent={<button>Door: {connection.name}</button>}
+                    autoClose
+                    orbitRadius={180}
+                >
+                    {connection.candidates().map(conn => {
+                        return <DoorCheckTaskSatellite key={conn.key} connection={conn} onClick={onClick} />;
+                    })}
+                </Planet>
+            </div>
+        );
+    }
 }
 
 // export function WinTask({id, onSubmit}) {
