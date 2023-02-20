@@ -81,9 +81,14 @@ function AmmoStatus({ammo, ammoSources}) {
     );
 }
 
-function Status({connectionMap, ammoSources}) {
+function Status({connectionMap, ammoSources, ankhJewels, sacredOrbs}) {
     return (
         <div className="status">
+            <fieldset>
+                <legend>Misc</legend>
+                <div>Ankh Jewels: {ankhJewels}</div>
+                <div>Max HP: {32 * (1 + sacredOrbs)}</div>
+            </fieldset>
             <fieldset>
                 <legend>Fields</legend>
                 <div className="field-status-grid">

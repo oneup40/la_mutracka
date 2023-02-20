@@ -772,11 +772,9 @@ function App() {
                 <SelectableItemList name='Items' choices={itemChoices} selected={state.access} onChange={onSelectableItemsChanged}/>
                 <SelectableItemList name='Seals' choices={sealChoices} selected={state.access} onChange={onSelectableItemsChanged}/>
                 <SelectableItemList name='Software' choices={softwareChoices} selected={state.access} onChange={onSelectableItemsChanged}/>
-                <div>Ankh Jewels: {state.ankhJewels}</div>
-                <div>Max HP: {32 * (1 + state.sacredOrbs)}</div>
             </fieldset>
             <RequirementsLoader onLoaded={onReqsLoaded} />
-            <Status connectionMap={state.connectionMap} ammoSources={state.ammoSources} />
+            <Status connectionMap={state.connectionMap} ammoSources={state.ammoSources} ankhJewels={state.ankhJewels} sacredOrbs={state.sacredOrbs}/>
             {state.tasks.map(task => {
                 switch (task.type) {
                     case 'start-location':
