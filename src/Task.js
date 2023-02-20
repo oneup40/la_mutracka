@@ -1,12 +1,12 @@
 import './Task.css';
-import {useCallback, useState} from 'react';
+import {useCallback} from 'react';
 import {Planet} from 'react-planet';
 
 import Universe from './Universe.js';
 
 function StartLocationTaskSatellite({region, onClick}) {
     return (
-        <button onClick={e => onClick(region)}>{region.fullName()}</button>
+        <button onClick={() => onClick(region)}>{region.fullName()}</button>
     );
 }
 
@@ -41,7 +41,7 @@ export function StartLocationTask({id, onSubmit}) {
 
 function StartWeaponTaskSatellite({item, onClick}) {
     return (
-        <button onClick={e => onClick(item)}>{item.name}</button>
+        <button onClick={() => onClick(item)}>{item.name}</button>
     );
 }
 
@@ -58,7 +58,7 @@ export function StartWeaponTask({id, onSubmit}) {
                 completedTasks: [id]
             });
         }
-    }, [onSubmit]);
+    }, [id, onSubmit]);
 
     return (
         <div
@@ -79,7 +79,7 @@ export function StartWeaponTask({id, onSubmit}) {
 
 function TransitionTaskSatellite({connection, onClick}) {
     return (
-        <button onClick={e => onClick(connection)}>{connection.name}</button>
+        <button onClick={() => onClick(connection)}>{connection.name}</button>
     );
 }
 
@@ -119,7 +119,7 @@ class NPCChoice {
 
 function NPCTaskSatellite({choice, onClick}) {
     return (
-        <button onClick={e => onClick(choice.key)}>{choice.name}</button>
+        <button onClick={() => onClick(choice.key)}>{choice.name}</button>
     );
 }
 
@@ -163,7 +163,7 @@ export function NPCTask({id, location, onSubmit}) {
                 completedTasks: [id],
             });
         }
-    }, [id, onSubmit]);
+    }, [id, location, onSubmit]);
 
     let choices = [].concat(
         Universe.npcs.all.map(npc => new NPCChoice(npc)),
@@ -193,7 +193,7 @@ export function NPCTask({id, location, onSubmit}) {
 
 function SleepingPhilosopherTaskSatellite({npc, onClick}) {
     return (
-        <button onClick={e => onClick(npc)}>{npc.name}</button>
+        <button onClick={() => onClick(npc)}>{npc.name}</button>
     );
 }
 
@@ -243,7 +243,7 @@ class ItemChoice {
 
 function ItemCheckItemSatellite({choice, onClick}) {
     return (
-        <button onClick={e => onClick(choice.key)}>{choice.name}</button>
+        <button onClick={() => onClick(choice.key)}>{choice.name}</button>
     );
 }
 
@@ -290,7 +290,7 @@ export function ItemCheckTask({id, location, onSubmit}) {
         if (onSubmit) {
             onSubmit(e);
         }
-    }, [onSubmit]);
+    }, [id, onSubmit]);
 
     function getCategoryItemChoices(cat) {
         return Universe.items.byCategory(cat).map(item => new ItemChoice(item));
@@ -322,7 +322,7 @@ export function ItemCheckTask({id, location, onSubmit}) {
 
 function ShopItemItemSatellite({choice, onClick}) {
     return (
-        <button onClick={e => onClick(choice.key)}>{choice.name}</button>
+        <button onClick={() => onClick(choice.key)}>{choice.name}</button>
     );
 }
 
@@ -369,7 +369,7 @@ export function ShopItemTask({id, location, index, onSubmit}) {
         if (onSubmit) {
             onSubmit(e);
         }
-    }, [onSubmit]);
+    }, [id, onSubmit]);
 
     function getCategoryItemChoices(cat) {
         return Universe.items.byCategory(cat).map(item => new ItemChoice(item));
@@ -402,7 +402,7 @@ export function ShopItemTask({id, location, index, onSubmit}) {
 
 function SealCheckTaskSatellite({item, onClick}) {
     return (
-        <button onClick={e => onClick(item)}>{item.name}</button>
+        <button onClick={() => onClick(item)}>{item.name}</button>
     );
 }
 
@@ -439,7 +439,7 @@ export function SealCheckTask({id, location, onSubmit}) {
 
 function DoorCheckTaskSatellite({connection, onClick}) {
     return (
-        <button onClick={e => onClick(connection)}>{connection.name}</button>
+        <button onClick={() => onClick(connection)}>{connection.name}</button>
     );
 }
 
@@ -470,15 +470,16 @@ export function DoorCheckTask({id, connection, onSubmit}) {
     );
 }
 
-export function WinTask({id, onSubmit}) {
-    let onClick = useCallback(event => {
+// export function WinTask({id, onSubmit}) {
+    /*let onClick = useCallback(event => {
         if (onSubmit) {
             onSubmit({
                 completedTasks: [id]
             });
         }
-    }, [id, onSubmit]);
+    }, [id, onSubmit]);*/
 
+export function WinTask() {
     return (
         <div
             className='Task WinTask'

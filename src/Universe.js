@@ -240,4 +240,5 @@ items.all.forEach(item => item.doConnect());
 connections.all.forEach(conn => conn.doConnect());
 locations.all.forEach(loc => loc.doConnect());
 
-export default {fields, regions, items, connections, locations, npcs};
+const Universe = {fields, regions, items, connections, locations, npcs};
+export default Universe;

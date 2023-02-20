@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState, Fragment} from 'react';
+import {useEffect} from 'react';
 
 import attack_reqs_url from './third_party/lmr/attack_reqs.txt';
 import bosses_hard_reqs_url from './third_party/lmr/bosses_hard_reqs.txt';

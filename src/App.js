@@ -1,5 +1,5 @@
 // import './App.css';
-import {useCallback, useReducer, useState, Fragment} from 'react';
+import {useCallback, useReducer, Fragment} from 'react';
 
 import {ReqList, RequirementsLoader} from './RequirementsLoader.js';
 import RequirementsList from './RequirementsList.js';
@@ -12,13 +12,8 @@ function invertSubset(subset, all) {
     return new Set(Array.from(all.keys()).filter(key => !subset.has(key)));
 }
 
-function invertMapSubset(subset, all) {
-    return new Map(Array.from(all.entries()).filter(([key, value]) => !subset.has(key)));
-}
-
 function SelectableItemList({name, choices, selected, onChange}) {
     let onInputChanged = useCallback(event => {
-        let key = event.target.id;
         let value = event.target.value;
         let checked = event.target.checked;
 
@@ -38,7 +33,7 @@ function SelectableItemList({name, choices, selected, onChange}) {
                 unselected: nextUnselected
             });
         }
-    }, [choices, selected, onChange]);
+    }, [name, choices, selected, onChange]);
 
     let ret = (
         <fieldset>
@@ -180,7 +175,7 @@ function calculateSettingsRoots({settings}) {
 }
 
 function calculateInitialRoots({settings}) {
-    let [roots, notRoots] = calculateSettingsRoots({settings});
+    let [roots, _] = calculateSettingsRoots({settings});
 
     // TODO: exit logic is confusing
     for (let frontback of ['F','B']) {
@@ -240,19 +235,16 @@ let settings = new Set([
     "Setting: Screen Mash",
 ]);
 
-let allTrackedMaps = [weaponChoices, subweaponChoices, usableChoices, itemChoices, sealChoices, softwareChoices];
-let allTracked = [].concat(allTrackedMaps.map(map => Array.from(map.keys()), Array.from(settings)));
-
 function calculateAccess({reqs, prevAccess, roots}) {
     // let access = new Set([].concat(Array.from(prevAccess), Array.from(roots)));
     let access = new Set(roots);
     let newAccess = new Set(Array.from(roots).filter(root => !prevAccess.has(root)));
     let lastSize = -1;
 
-    while (access.size != lastSize) {
+    while (access.size !== lastSize) {
         lastSize = access.size;
 
-        Array.from(reqs.entries()).forEach(([subsetName, subset]) => {
+        Array.from(reqs.entries()).forEach(([_, subset]) => {
             Array.from(subset.entries()).forEach(([target, choices]) => {
                 if (!access.has(target) && choices.some(choice => choice.every(req => access.has(req)))) {
                     access.add(target);
@@ -379,6 +371,8 @@ function App() {
                         ++nextState.bossesDefeated;
                         extraRoots.push(`Bosses Defeated: ${nextState.bossesDefeated}`);
                         break;
+                    default:
+                        break;
                 }
             });
             Array.from(newAccess).forEach(value => {
@@ -504,8 +498,6 @@ function App() {
         }
 
         function setStartingLocation(state, action) {
-            let settings = [];
-
             let nextState = state;
             nextState = setGameSetting(nextState, {key: 'alternate-start', value: action.region.isAlternateStart()});
             nextState = setGameSetting(nextState, {key: 'frontside-start', value: action.region.isFrontside()});
@@ -661,8 +653,7 @@ function App() {
                 });
             });
         }
-
-    });
+    }, []);
 
     let onReqsLoaded = useCallback(({reqs}) => {
         dispatch({
@@ -676,16 +667,8 @@ function App() {
             value: event.target.value
         });
     }, []);
-    let onEnableAll = useCallback(event => {
-        allTrackedMaps.forEach(map => {
-            dispatch({
-                type: 'addRoots',
-                roots: Array.from(map.keys())
-            });
-        });
-    });
 
-    let onSelectableItemsChanged = useCallback(({name, selected, unselected}) => {
+    let onSelectableItemsChanged = useCallback(({selected}) => {
         dispatch({
             type: 'addRoots',
             roots: Array.from(selected.keys())
