@@ -767,7 +767,6 @@ export default App;
 // TODO: lint
 // TODO: nebur shop 4+ item
 // TODO: understand exit logic, specifically DC
-// TODO: escape chest default
 // TODO: other location randomization options?
 // TODO: starting shop
 // TODO: check Spring NPC Hidden Priest with knife+shuriken
@@ -788,6 +787,7 @@ export default App;
 // TODO: skip seal tasks when having all 4
 // TODO: fix endless one-way direction
 // TODO: fix NPC: The Fairy Queen
+// TODO: escape chest default
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather

@@ -78,7 +78,7 @@ function GameSettingsSection({label, settings, children, onChange}) {
 }
 
 export const defaultSettings = {
-    'randomize-escape-chest': true,
+    'randomize-escape-chest': false,
 
 
     'randomize-non-boss-doors': true,
