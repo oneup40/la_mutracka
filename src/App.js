@@ -791,6 +791,7 @@ export default App;
 // TODO: starting shop
 // TODO: save/clear state
 // TODO: break up more blockable tasks (door checks, shop purchases, etc.)
+// TODO: remove field name from connection in field status?
 
 // done:
 // TODO: philosopher visited events
