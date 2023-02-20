@@ -84,14 +84,15 @@ function TransitionTaskSatellite({connection, onClick}) {
 }
 
 export function TransitionTask({id, connection, onSubmit}) {
-    let onClick = useCallback(conn => {
+    let onClick = useCallback(dstConn => {
         if (onSubmit) {
             onSubmit({
-                newRoots: [conn.root],
+                newRoots: [dstConn.root],
+                newConnections: [[connection, dstConn]],
                 completedTasks: [id]
             });
         }
-    }, [id, onSubmit]);
+    }, [connection, id, onSubmit]);
 
     return (
         <div
@@ -448,14 +449,15 @@ function DoorCheckTaskSatellite({connection, onClick}) {
 }
 
 export function DoorCheckTask({id, connection, onSubmit}) {
-    let onClick = useCallback(conn => {
+    let onClick = useCallback(dstConn => {
         if (onSubmit) {
             onSubmit({
-                newRoots: [conn.root],
+                newRoots: [dstConn.root],
+                newConnections: [[connection, dstConn]],
                 completedTasks: [id]
             });
         }
-    }, [id, onSubmit]);
+    }, [connection, id, onSubmit]);
 
     return (
         <div

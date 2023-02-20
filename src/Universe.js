@@ -184,6 +184,9 @@ class Connection {
 
     isSource() { return !this.tags.has('destination-only'); }
     isDestination() { return !this.tags.has('source-only'); }
+
+    field() { return this.region.field; }
+    inField(field) { return field === this.field(); }
 }
 let connections = {}
 connections.all = connectionDefs.map(def => new Connection(def));
@@ -191,6 +194,7 @@ connections.byKey = new Map(connections.all.map(conn => [conn.key, conn]));
 connections.byType = (type) => connections.all.filter(conn => conn.type === type);
 connections.byRoot = new Map(connections.all.map(conn => [conn.root, conn]));
 connections.byRegion = (region) => connections.all.filter(conn => conn.region === region);
+connections.byField = (field) => connections.all.filter(conn => conn.region.field === field);
 
 class Location {
     constructor({name, root, regions, key, tags}) {

@@ -5,6 +5,7 @@ import {ReqList, RequirementsLoader} from './RequirementsLoader.js';
 import RequirementsList from './RequirementsList.js';
 import {StartLocationTask, StartWeaponTask, TransitionTask, NPCTask, SleepingPhilosopherTask, ItemCheckTask, ShopItemTask, SealCheckTask, DoorCheckTask, WinTask} from './Task.js';
 import {defaultSettings, GameSettings} from './GameSettings.js';
+import Status from './Status.js';
 
 import Universe from './Universe.js';
 
@@ -523,6 +524,17 @@ function App() {
             return nextState;
         }
 
+        function connect(state, action) {
+            let nextConnectionMap = new Map(state.connectionMap);
+            nextConnectionMap.set(action.src.key, action.dst);
+            nextConnectionMap.set(action.dst.key, action.src);
+
+            return {
+                ...state,
+                connectionMap: nextConnectionMap
+            };
+        }
+
         switch (action.type) {
             case 'setReqs':
                 return setReqs(state, action);
@@ -546,6 +558,8 @@ function App() {
                 return setStartingLocation(state, action);
             case 'addSealMapping':
                 return addSealMapping(state, action);
+            case 'connect':
+                return connect(state, action);
             default:
                 console.error(`unexpected action.type '${action.type}'`);
         }
@@ -572,6 +586,7 @@ function App() {
             ['Death Seal', new Set()]
         ]),
         bossesDefeated: 0,
+        connectionMap: new Map(),
     });
 
     let onTaskSubmit = useCallback((args) => {
@@ -651,6 +666,16 @@ function App() {
                 });
             });
         }
+
+        if (args.newConnections !== undefined) {
+            args.newConnections.forEach(([src, dst]) => {
+                dispatch({
+                    type: 'connect',
+                    src,
+                    dst
+                });
+            });
+        }
     }, []);
 
     let onReqsLoaded = useCallback(({reqs}) => {
@@ -715,6 +740,7 @@ function App() {
                 <div>Max HP: {32 * (1 + state.sacredOrbs)}</div>
             </fieldset>
             <RequirementsLoader onLoaded={onReqsLoaded} />
+            <Status connectionMap={state.connectionMap} />
             {state.tasks.map(task => {
                 switch (task.type) {
                     case 'start-location':
@@ -757,7 +783,6 @@ export default App;
 // TODO: escape route
 // TODO: show ammo locations
 // TODO: show seal locations
-// TODO: show transitions
 // TODO: reciprocal connections
 // TODO: connection choiecs
 // TODO: fix settings startup
@@ -785,6 +810,7 @@ export default App;
 // TODO: fix NPC: The Fairy Queen
 // TODO: escape chest default
 // TODO: remove SealCheck tasks when last seal is found
+// TODO: show transitions
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather

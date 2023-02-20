@@ -531,13 +531,13 @@
 - name: All
   root: 'Location: Gate of Time [Surface]'
   field: field-surface-time
-  key: region-surface-time-all
+  key: region-surface-time
 
 
 - name: All
   root: 'Location: Gate of Time [Guidance]'
   field: field-guidance-time
-  key: region-guidance-time-all
+  key: region-guidance-time
 
 
 - name: Lower

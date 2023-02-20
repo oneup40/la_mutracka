@@ -1,0 +1,72 @@
+.status {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.field-status {
+    border: solid 2px;
+    margin: 0 0 -2px -2px;
+    justify-content: center;
+}
+
+.field-status.field-surface {
+    grid-row: 1;
+}
+
+.field-status.field-guidance,
+.field-status.field-mausoleum,
+.field-status.field-sun,
+.field-status.field-spring {
+    grid-row: 2;
+}
+
+.field-status.field-inferno,
+.field-status.field-extinction,
+.field-status.field-twin,
+.field-status.field-endless {
+    grid-row: 3;
+}
+
+.field-status.field-shrine {
+    grid-row: 4;
+}
+
+.field-status.field-illusion,
+.field-status.field-graveyard,
+.field-status.field-moonlight,
+.field-status.field-goddess {
+    grid-row: 5;
+}
+
+.field-status.field-ruin,
+.field-status.field-birth {
+    grid-row: 6;
+}
+
+.field-status.field-dc {
+    grid-column: 4;
+    grid-row: 6;
+}
+
+.field-status.field-surface-time,
+.field-status.field-guidance-time,
+.field-status.field-mausoleum-time {
+    grid-row: 7;
+}
+
+.field-status.field-hell-temple {
+    grid-row: 8;
+}
+
+.field-name {
+    font-weight: bold;
+}
+
+.connections-list {
+    padding: 0 0 0 1em;
+    margin: 0.2em;
+}
+
+.connection-item {
+    padding: 0;
+}
