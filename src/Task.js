@@ -406,7 +406,7 @@ function SealCheckTaskSatellite({item, onClick}) {
     );
 }
 
-export function SealCheckTask({id, location, onSubmit}) {
+export function SealCheckTask({id, location, access, onSubmit}) {
     let onClick = useCallback(item => {
         let newSealMappings = new Map([
             [location.root, item.root]
@@ -420,21 +420,25 @@ export function SealCheckTask({id, location, onSubmit}) {
         }
     }, [id, location, onSubmit]);
 
-    return (
-        <div
-            className='Task SealCheckTask'
-        >
-            <Planet
-                centerContent={<button>Seal: {location.name}</button>}
-                autoClose
-                orbitRadius={180}
+    if (Universe.items.byCategory('seal').every(item => access.has(item.root))) {
+        return null;
+    } else {
+        return (
+            <div
+                className='Task SealCheckTask'
             >
-                {Universe.items.byCategory('seal').map(item => {
-                    return <SealCheckTaskSatellite key={item.key} item={item} onClick={onClick} />;
-                })}
-            </Planet>
-        </div>
-    );
+                <Planet
+                    centerContent={<button>Seal: {location.name}</button>}
+                    autoClose
+                    orbitRadius={180}
+                >
+                    {Universe.items.byCategory('seal').map(item => {
+                        return <SealCheckTaskSatellite key={item.key} item={item} onClick={onClick} />;
+                    })}
+                </Planet>
+            </div>
+        );
+    }
 }
 
 function DoorCheckTaskSatellite({connection, onClick}) {

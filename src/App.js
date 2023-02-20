@@ -339,15 +339,11 @@ function App() {
 
                 let locations = Universe.locations.withTag('seal').filter(loc => loc.regions.some(locRegion => locRegion === region));
 
-                if (nextRoots.has('Origin Seal') && nextRoots.has('Birth Seal') && nextRoots.has('Life Seal') && nextRoots.has('Death Seal')) {
-                    locations.forEach(loc => extraRoots.push(loc.root));
-                } else {
-                    locations.forEach(loc => newTasks.push({
-                        type: 'seal-check',
-                        key: 'seal-' + loc.key,
-                        location: loc
-                    }));
-                }
+                locations.forEach(loc => newTasks.push({
+                    type: 'seal-check',
+                    key: 'seal-' + loc.key,
+                    location: loc
+                }));
 
                 let connections = Universe.connections.byType('door').filter(conn => conn.region === region);
                 connections.forEach(conn => {
@@ -734,7 +730,7 @@ function App() {
                     case 'shop-item':
                         return <ShopItemTask key={task.key} id={task.key} location={task.location} index={task.index} onSubmit={onTaskSubmit}/>;
                     case 'seal-check':
-                        return <SealCheckTask key={task.key} id={task.key} location={task.location} onSubmit={onTaskSubmit}/>;
+                        return <SealCheckTask key={task.key} id={task.key} location={task.location} access={state.access} onSubmit={onTaskSubmit}/>;
                     case 'door-check':
                         return <DoorCheckTask key={task.key} id={task.key} connection={task.connection} onSubmit={onTaskSubmit}/>;
                     case 'win':
@@ -763,7 +759,6 @@ export default App;
 // TODO: reciprocal connections
 // TODO: connection choiecs
 // TODO: fix settings startup
-// TODO: remove SealCheck tasks when last seal is found
 // TODO: lint
 // TODO: nebur shop 4+ item
 // TODO: understand exit logic, specifically DC
@@ -787,6 +782,7 @@ export default App;
 // TODO: fix endless one-way direction
 // TODO: fix NPC: The Fairy Queen
 // TODO: escape chest default
+// TODO: remove SealCheck tasks when last seal is found
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather
