@@ -782,21 +782,15 @@ function App() {
 
 export default App;
 
-// TODO?: cursed tasks
-// TODO?: purchase tasks
-// TODO?: boss tasks
-// TODO: door tasks
 // TODO: escape route
 // TODO: show ammo locations
 // TODO: show seal locations
 // TODO: fix settings startup
-// TODO: lint
 // TODO: nebur shop 4+ item
 // TODO: understand exit logic, specifically DC
 // TODO: other location randomization options?
-// TODO: starting shop
 // TODO: save/clear state
-// TODO: break up more blockable tasks (door checks, shop purchases, etc.)
+// TODO: break up more blockable tasks (cursed chests, door checks, shop purchases, etc.)
 // TODO: remove field name from connection in field status?
 
 // done:
@@ -819,6 +813,9 @@ export default App;
 // TODO: show transitions
 // TODO: reciprocal connections
 // TODO: connection choices
+// TODO: door tasks
+// TODO: lint
+// TODO: starting shop
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather
