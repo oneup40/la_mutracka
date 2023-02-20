@@ -783,7 +783,6 @@ export default App;
 // TODO: escape route
 // TODO: show ammo locations
 // TODO: show seal locations
-// TODO: connection choiecs
 // TODO: fix settings startup
 // TODO: lint
 // TODO: nebur shop 4+ item
@@ -811,6 +810,7 @@ export default App;
 // TODO: remove SealCheck tasks when last seal is found
 // TODO: show transitions
 // TODO: reciprocal connections
+// TODO: connection choices
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather
