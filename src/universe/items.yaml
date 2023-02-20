@@ -1,0 +1,466 @@
+- name: Whip
+  root: Whip
+  key: whip
+  category: weapon
+  tags:
+    - start-weapon
+
+- name: Chain Whip
+  root: Chain Whip
+  key: chain-whip
+  category: weapon
+  tags:
+    - start-weapon
+
+- name: Flail Whip
+  root: Flail Whip
+  key: flail-whip
+  category: weapon
+  tags:
+    - start-weapon
+
+- name: Knife
+  root: Knife
+  key: knife
+  category: weapon
+  tags:
+    - start-weapon
+
+- name: Key Sword
+  root: Key Sword
+  key: key-sword
+  category: weapon
+  tags:
+    - start-weapon
+
+- name: Axe
+  root: Axe
+  key: axe
+  category: weapon
+  tags:
+    - start-weapon
+
+- name: Katana
+  root: Katana
+  key: katana
+  category: weapon
+  tags:
+    - start-weapon
+
+
+- name: Shuriken
+  root: Shuriken
+  key: shuriken
+  category: subweapon
+  ammo: shuriken-ammo
+  tags:
+    - start-weapon
+
+- name: Rolling Shuriken
+  root: Rolling Shuriken
+  key: rolling-shuriken
+  category: subweapon
+  ammo: rolling-shuriken-ammo
+  tags:
+    - start-weapon
+
+- name: Earth Spear
+  root: Earth Spear
+  key: earth-spear
+  category: subweapon
+  ammo: earth-spear-ammo
+  tags:
+    - start-weapon
+
+- name: Flare Gun
+  root: Flare Gun
+  key: flare-gun
+  category: subweapon
+  ammo: flare-gun-ammo
+  tags:
+    - start-weapon
+
+- name: Bomb
+  root: Bomb
+  key: bomb
+  category: subweapon
+  ammo: bomb-ammo
+  tags:
+    - start-weapon
+
+- name: Chakram
+  root: Chakram
+  key: chakram
+  category: subweapon
+  ammo: chakram-ammo
+  tags:
+    - start-weapon
+
+- name: Caltrops
+  root: Caltrops
+  key: caltrops
+  category: subweapon
+  ammo: caltrops-ammo
+  tags:
+    - start-weapon
+
+- name: Pistol
+  root: Pistol
+  key: pistol
+  category: subweapon
+  ammo: pistol-ammo
+  tags:
+    - start-weapon
+
+- name: Angel Shield
+  root: Angel Shield
+  key: angel-shield
+  category: subweapon
+
+
+- name: Shuriken Ammo
+  root: Shuriken Ammo
+  key: shuriken-ammo
+  category: ammo
+
+- name: Rolling Shuriken Ammo
+  root: Rolling Shuriken Ammo
+  key: rolling-shuriken-ammo
+  category: ammo
+
+- name: Earth Spear Ammo
+  root: Earth Spear Ammo
+  key: earth-spear-ammo
+  category: ammo
+
+- name: Flare Gun Ammo
+  root: Flare Gun Ammo
+  key: flare-gun-ammo
+  category: ammo
+
+- name: Bomb Ammo
+  root: Bomb Ammo
+  key: bomb-ammo
+  category: ammo
+
+- name: Chakram Ammo
+  root: Chakram Ammo
+  key: chakram-ammo
+  category: ammo
+
+- name: Caltrops Ammo
+  root: Caltrops Ammo
+  key: caltrops-ammo
+  category: ammo
+
+- name: Pistol Ammo
+  root: Pistol Ammo
+  key: pistol-ammo
+  category: ammo
+
+
+- name: Hand Scanner
+  root: Hand Scanner
+  key: hand-scanner
+  category: usable
+
+- name: Djed Pillar
+  root: Djed Pillar
+  key: djed-pillar
+  category: usable
+
+- name: Mini Doll
+  root: Mini Doll
+  key: mini-doll
+  category: usable
+
+- name: Magatama Jewel
+  root: Magatama Jewel
+  key: magatama-jewel
+  category: usable
+
+- name: Cog of the Soul
+  root: Cog of the Soul
+  key: cog-of-the-soul
+  category: usable
+
+- name: Lamp of Time
+  root: Lamp of Time
+  key: lamp-of-time
+  category: usable
+
+- name: Pochette Key
+  root: Pochette Key
+  key: pochette-key
+  category: usable
+
+- name: Dragon Bone
+  root: Dragon Bone
+  key: dragon-bone
+  category: usable
+
+- name: Crystal Skull
+  root: Crystal Skull
+  key: crystal-skull
+  category: usable
+
+- name: Vessel
+  root: Vessel
+  key: vessel
+  category: usable
+
+- name: Pepper
+  root: Pepper
+  key: pepper
+  category: usable
+
+- name: Woman Statue
+  root: Woman Statue
+  key: woman-statue
+  category: usable
+
+- name: Key of Eternity
+  root: Key of Eternity
+  key: key-of-eternity
+  category: usable
+
+- name: Serpent Staff
+  root: Serpent Staff
+  key: serpent-staff
+  category: usable
+
+- name: Diary
+  root: Diary
+  key: diary
+  category: usable
+
+- name: Talisman
+  root: Talisman
+  key: talisman
+  category: usable
+
+- name: Mulana Talisman
+  root: Mulana Talisman
+  key: mulana-talisman
+  category: usable
+
+
+- name: Mobile Super X2
+  root: Mobile Super X2
+  key: mobile-super-x2
+  category: item
+
+- name: Glove
+  root: Glove
+  key: glove
+  category: item
+
+- name: Holy Grail
+  root: Holy Grail
+  key: holy-grail
+  category: item
+
+- name: Isis' Pendant
+  root: Isis' Pendant
+  key: isis-pendant
+  category: item
+
+- name: Helmet
+  root: Helmet
+  key: helmet
+  category: item
+
+- name: Grapple Claw
+  root: Grapple Claw
+  key: grapple-claw
+  category: item
+
+- name: Bronze Mirror
+  root: Bronze Mirror
+  key: bronze-mirror
+  category: item
+
+- name: Eye of Truth
+  root: Eye of Truth
+  key: eye-of-truth
+  category: item
+
+- name: Ring
+  root: Ring
+  key: ring
+  category: item
+
+- name: Scalesphere
+  root: Scalesphere
+  key: scalesphere
+  category: item
+
+- name: Gauntlet
+  root: Gauntlet
+  key: gauntlet
+  category: item
+
+- name: Treasures
+  root: Treasures
+  key: treasures
+  category: item
+
+- name: Anchor
+  root: Anchor
+  key: anchor
+  category: item
+
+- name: Plane Model
+  root: Plane Model
+  key: plane-model
+  category: item
+
+- name: Philosopher's Ocarina
+  root: Philosopher's Ocarina
+  key: philosophers-ocarina
+  category: item
+
+- name: Feather
+  root: Feather
+  key: feather
+  category: item
+
+- name: Book of the Dead
+  root: Book of the Dead
+  key: book-of-the-dead
+  category: item
+
+- name: Fairy Clothes
+  root: Fairy Clothes
+  key: fairy-clothes
+  category: item
+
+- name: Hermes' Boots
+  root: Hermes' Boots
+  key: hermes-boots
+  category: item
+
+- name: Fruit of Eden
+  root: Fruit of Eden
+  key: fruit-of-eden
+  category: item
+
+- name: Twin Statue
+  root: Twin Statue
+  key: twin-statue
+  category: item
+
+- name: Bracelet
+  root: Bracelet
+  key: bracelet
+  category: item
+
+- name: Dimensional Key
+  root: Dimensional Key
+  key: dimensional-key
+  category: item
+
+- name: Ice Cape
+  root: Ice Cape
+  key: ice-cape
+  category: item
+
+
+- name: Origin Seal
+  root: Origin Seal
+  key: origin-seal
+  category: seal
+
+- name: Birth Seal
+  root: Birth Seal
+  key: birth-seal
+  category: seal
+
+- name: Life Seal
+  root: Life Seal
+  key: life-seal
+  category: seal
+
+- name: Death Seal
+  root: Death Seal
+  key: death-seal
+  category: seal
+
+
+- name: reader.exe
+  root: reader.exe
+  key: reader-exe
+  category: software
+
+- name: yagomap.exe
+  root: yagomap.exe
+  key: yagomap-exe
+  category: software
+
+- name: yagostr.exe
+  root: yagostr.exe
+  key: yagostr-exe
+  category: software
+
+- name: torude.exe
+  root: torude.exe
+  key: torude-exe
+  category: software
+
+- name: guild.exe
+  root: guild.exe
+  key: guild-exe
+  category: software
+
+- name: mantra.exe
+  root: mantra.exe
+  key: mantra-exe
+  category: software
+
+- name: deathv.exe
+  root: deathv.exe
+  key: deathv-exe
+  category: software
+
+- name: randc.exe
+  root: randc.exe
+  key: randc-exe
+  category: software
+
+- name: move.exe
+  root: move.exe
+  key: move-exe
+  category: software
+
+- name: mekuri.exe
+  root: mekuri.exe
+  key: mekuri-exe
+  category: software
+
+- name: miracle.exe
+  root: miracle.exe
+  key: miracle-exe
+  category: software
+
+- name: mirai.exe
+  root: mirai.exe
+  key: mirai-exe
+  category: software
+
+- name: lamulana.exe
+  root: lamulana.exe
+  key: lamulana-exe
+  category: software
+
+- name: Sacred Orb
+  key: sacred-orb
+  category: other
+
+- name: Ankh Jewel
+  key: ankh-jewel
+  category: other
+
+- name: Map (Shrine of the Mother)
+  root: Map (Shrine of the Mother)
+  key: map-shrine
+  category: map

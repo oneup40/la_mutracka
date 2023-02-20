@@ -1,0 +1,59 @@
+- name: Xelpud
+  root: 'NPC: Elder Xelpud'
+  key: npc-xelpud
+
+- name: Mekuri Master
+  root: 'NPC: Former Mekuri Master'
+  key: npc-mekuri-master
+
+- name: Fairy Queen
+  root: 'NPC: The Fairy Queen'
+  key: npc-fairy-queen
+
+- name: Mulbruk
+  root: 'NPC: Mulbruk'
+  key: npc-mulbruk
+
+- name: Nebur PC Shop
+  root: 'NPC: Nebur'
+  key: npc-nebur
+  tags:
+    - shop
+
+- name: Little Bro Shop
+  root: 'NPC: Yiegah Kungfu'
+  key: npc-little-brother
+  tags:
+    - shop
+
+- name: Treasures NPC
+  root: 'NPC: Mr. Slushfund'
+  key: npc-slushfund
+
+- name: Mini Doll NPC
+  root: 'NPC: Priest Alest'
+  key: npc-alest
+
+- name: Giltoriyo
+  root: 'NPC: Philosopher Giltoriyo'
+  key: npc-giltoriyo
+  tags:
+    - philosopher
+
+- name: Alsedana
+  root: 'NPC: Philosopher Alsedana'
+  key: npc-alsedana
+  tags:
+    - philosopher
+
+- name: Samaranta
+  root: 'NPC: Philosopher Samaranta'
+  key: npc-samaranta
+  tags:
+    - philosopher
+
+- name: Fobos
+  root: 'NPC: Philosopher Fobos'
+  key: npc-fobos
+  tags:
+    - philosopher

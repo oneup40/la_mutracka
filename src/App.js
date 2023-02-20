@@ -6,7 +6,7 @@ import RequirementsList from './RequirementsList.js';
 import {StartLocationTask, StartWeaponTask, TransitionTask, NPCTask, SleepingPhilosopherTask, ItemCheckTask, ShopItemTask, SealCheckTask, DoorCheckTask, WinTask} from './Task.js';
 import {defaultSettings, GameSettings} from './GameSettings.js';
 
-import {connections, npcLocations, items, itemLocations, sealLocations, doorLocations} from './World.js';
+import Universe from './Universe.js';
 
 function invertSubset(subset, all) {
     return new Set(Array.from(all.keys()).filter(key => !subset.has(key)));
@@ -55,12 +55,12 @@ function SelectableItemList({name, choices, selected, onChange}) {
     return ret;
 }
 
-let weaponChoices = new Map(items.weapons.map(x => [x.name, x.key]));
-let subweaponChoices = new Map(items.subweapons.map(x => [x.name, x.key]));
-let usableChoices = new Map(items.usable.map(x => [x.name, x.key]));
-let itemChoices = new Map(items.items.map(x => [x.name, x.key]));
-let sealChoices = new Map(items.seals.map(x => [x.name, x.key]));
-let softwareChoices = new Map(items.software.map(x => [x.name, x.key]));
+let weaponChoices = new Map(Universe.items.byCategory('weapon').map(x => [x.name, x.key]));
+let subweaponChoices = new Map(Universe.items.byCategory('subweapon').map(x => [x.name, x.key]));
+let usableChoices = new Map(Universe.items.byCategory('usable').map(x => [x.name, x.key]));
+let itemChoices = new Map(Universe.items.byCategory('item').map(x => [x.name, x.key]));
+let sealChoices = new Map(Universe.items.byCategory('seal').map(x => [x.name, x.key]));
+let softwareChoices = new Map(Universe.items.byCategory('software').map(x => [x.name, x.key]));
 
 function calculateSettingsRoots({settings}) {
     let roots = new Set();
@@ -307,7 +307,7 @@ function App() {
 
             let newTasks = [];
             Array.from(newAccess).filter(value => value.startsWith('Transition:')).forEach(value => {
-                let conn = connections.byLogic.get(value);
+                let conn = Universe.connections.byRoot.get(value);
                 if (conn === undefined) {
                     console.error(`Unknown transition '${value}'`);
                 }
@@ -318,18 +318,18 @@ function App() {
                 });
             });
             Array.from(newAccess).filter(value => value.startsWith('NPCL:')).forEach(value => {
-                let location = npcLocations.byLogic.get(value);
-                if (location === undefined) {
+                let loc = Universe.locations.byRoot.get(value);
+                if (loc === undefined) {
                     console.error(`Unknown NPC location '${value}'`);
                 }
                 newTasks.push({
                     type: 'npc',
-                    key: 'npc-' + location.key,
-                    location: location
+                    key: 'npc-' + loc.key,
+                    location: loc
                 });
             });
             Array.from(newAccess).filter(value => value.startsWith('Check:') || value.startsWith('Coin:') || value.startsWith('Trap:')).forEach(value => {
-                let location = itemLocations.byLogic.get(value);
+                let location = Universe.locations.byRoot.get(value);
                 if (location === undefined) {
                     console.error(`Unknown item location '${value}'`);
                 }
@@ -339,33 +339,32 @@ function App() {
                     location: location
                 });
             });
-            Array.from(newAccess).forEach(value => {
-                let sealLocs = sealLocations.byLocation.get(value);
-                if (sealLocs !== undefined) {
-                    if (nextRoots.has('Origin Seal') && nextRoots.has('Birth Seal') && nextRoots.has('Life Seal') && nextRoots.has('Death Seal')) {
-                        Array.from(sealLocs).forEach(sealLoc => {
-                            extraRoots.push(sealLoc.logic);
-                        });
-                    } else {
-                        Array.from(sealLocs).forEach(sealLoc => {
-                            newTasks.push({
-                                type: 'seal-check',
-                                key: 'seal-' + sealLoc.key,
-                                sealLoc
-                            });
-                        });
-                    }
+            Array.from(newAccess).filter(value => value.startsWith('Location:')).forEach(value => {
+                let region = Universe.regions.byRoot.get(value);
+                if (region === undefined) {
+                    console.error(`Unknown region '${value}'`);
                 }
-            });
-            Array.from(newAccess).forEach(value => {
-                let doorLoc = doorLocations.byLocation.get(value);
-                if (doorLoc !== undefined) {
+
+                let locations = Universe.locations.withTag('seal').filter(loc => loc.regions.some(locRegion => locRegion === region));
+
+                if (nextRoots.has('Origin Seal') && nextRoots.has('Birth Seal') && nextRoots.has('Life Seal') && nextRoots.has('Death Seal')) {
+                    locations.forEach(loc => extraRoots.push(loc.root));
+                } else {
+                    locations.forEach(loc => newTasks.push({
+                        type: 'seal-check',
+                        key: 'seal-' + loc.key,
+                        location: loc
+                    }));
+                }
+
+                let connections = Universe.connections.byType('door').filter(conn => conn.region === region);
+                connections.forEach(conn => {
                     newTasks.push({
                         type: 'door-check',
-                        key: 'door-' + doorLoc.key,
-                        name: doorLoc.human
+                        key: 'door-' + conn.key,
+                        connection: conn
                     });
-                }
+                });
             });
             Array.from(newAccess).forEach(value => {
                 switch (value) {
@@ -508,51 +507,9 @@ function App() {
             let settings = [];
 
             let nextState = state;
-
-            switch (action.location) {
-                case 'Location: Surface [Main]':
-                    nextState = setGameSetting(nextState, {key: 'alternate-start', value: false});
-                    nextState = setGameSetting(nextState, {key: 'frontside-start', value: true});
-                    nextState = setGameSetting(nextState, {key: 'backside-start', value: false});
-                    break;
-                case 'Location: Gate of Guidance [Main]':
-                case 'Location: Mausoleum of the Giants':
-                case 'Location: Temple of the Sun [Main]':
-                case 'Location: Spring in the Sky [Main]':
-                case 'Location: Inferno Cavern [Main]':
-                case 'Location: Chamber of Extinction [Main]':
-                case 'Location: Twin Labyrinths [Poison 1]':
-                case 'Location: Endless Corridor [1F]':
-                case 'Location: Gate of Time [Surface]':
-                    nextState = setGameSetting(nextState, {key: 'alternate-start', value: true});
-                    nextState = setGameSetting(nextState, {key: 'frontside-start', value: true});
-                    nextState = setGameSetting(nextState, {key: 'backside-start', value: false});
-                    nextState = addTasks(nextState, {tasks: [
-                        {type: 'shop-item', key: 'shop-start-0', location: 'Starting Shop', index: 0},
-                        {type: 'shop-item', key: 'shop-start-1', location: 'Starting Shop', index: 1},
-                        {type: 'shop-item', key: 'shop-start-2', location: 'Starting Shop', index: 2},
-                    ]});
-                    break;
-                case 'Location: Gate of Illusion [Grail]':
-                case 'Location: Graveyard of the Giants [Grail]':
-                case 'Location: Temple of Moonlight [Grail]':
-                case 'Location: Tower of the Goddess [Grail]':
-                case 'Location: Chamber of Birth [West Entrance]':
-                case 'Location: Twin Labyrinths [Lower]':
-                    nextState = setGameSetting(nextState, {key: 'alternate-start', value: true});
-                    nextState = setGameSetting(nextState, {key: 'frontside-start', value: false});
-                    nextState = setGameSetting(nextState, {key: 'backside-start', value: true});
-                    nextState = addTasks(nextState, {tasks: [
-                        {type: 'shop-item', key: 'shop-start-0', location: 'Starting Shop', index: 0},
-                        {type: 'shop-item', key: 'shop-start-1', location: 'Starting Shop', index: 1},
-                        {type: 'shop-item', key: 'shop-start-2', location: 'Starting Shop', index: 2},
-                    ]});
-
-                    break;
-                default:
-                    console.error(`unknown starting location ${action.location}`);
-                    break;
-            }
+            nextState = setGameSetting(nextState, {key: 'alternate-start', value: action.region.isAlternateStart()});
+            nextState = setGameSetting(nextState, {key: 'frontside-start', value: action.region.isFrontside()});
+            nextState = setGameSetting(nextState, {key: 'backside-start', value: action.region.isBackside()});
 
             return nextState;
         }
@@ -656,7 +613,7 @@ function App() {
                     newTasks.push({
                         type: 'shop-item',
                         key: `shop-${location.key}-${i}`,
-                        location: location.human,
+                        location: location.name,
                         index: i
                     });
                 }
@@ -691,7 +648,7 @@ function App() {
         if (args.startingLocation !== undefined) {
             dispatch({
                 type: 'setStartingLocation',
-                location: args.startingLocation
+                region: args.startingLocation
             });
         }
 
@@ -794,9 +751,9 @@ function App() {
                     case 'shop-item':
                         return <ShopItemTask key={task.key} id={task.key} location={task.location} index={task.index} onSubmit={onTaskSubmit}/>;
                     case 'seal-check':
-                        return <SealCheckTask key={task.key} id={task.key} sealLoc={task.sealLoc} onSubmit={onTaskSubmit}/>;
+                        return <SealCheckTask key={task.key} id={task.key} location={task.location} onSubmit={onTaskSubmit}/>;
                     case 'door-check':
-                        return <DoorCheckTask key={task.key} id={task.key} name={task.name} onSubmit={onTaskSubmit}/>;
+                        return <DoorCheckTask key={task.key} id={task.key} connection={task.connection} onSubmit={onTaskSubmit}/>;
                     case 'win':
                         return <WinTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
                     default:
@@ -827,6 +784,11 @@ export default App;
 // TODO: lint
 // TODO: nebur shop 4+ item
 // TODO: understand exit logic, specifically DC
+// TODO: escape chest default
+// TODO: other location randomization options?
+// TODO: starting shop
+// TODO: check Spring NPC Hidden Priest with knife+shuriken
+// TODO: save/clear state
 
 // done:
 // TODO: philosopher visited events
@@ -843,7 +805,6 @@ export default App;
 // TODO: skip seal tasks when having all 4
 // TODO: fix endless one-way direction
 // TODO: fix NPC: The Fairy Queen
-// TODO: starting shop
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather

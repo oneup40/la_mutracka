@@ -1,0 +1,1655 @@
+- name: Surface NPC Xelpud
+  root: "NPCL: Elder Xelpud"
+  key: location-npc-xelpud
+  tags:
+    - npc
+
+- name: Surface Tent 1
+  root: "NPCL: Nebur"
+  key: location-npc-nebur
+  tags:
+    - npc
+
+- name: Surface Tent 2
+  root: "NPCL: Sidro"
+  key: location-npc-sidro
+  tags:
+    - npc
+
+- name: Surface Tent 3
+  root: "NPCL: Modro"
+  key: location-npc-modro
+  tags:
+    - npc
+
+- name: Surface Tent 4
+  root: "NPCL: Hiner"
+  key: location-npc-hiner
+  tags:
+    - npc
+
+- name: Surface Tent 5
+  root: "NPCL: Moger"
+  key: location-npc-moger
+  tags:
+    - npc
+
+- name: Surface NPC Mekuri Master
+  root: "NPCL: Former Mekuri Master"
+  key: location-npc-mekuri
+  tags:
+    - npc
+
+- name: Guidance NPC Priest
+  root: "NPCL: Priest Zarnac"
+  key: location-npc-zarnac
+  tags:
+    - npc
+
+- name: Guidance Shop
+  root: "NPCL: Penadvent of ghost"
+  key: location-npc-penadvent
+  tags:
+    - npc
+
+- name: Mausoleum NPC Priest
+  root: "NPCL: Priest Xanado"
+  key: location-npc-xanado
+  tags:
+    - npc
+
+- name: Mausoleum Shop
+  root: "NPCL: Greedy Charlie"
+  key: location-npc-charlie
+  tags:
+    - npc
+
+- name: Sun NPC Mulbruk
+  root: "NPCL: Mulbruk"
+  key: location-npc-mulbruk
+  tags:
+    - npc
+
+- name: Sun NPC Sphinx
+  root: "NPCL: Priest Madomono"
+  key: location-npc-madomono
+  tags:
+    - npc
+
+- name: Sun Shop Pot Smash
+  root: "NPCL: Shalom III"
+  key: location-npc-shalom
+  tags:
+    - npc
+
+- name: Sun Shop Spikes
+  root: "NPCL: Usas VI"
+  key: location-npc-usas
+  tags:
+    - npc
+
+- name: Sun Shop Seal
+  root: "NPCL: Kingvalley I"
+  key: location-npc-kingvalley-1
+  tags:
+    - npc
+
+- name: Spring NPC Hidden Priest
+  root: "NPCL: Priest Hidlyda"
+  key: location-npc-hidlyda
+  tags:
+    - npc
+
+- name: Spring NPC Philosopher
+  root: "NPCL: Philosopher Giltoriyo"
+  key: location-npc-giltoriyo
+  tags:
+    - npc
+
+- name: Spring Shop
+  root: "NPCL: Mr. Fishman (Original)"
+  key: location-npc-fishman
+  tags:
+    - npc
+
+- name: Spring Shop Secret
+  root: "NPCL: Mr. Fishman (Alt)"
+  key: location-npc-fishman-alt
+  tags:
+    - npc
+
+- name: Inferno NPC Seal
+  root: "NPCL: Priest Gailious"
+  key: location-npc-gailious
+  tags:
+    - npc
+
+- name: Inferno NPC Pazuzu
+  root: "NPCL: Priest Romancis"
+  key: location-npc-romancis
+  tags:
+    - npc
+
+- name: Inferno Shop
+  root: "NPCL: Hot-blooded Nemesistwo"
+  key: location-npc-nemesistwo
+  tags:
+    - npc
+
+- name: Extinction NPC Main
+  root: "NPCL: Priest Aramo"
+  key: location-npc-aramo
+  tags:
+    - npc
+
+- name: Extinction NPC Palenque
+  root: "NPCL: Priest Triton"
+  key: location-npc-triton
+  tags:
+    - npc
+
+- name: Extinction Shop Palenque
+  root: "NPCL: Operator Combaker"
+  key: location-npc-combaker
+  tags:
+    - npc
+
+- name: TL Shop Little Bro
+  root: "NPCL: Yiegah Kungfu"
+  key: location-npc-yiegah
+  tags:
+    - npc
+
+- name: TL Shop Big Bro
+  root: "NPCL: Yiear Kungfu"
+  key: location-npc-yiear
+  tags:
+    - npc
+
+- name: TL Shop Middle Right (Coin Pot)
+  root: "NPCL: Arrogant Sturdy Snake"
+  key: location-npc-sturdy-snake
+  tags:
+    - npc
+
+- name: TL Shop Middle Left (Bomb)
+  root: "NPCL: Arrogant Metagear"
+  key: location-npc-metagear
+  tags:
+    - npc
+
+- name: TL NPC Skull Ladder
+  root: "NPCL: Priest Jaguarfiv"
+  key: location-npc-jaguarfiv
+  tags:
+    - npc
+
+- name: Endless NPC Fairy Queen
+  root: "NPCL: The Fairy Queen"
+  key: location-npc-fairy-queen
+  tags:
+    - npc
+
+- name: Endless Shop
+  root: "NPCL: Affected Knimare"
+  key: location-npc-knimare
+  tags:
+    - npc
+
+- name: Illusion Dev NPC
+  root: "NPCL: duplex"
+  key: location-npc-duplex
+  tags:
+    - npc
+
+- name: Illusion NPC Treasures
+  root: "NPCL: Mr. Slushfund"
+  key: location-npc-slushfund
+  tags:
+    - npc
+
+- name: Illusion NPC Mini Doll
+  root: "NPCL: Priest Alest"
+  key: location-npc-alest
+  tags:
+    - npc
+
+- name: Illusion Shop
+  root: "NPCL: Mover Athleland"
+  key: location-npc-athleland
+  tags:
+    - npc
+
+- name: Graveyard Shop
+  root: "NPCL: Giant Mopiran"
+  key: location-npc-mopiran
+  tags:
+    - npc
+
+- name: Graveyard NPC Kamitachi
+  root: "NPCL: Giant Thexde"
+  key: location-npc-thexde
+  tags:
+    - npc
+
+- name: Moonlight NPC Philosopher
+  root: "NPCL: Philosopher Alsedana"
+  key: location-npc-alsedana
+  tags:
+    - npc
+
+- name: Moonlight Dev NPC
+  root: "NPCL: Samieru"
+  key: location-npc-samieru
+  tags:
+    - npc
+
+- name: Moonlight Shop
+  root: "NPCL: Kingvalley II"
+  key: location-npc-kingvalley-2
+  tags:
+    - npc
+
+- name: Goddess NPC Philosopher
+  root: "NPCL: Philosopher Samaranta"
+  key: location-npc-samaranta
+  tags:
+    - npc
+
+- name: Goddess Dev NPC
+  root: "NPCL: Naramura"
+  key: location-npc-naramura
+  tags:
+    - npc
+
+- name: Goddess Shop
+  root: "NPCL: Energetic Belmont"
+  key: location-npc-belmont
+  tags:
+    - npc
+
+- name: Ruin NPC Priest
+  root: "NPCL: Priest Laydoc"
+  key: location-npc-laydoc
+  tags:
+    - npc
+
+- name: Ruin Shop
+  root: "NPCL: Mechanical Efspi"
+  key: location-npc-efspi
+  tags:
+    - npc
+
+- name: Birth NPC Priest
+  root: "NPCL: Priest Ashgine"
+  key: location-npc-ashgine
+  tags:
+    - npc
+
+- name: Birth Shop
+  root: "NPCL: Mud Man Qubert"
+  key: location-npc-qubert
+  tags:
+    - npc
+
+- name: DC NPC Philosopher
+  root: "NPCL: Philosopher Fobos"
+  key: location-npc-fobos
+  tags:
+    - npc
+
+- name: Surface [Time] NPC
+  root: "NPCL: 8bit Elder"
+  key: location-npc-elder-time
+  tags:
+    - npc
+
+- name: Hell Temple Shop
+  root: "NPCL: Tailor Dracuet"
+  key: location-npc-dracuet
+  tags:
+    - npc
+
+- name: "Check: Whip"
+  root: "Check: Whip"
+  key: location-item-whip
+  tags:
+    - item
+    - check
+
+- name: "Check: Chain Whip"
+  root: "Check: Chain Whip"
+  key: location-item-chain-whip
+  tags:
+    - item
+    - check
+
+- name: "Check: Flail Whip"
+  root: "Check: Flail Whip"
+  key: location-item-flail-whip
+  tags:
+    - item
+    - check
+
+- name: "Check: Knife"
+  root: "Check: Knife"
+  key: location-item-knife
+  tags:
+    - item
+    - check
+
+- name: "Check: Key Sword"
+  root: "Check: Key Sword"
+  key: location-item-key-sword
+  tags:
+    - item
+    - check
+
+- name: "Check: Axe"
+  root: "Check: Axe"
+  key: location-item-axe
+  tags:
+    - item
+    - check
+
+- name: "Check: Katana"
+  root: "Check: Katana"
+  key: location-item-katana
+  tags:
+    - item
+    - check
+
+- name: "Check: Shuriken"
+  root: "Check: Shuriken"
+  key: location-item-shuriken
+  tags:
+    - item
+    - check
+
+- name: "Check: Rolling Shuriken"
+  root: "Check: Rolling Shuriken"
+  key: location-item-rolling-shuriken
+  tags:
+    - item
+    - check
+
+- name: "Check: Earth Spear"
+  root: "Check: Earth Spear"
+  key: location-item-earth-spear
+  tags:
+    - item
+    - check
+
+- name: "Check: Flare Gun"
+  root: "Check: Flare Gun"
+  key: location-item-flare-gun
+  tags:
+    - item
+    - check
+
+- name: "Check: Bomb"
+  root: "Check: Bomb"
+  key: location-item-bomb
+  tags:
+    - item
+    - check
+
+- name: "Check: Chakram"
+  root: "Check: Chakram"
+  key: location-item-chakram
+  tags:
+    - item
+    - check
+
+- name: "Check: Caltrops"
+  root: "Check: Caltrops"
+  key: location-item-caltrops
+  tags:
+    - item
+    - check
+
+- name: "Check: Pistol"
+  root: "Check: Pistol"
+  key: location-item-pistol
+  tags:
+    - item
+    - check
+
+- name: "Check: Angel Shield"
+  root: "Check: Angel Shield"
+  key: location-item-angel-shield
+  tags:
+    - item
+    - check
+
+- name: "Check: Shuriken Ammo"
+  root: "Check: Shuriken Ammo"
+  key: location-item-shuriken-ammo
+  tags:
+    - item
+    - check
+
+- name: "Check: Rolling Shuriken Ammo"
+  root: "Check: Rolling Shuriken Ammo"
+  key: location-item-rolling-shuriken-ammo
+  tags:
+    - item
+    - check
+
+- name: "Check: Earth Spear Ammo"
+  root: "Check: Earth Spear Ammo"
+  key: location-item-earth-spear-ammo
+  tags:
+    - item
+    - check
+
+- name: "Check: Flare Gun Ammo"
+  root: "Check: Flare Gun Ammo"
+  key: location-item-flare-gun-ammo
+  tags:
+    - item
+    - check
+
+- name: "Check: Bomb Ammo"
+  root: "Check: Bomb Ammo"
+  key: location-item-bomb-ammo
+  tags:
+    - item
+    - check
+
+- name: "Check: Chakram Ammo"
+  root: "Check: Chakram Ammo"
+  key: location-item-chakram-ammo
+  tags:
+    - item
+    - check
+
+- name: "Check: Caltrops Ammo"
+  root: "Check: Caltrops Ammo"
+  key: location-item-caltrops-ammo
+  tags:
+    - item
+    - check
+
+- name: "Check: Pistol Ammo"
+  root: "Check: Pistol Ammo"
+  key: location-item-pistol-ammo
+  tags:
+    - item
+    - check
+
+- name: "Check: Hand Scanner"
+  root: "Check: Hand Scanner"
+  key: location-item-hand-scanner
+  tags:
+    - item
+    - check
+
+- name: "Check: Djed Pillar"
+  root: "Check: Djed Pillar"
+  key: location-item-djed-pillar
+  tags:
+    - item
+    - check
+
+- name: "Check: Mini Doll"
+  root: "Check: Mini Doll"
+  key: location-item-mini-doll
+  tags:
+    - item
+    - check
+
+- name: "Check: Magatama Jewel"
+  root: "Check: Magatama Jewel"
+  key: location-item-magatama-jewel
+  tags:
+    - item
+    - check
+
+- name: "Check: Cog of the Soul"
+  root: "Check: Cog of the Soul"
+  key: location-item-cog-of-the-soul
+  tags:
+    - item
+    - check
+
+- name: "Check: Lamp of Time"
+  root: "Check: Lamp of Time"
+  key: location-item-lamp-of-time
+  tags:
+    - item
+    - check
+
+- name: "Check: Pochette Key"
+  root: "Check: Pochette Key"
+  key: location-item-pochette-key
+  tags:
+    - item
+    - check
+
+- name: "Check: Dragon Bone"
+  root: "Check: Dragon Bone"
+  key: location-item-dragon-bone
+  tags:
+    - item
+    - check
+
+- name: "Check: Crystal Skull"
+  root: "Check: Crystal Skull"
+  key: location-item-crystal-skull
+  tags:
+    - item
+    - check
+
+- name: "Check: Vessel"
+  root: "Check: Vessel"
+  key: location-item-vessel
+  tags:
+    - item
+    - check
+
+- name: "Check: Pepper"
+  root: "Check: Pepper"
+  key: location-item-pepper
+  tags:
+    - item
+    - check
+
+- name: "Check: Woman Statue"
+  root: "Check: Woman Statue"
+  key: location-item-woman-statue
+  tags:
+    - item
+    - check
+
+- name: "Check: Key of Eternity"
+  root: "Check: Key of Eternity"
+  key: location-item-key-of-eternity
+  tags:
+    - item
+    - check
+
+- name: "Check: Serpent Staff"
+  root: "Check: Serpent Staff"
+  key: location-item-serpent-staff
+  tags:
+    - item
+    - check
+
+- name: "Check: Diary"
+  root: "Check: Diary"
+  key: location-item-diary
+  tags:
+    - item
+    - check
+
+- name: "Check: Talisman"
+  root: "Check: Talisman"
+  key: location-item-talisman
+  tags:
+    - item
+    - check
+
+- name: "Check: Mulana Talisman"
+  root: "Check: Mulana Talisman"
+  key: location-item-mulana-talisman
+  tags:
+    - item
+    - check
+
+- name: "Check: Mobile Super X2"
+  root: "Check: Mobile Super X2"
+  key: location-item-mobile-super-x2
+  tags:
+    - item
+    - check
+
+- name: "Check: Glove"
+  root: "Check: Glove"
+  key: location-item-glove
+  tags:
+    - item
+    - check
+
+- name: "Check: Holy Grail"
+  root: "Check: Holy Grail"
+  key: location-item-holy-grail
+  tags:
+    - item
+    - check
+
+- name: "Check: Isis' Pendant"
+  root: "Check: Isis' Pendant"
+  key: location-item-isis-pendant
+  tags:
+    - item
+    - check
+
+- name: "Check: Helmet"
+  root: "Check: Helmet"
+  key: location-item-helmet
+  tags:
+    - item
+    - check
+
+- name: "Check: Grapple Claw"
+  root: "Check: Grapple Claw"
+  key: location-item-grapple-claw
+  tags:
+    - item
+    - check
+
+- name: "Check: Bronze Mirror"
+  root: "Check: Bronze Mirror"
+  key: location-item-bronze-mirror
+  tags:
+    - item
+    - check
+
+- name: "Check: Eye of Truth"
+  root: "Check: Eye of Truth"
+  key: location-item-eye-of-truth
+  tags:
+    - item
+    - check
+
+- name: "Check: Ring"
+  root: "Check: Ring"
+  key: location-item-ring
+  tags:
+    - item
+    - check
+
+- name: "Check: Scalesphere"
+  root: "Check: Scalesphere"
+  key: location-item-scalesphere
+  tags:
+    - item
+    - check
+
+- name: "Check: Gauntlet"
+  root: "Check: Gauntlet"
+  key: location-item-gauntlet
+  tags:
+    - item
+    - check
+
+- name: "Check: Treasures"
+  root: "Check: Treasures"
+  key: location-item-treasures
+  tags:
+    - item
+    - check
+
+- name: "Check: Anchor"
+  root: "Check: Anchor"
+  key: location-item-anchor
+  tags:
+    - item
+    - check
+
+- name: "Check: Plane Model"
+  root: "Check: Plane Model"
+  key: location-item-plane-model
+  tags:
+    - item
+    - check
+
+- name: "Check: Philosopher's Ocarina"
+  root: "Check: Philosopher's Ocarina"
+  key: location-item-philosophers-ocarina
+  tags:
+    - item
+    - check
+
+- name: "Check: Feather"
+  root: "Check: Feather"
+  key: location-item-feather
+  tags:
+    - item
+    - check
+
+- name: "Check: Book of the Dead"
+  root: "Check: Book of the Dead"
+  key: location-item-book-of-the-dead
+  tags:
+    - item
+    - check
+
+- name: "Check: Fairy Clothes"
+  root: "Check: Fairy Clothes"
+  key: location-item-fairy-clothes
+  tags:
+    - item
+    - check
+
+- name: "Check: Hermes' Boots"
+  root: "Check: Hermes' Boots"
+  key: location-item-hermes-boots
+  tags:
+    - item
+    - check
+
+- name: "Check: Fruit of Eden"
+  root: "Check: Fruit of Eden"
+  key: location-item-fruit-of-eden
+  tags:
+    - item
+    - check
+
+- name: "Check: Twin Statue"
+  root: "Check: Twin Statue"
+  key: location-item-twin-statue
+  tags:
+    - item
+    - check
+
+- name: "Check: Bracelet"
+  root: "Check: Bracelet"
+  key: location-item-bracelet
+  tags:
+    - item
+    - check
+
+- name: "Check: Dimensional Key"
+  root: "Check: Dimensional Key"
+  key: location-item-dimensional-key
+  tags:
+    - item
+    - check
+
+- name: "Check: Ice Cape"
+  root: "Check: Ice Cape"
+  key: location-item-ice-cape
+  tags:
+    - item
+    - check
+
+- name: "Check: Origin Seal"
+  root: "Check: Origin Seal"
+  key: location-item-origin-seal
+  tags:
+    - item
+    - check
+
+- name: "Check: Birth Seal"
+  root: "Check: Birth Seal"
+  key: location-item-birth-seal
+  tags:
+    - item
+    - check
+
+- name: "Check: Life Seal"
+  root: "Check: Life Seal"
+  key: location-item-life-seal
+  tags:
+    - item
+    - check
+
+- name: "Check: Death Seal"
+  root: "Check: Death Seal"
+  key: location-item-death-seal
+  tags:
+    - item
+    - check
+
+- name: "Check: reader.exe"
+  root: "Check: reader.exe"
+  key: location-item-reader-exe
+  tags:
+    - item
+    - check
+
+- name: "Check: yagomap.exe"
+  root: "Check: yagomap.exe"
+  key: location-item-yagomap-exe
+  tags:
+    - item
+    - check
+
+- name: "Check: yagostr.exe"
+  root: "Check: yagostr.exe"
+  key: location-item-yagostr-exe
+  tags:
+    - item
+    - check
+
+- name: "Check: torude.exe"
+  root: "Check: torude.exe"
+  key: location-item-torude-exe
+  tags:
+    - item
+    - check
+
+- name: "Check: guild.exe"
+  root: "Check: guild.exe"
+  key: location-item-guild-exe
+  tags:
+    - item
+    - check
+
+- name: "Check: mantra.exe"
+  root: "Check: mantra.exe"
+  key: location-item-mantra-exe
+  tags:
+    - item
+    - check
+
+- name: "Check: deathv.exe"
+  root: "Check: deathv.exe"
+  key: location-item-deathv-exe
+  tags:
+    - item
+    - check
+
+- name: "Check: randc.exe"
+  root: "Check: randc.exe"
+  key: location-item-randc-exe
+  tags:
+    - item
+    - check
+
+- name: "Check: move.exe"
+  root: "Check: move.exe"
+  key: location-item-move-exe
+  tags:
+    - item
+    - check
+
+- name: "Check: mekuri.exe"
+  root: "Check: mekuri.exe"
+  key: location-item-mekuri-exe
+  tags:
+    - item
+    - check
+
+- name: "Check: miracle.exe"
+  root: "Check: miracle.exe"
+  key: location-item-miracle-exe
+  tags:
+    - item
+    - check
+
+- name: "Check: mirai.exe"
+  root: "Check: mirai.exe"
+  key: location-item-mirai-exe
+  tags:
+    - item
+    - check
+
+- name: "Check: lamulana.exe"
+  root: "Check: lamulana.exe"
+  key: location-item-lamulana-exe
+  tags:
+    - item
+    - check
+
+- name: "Check: Map (Shrine of the Mother)"
+  root: "Check: Map (Shrine of the Mother)"
+  key: location-item-map-shrine
+  tags:
+    - item
+    - check
+
+- name: "Check: Ankh Jewel (Guidance)"
+  root: "Check: Ankh Jewel (Gate of Guidance)"
+  key: location-item-ankh-jewel-guidance
+  tags:
+    - item
+    - check
+
+- name: "Check: Ankh Jewel (Mausoleum)"
+  root: "Check: Ankh Jewel (Mausoleum of the Giants)"
+  key: location-item-ankh-jewel-mausoleum
+  tags:
+    - item
+    - check
+
+- name: "Check: Ankh Jewel (Sun)"
+  root: "Check: Ankh Jewel (Temple of the Sun)"
+  key: location-item-ankh-jewel-sun
+  tags:
+    - item
+    - check
+
+- name: "Check: Ankh Jewel (Spring)"
+  root: "Check: Ankh Jewel (Spring in the Sky)"
+  key: location-item-ankh-jewel-spring
+  tags:
+    - item
+    - check
+
+- name: "Check: Ankh Jewel (Ruin)"
+  root: "Check: Ankh Jewel (Tower of Ruin)"
+  key: location-item-ankh-jewel-ruin
+  tags:
+    - item
+    - check
+
+- name: "Check: Ankh Jewel (Twin)"
+  root: "Check: Ankh Jewel (Twin Labyrinths)"
+  key: location-item-ankh-jewel-twin
+  tags:
+    - item
+    - check
+
+- name: "Check: Ankh Jewel (DC)"
+  root: "Check: Ankh Jewel (Dimensional Corridor)"
+  key: location-item-ankh-jewel-dc
+  tags:
+    - item
+    - check
+
+- name: "Check: Crucifix"
+  root: "Check: Crucifix"
+  key: location-item-crucifix
+  tags:
+    - item
+    - check
+
+- name: "Check: Map (Surface)"
+  root: "Check: Map (Surface)"
+  key: location-item-map-surface
+  tags:
+    - item
+    - check
+
+- name: "Check: Map (Guidance)"
+  root: "Check: Map (Gate of Guidance)"
+  key: location-item-map-guidance
+  tags:
+    - item
+    - check
+
+- name: "Check: Map (Mausoleum)"
+  root: "Check: Map (Mausoleum of the Giants)"
+  key: location-item-map-mausoleum
+  tags:
+    - item
+    - check
+
+- name: "Check: Map (Sun)"
+  root: "Check: Map (Temple of the Sun)"
+  key: location-item-map-sun
+  tags:
+    - item
+    - check
+
+- name: "Check: Map (Spring)"
+  root: "Check: Map (Spring in the Sky)"
+  key: location-item-map-spring
+  tags:
+    - item
+    - check
+
+- name: "Check: Map (Inferno)"
+  root: "Check: Map (Inferno Cavern)"
+  key: location-item-map-inferno
+  tags:
+    - item
+    - check
+
+- name: "Check: Map (Extinction)"
+  root: "Check: Map (Chamber of Extinction)"
+  key: location-item-map-extinction
+  tags:
+    - item
+    - check
+
+- name: "Check: Map (Twin)"
+  root: "Check: Map (Twin Labyrinths)"
+  key: location-item-map-twin
+  tags:
+    - item
+    - check
+
+- name: "Check: Map (Endless)"
+  root: "Check: Map (Endless Corridor)"
+  key: location-item-map-endless
+  tags:
+    - item
+    - check
+
+- name: "Check: Map (Illusion)"
+  root: "Check: Map (Gate of Illusion)"
+  key: location-item-map-illusion
+  tags:
+    - item
+    - check
+
+- name: "Check: Map (Graveyard)"
+  root: "Check: Map (Graveyard of the Giants)"
+  key: location-item-map-graveyard
+  tags:
+    - item
+    - check
+
+- name: "Check: Map (Moonlight)"
+  root: "Check: Map (Temple of Moonlight)"
+  key: location-item-map-moonlight
+  tags:
+    - item
+    - check
+
+- name: "Check: Map (Goddess)"
+  root: "Check: Map (Tower of the Goddess)"
+  key: location-item-map-goddess
+  tags:
+    - item
+    - check
+
+- name: "Check: Map (Ruin)"
+  root: "Check: Map (Tower of Ruin)"
+  key: location-item-map-ruin
+  tags:
+    - item
+    - check
+
+- name: "Check: Map (Birth)"
+  root: "Check: Map (Chamber of Birth)"
+  key: location-item-map-birth
+  tags:
+    - item
+    - check
+
+- name: "Check: Map (DC)"
+  root: "Check: Map (Dimensional Corridor)"
+  key: location-item-map-dc
+  tags:
+    - item
+    - check
+
+- name: "Check: Perfume"
+  root: "Check: Perfume"
+  key: location-item-perfume
+  tags:
+    - item
+    - check
+
+- name: "Check: Forbidden Treasure"
+  root: "Check: Provocative Bathing Suit"
+  key: location-item-swimsuit
+  tags:
+    - item
+    - check
+
+- name: "Check: Sacred Orb (Surface)"
+  root: "Check: Sacred Orb (Surface)"
+  key: location-item-sacred-orb-surface
+  tags:
+    - item
+    - check
+
+- name: "Check: Sacred Orb (Guidance)"
+  root: "Check: Sacred Orb (Gate of Guidance)"
+  key: location-item-sacred-orb-guidance
+  tags:
+    - item
+    - check
+
+- name: "Check: Sacred Orb (Mausoleum)"
+  root: "Check: Sacred Orb (Mausoleum of the Giants)"
+  key: location-item-sacred-orb-mausoleum
+  tags:
+    - item
+    - check
+
+- name: "Check: Sacred Orb (Sun)"
+  root: "Check: Sacred Orb (Temple of the Sun)"
+  key: location-item-sacred-orb-sun
+  tags:
+    - item
+    - check
+
+- name: "Check: Sacred Orb (Spring)"
+  root: "Check: Sacred Orb (Spring in the Sky)"
+  key: location-item-sacred-orb-spring
+  tags:
+    - item
+    - check
+
+- name: "Check: Sacred Orb (Extinction)"
+  root: "Check: Sacred Orb (Chamber of Extinction)"
+  key: location-item-sacred-orb-extinction
+  tags:
+    - item
+    - check
+
+- name: "Check: Sacred Orb (Twin)"
+  root: "Check: Sacred Orb (Twin Labyrinths)"
+  key: location-item-sacred-orb-twin
+  tags:
+    - item
+    - check
+
+- name: "Check: Sacred Orb (Shrine)"
+  root: "Check: Sacred Orb (Shrine of the Mother)"
+  key: location-item-sacred-orb-shrine
+  tags:
+    - item
+    - check
+
+- name: "Check: Sacred Orb (Ruin)"
+  root: "Check: Sacred Orb (Tower of Ruin)"
+  key: location-item-sacred-orb-ruin
+  tags:
+    - item
+    - check
+
+- name: "Check: Sacred Orb (DC)"
+  root: "Check: Sacred Orb (Dimensional Corridor)"
+  key: location-item-sacred-orb-dc
+  tags:
+    - item
+    - check
+
+- name: "Check: Shell Horn"
+  root: "Check: Shell Horn"
+  key: location-item-shell-horn
+  tags:
+    - item
+    - check
+
+- name: "Check: Silver Shield"
+  root: "Check: Silver Shield"
+  key: location-item-silver-shield
+  tags:
+    - item
+    - check
+
+- name: "Check: Spaulder"
+  root: "Check: Spaulder"
+  key: location-item-spaulder
+  tags:
+    - item
+    - check
+
+- name: "Check: Treasures"
+  root: "Check: Treasures"
+  key: location-item-treasures
+  tags:
+    - item
+    - check
+
+- name: "Check: beolamu.exe"
+  root: "Check: beolamu.exe"
+  key: location-item-beolamu-exe
+  tags:
+    - item
+    - check
+
+- name: "Check: bounce.exe"
+  root: "Check: bounce.exe"
+  key: location-item-bounce-exe
+  tags:
+    - item
+    - check
+
+- name: "Check: bunplus.com"
+  root: "Check: bunplus.com"
+  key: location-item-bunplus-com
+  tags:
+    - item
+    - check
+
+- name: "Check: emusic.exe"
+  root: "Check: emusic.exe"
+  key: location-item-emusic-exe
+  tags:
+    - item
+    - check
+
+- name: "Check: xmailer.exe"
+  root: "Check: xmailer.exe"
+  key: location-item-xmailer-exe
+  tags:
+    - item
+    - check
+
+- name: "Coin: Birth (Dance)"
+  root: "Coin: Birth (Dance)"
+  key: location-coin-birth-dance
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Birth (Ninja)"
+  root: "Coin: Birth (Ninja)"
+  key: location-coin-birth-ninja
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Birth (Leaning Pillar)"
+  root: "Coin: Birth (Southeast)"
+  key: location-coin-birth-southeast
+  tags:
+    - coin
+    - check
+
+- name: "Coin: DC (Entrance)"
+  root: "Coin: Dimensional"
+  key: location-coin-dimensional
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Endless"
+  root: "Coin: Endless"
+  key: location-coin-endless
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Extinction"
+  root: "Coin: Extinction"
+  key: location-coin-extinction
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Goddess (Fairy Point)"
+  root: "Coin: Goddess (Fairy)"
+  key: location-coin-goddess-fairy
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Goddess (Shield Trap)"
+  root: "Coin: Goddess (Shield)"
+  key: location-coin-goddess-shield
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Graveyard (Top)"
+  root: "Coin: Graveyard"
+  key: location-coin-graveyard
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Guidance (Shuriken A)"
+  root: "Coin: Guidance (One)"
+  key: location-coin-guidance-one
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Guidance (Shuriken B)"
+  root: "Coin: Guidance (Two)"
+  key: location-coin-guidance-two
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Guidance (Trap)"
+  root: "Coin: Guidance (Trap)"
+  key: location-coin-guidance-trap
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Illusion (Katana)"
+  root: "Coin: Illusion (Katana)"
+  key: location-coin-illusion-katana
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Illusion (Spikes)"
+  root: "Coin: Illusion (Spikes)"
+  key: location-coin-illusion-spikes
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Inferno (Lava)"
+  root: "Coin: Inferno (Lava)"
+  key: location-coin-inferno-lava
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Inferno Annex (Spikes)"
+  root: "Coin: Inferno (Spikes)"
+  key: location-coin-inferno-spikes
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Mausoleum"
+  root: "Coin: Mausoleum"
+  key: location-coin-mausoleum
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Moonlight"
+  root: "Coin: Moonlight"
+  key: location-coin-moonlight
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Ruin"
+  root: "Coin: Ruin"
+  key: location-coin-ruin
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Shrine"
+  root: "Coin: Shrine"
+  key: location-coin-shrine
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Spring"
+  root: "Coin: Spring"
+  key: location-coin-spring
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Sun (Pyramid/Bomb)"
+  root: "Coin: Sun (Pyramid)"
+  key: location-coin-sun-pyramid
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Surface (Ruin Path)"
+  root: "Coin: Surface (Ruin Path)"
+  key: location-coin-surface-ruin-path
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Surface (Seal)"
+  root: "Coin: Surface (Seal)"
+  key: location-coin-surface-seal
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Surface (Waterfall)"
+  root: "Coin: Surface (Waterfall)"
+  key: location-coin-surface-waterfall
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Twin (Escape)"
+  root: "Coin: Twin (Escape)"
+  key: location-coin-twin-escape
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Twin (Below Zu)"
+  root: "Coin: Twin (Lower)"
+  key: location-coin-twin-lower
+  tags:
+    - coin
+    - check
+
+- name: "Coin: Twin (Peryton Witches)"
+  root: "Coin: Twin (Witches)"
+  key: location-coin-twin-witches
+  tags:
+    - coin
+    - check
+
+- name: "Check: Illusion Trap Chest"
+  root: "Trap: Exploding"
+  key: location-trap-exploding
+  tags:
+    - trap
+    - check
+
+- name: "Check: Graveyard Trap Chest"
+  root: "Trap: Graveyard"
+  key: location-trap-graveyard
+  tags:
+    - trap
+    - check
+
+- name: "Check: Inferno Trap Orb"
+  root: "Trap: Inferno Orb"
+  key: location-trap-inferno-orb
+  tags:
+    - trap
+    - check
+
+- name: "Check: Twin Trap Ankh Jewel"
+  root: "Trap: Twin Ankh"
+  key: location-trap-twin-ankh
+  tags:
+    - trap
+    - check
+
+- name: Surface Birth Seal Chest
+  root: "Seal: O1"
+  regions:
+    - region-surface-main
+  key: location-seal-o1
+  tags:
+    - seal
+
+- name: Sun Mulbruk's Room
+  root: "Seal: O2"
+  regions:
+    - region-sun-main
+  key: location-seal-o2
+  tags:
+    - seal
+
+- name: Sun Flooded Exits
+  root: "Seal: O3"
+  regions:
+    - region-sun-east
+  key: location-seal-o3
+  tags:
+    - seal
+
+- name: Spring Mr. Fishman Shop
+  root: "Seal: O4"
+  regions:
+    - region-spring-upper
+  key: location-seal-o4
+  tags:
+    - seal
+
+- name: Spring Water Release
+  root: "Seal: O5"
+  regions:
+    - region-spring-waterfall
+  key: location-seal-o5
+  tags:
+    - seal
+
+- name: Endless Shop
+  root: "Seal: O6"
+  regions:
+    - region-endless-1f
+  key: location-seal-o6
+  tags:
+    - seal
+
+- name: Shrine Sacred Orb Seal A
+  root: "Seal: O7"
+  regions:
+    - region-shrine-main
+  key: location-seal-o7
+  tags:
+    - seal
+
+- name: Mother Ankh Seal A
+  root: "Seal: O8"
+  regions:
+    - region-shrine-true
+  key: location-seal-o8
+  tags:
+    - seal
+
+- name: Spring Sacred Orb Chest
+  root: "Seal: B1"
+  regions:
+    - region-spring-main
+  key: location-seal-b1
+  tags:
+    - seal
+
+- name: Inferno Pazuzu Seal
+  root: "Seal: B2"
+  regions:
+    - region-inferno-main
+  key: location-seal-b2
+  tags:
+    - seal
+
+- name: Extinction Life Seal Chest
+  root: "Seal: B3"
+  regions:
+    - region-extinction-main
+  key: location-seal-b3
+  tags:
+    - seal
+
+- name: Shrine Sacred Orb Seal B
+  root: "Seal: B4"
+  regions:
+    - region-shrine-main
+  key: location-seal-b4
+  tags:
+    - seal
+
+- name: Illusion Chi You
+  root: "Seal: B5"
+  regions:
+    - region-illusion-grail
+  key: location-seal-b5
+  tags:
+    - seal
+
+- name: Moonlight Anubis
+  root: "Seal: B6"
+  regions:
+    - region-moonlight-lower
+  key: location-seal-b6
+  tags:
+    - seal
+
+- name: Mother Ankh Seal B
+  root: "Seal: B7"
+  regions:
+    - region-shrine-true
+  key: location-seal-b7
+  tags:
+    - seal
+
+- name: Guidance Crucifix Chest
+  root: "Seal: L1"
+  regions:
+    - region-guidance-main
+  key: location-seal-l1
+  tags:
+    - seal
+
+- name: Surface Coin Chest
+  root: "Seal: L2"
+  regions:
+    - region-surface-main
+  key: location-seal-l2
+  tags:
+    - seal
+
+- name: Extinction Perma-light
+  root: "Seal: L3"
+  regions:
+    - region-extinction-main
+  key: location-seal-l3
+  tags:
+    - seal
+
+- name: Shrine Crystal Skull Chest
+  root: "Seal: L4"
+  regions:
+    - region-shrine-main
+  key: location-seal-l4
+  tags:
+    - seal
+
+- name: Shrine Sacred Orb Seal C
+  root: "Seal: L5"
+  regions:
+    - region-shrine-main
+  key: location-seal-l5
+  tags:
+    - seal
+
+- name: Graveyard Gauntlet Chest
+  root: "Seal: L6"
+  regions:
+    - region-graveyard-west
+  key: location-seal-l6
+  tags:
+    - seal
+
+- name: Birth Perma-light
+  root: "Seal: L7"
+  regions:
+    - region-birth-southeast
+  key: location-seal-l7
+  tags:
+    - seal
+
+- name: Mother Ankh Seal C
+  root: "Seal: L8"
+  regions:
+    - region-shrine-true
+  key: location-seal-l8
+  tags:
+    - seal
+
+- name: Sun Discount Shop
+  root: "Seal: D1"
+  regions:
+    - region-sun-main
+  key: location-seal-d1
+  tags:
+    - seal
+
+- name: Shrine Sacred Orb Seal D
+  root: "Seal: D2"
+  regions:
+    - region-shrine-main
+  key: location-seal-d2
+  tags:
+    - seal
+
+- name: Ruin Nuwa
+  root: "Seal: D4"
+  regions:
+    - region-ruin-top
+  key: location-seal-d4
+  tags:
+    - seal
+
+- name: DC Sacred Orb
+  root: "Seal: D5"
+  regions:
+    - region-dc-upper
+  key: location-seal-d5
+  tags:
+    - seal
+
+- name: Mother Ankh Seal D
+  root: "Seal: D6"
+  regions:
+    - region-shrine-true
+  key: location-seal-d6
+  tags:
+    - seal

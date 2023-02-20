@@ -2,33 +2,21 @@ import './Task.css';
 import {useCallback, useState} from 'react';
 import {Planet} from 'react-planet';
 
-import {connections, items, doorLocations} from './World.js';
-import World from './World.yaml';
+import Universe from './Universe.js';
 
-function StartLocationTaskSatellite({name, value, onClick}) {
+function StartLocationTaskSatellite({region, onClick}) {
     return (
-        <button value={value} onClick={onClick}>{name}</button>
+        <button onClick={e => onClick(region)}>{region.fullName()}</button>
     );
 }
 
 export function StartLocationTask({id, onSubmit}) {
-    let onClick = useCallback(event => {
-        let newRoots = [event.target.value];
-
-        // cf: https://github.com/thezerothcat/LaMulanaRandomizer/blob/master/src/main/java/lmr/randomizer/Settings.java
-        //     getStartingItemsIncludingCustom()
-        if (event.target.value === 'Location: Twin Labyrinths [Poison 1]') {
-            newRoots.push('Twin Statue');
-        }
-        if (event.target.value === 'Location: Tower of the Goddess [Grail]') {
-            newRoots.push('Plane Model');
-        }
-
+    let onClick = useCallback(region => {
         if (onSubmit) {
             onSubmit({
-                newRoots,
+                newRoots: region.startRoots(),
                 completedTasks: [id],
-                startingLocation: event.target.value
+                startingLocation: region
             });
         }
     }, [id, onSubmit]);
@@ -42,34 +30,28 @@ export function StartLocationTask({id, onSubmit}) {
                 autoClose
                 orbitRadius={180}
             >
-                {Array.from(World.startingLocations).map(loc => {
-                    let name = `${loc.short} ${loc.human}`;
-                    return <StartLocationTaskSatellite key={loc.key} name={name} value={loc.logic} onClick={onClick} />;
+                {Universe.regions.withTag('grail-tablet').map(region => {
+                    return <StartLocationTaskSatellite key={region.key} region={region} onClick={onClick} />;
                 })}
             </Planet>
         </div>
     );
 }
 
-let startingWeapons = new Set([
-    'Whip', 'Chain Whip', 'Flail Whip', 'Knife', 'Key Sword', 'Axe', 'Katana',
-    'Shuriken', 'Rolling Shuriken', 'Earth Spear', 'Flare Gun', 'Bomb', 'Chakram', 'Caltrops', 'Pistol'
-]);
 
-function StartWeaponTaskSatellite({value, onClick}) {
+function StartWeaponTaskSatellite({item, onClick}) {
     return (
-        <button value={value} onClick={onClick}>{value}</button>
+        <button onClick={e => onClick(item)}>{item.name}</button>
     );
 }
 
 export function StartWeaponTask({id, onSubmit}) {
-    let onClick = useCallback(event => {
-        let choice = event.target.value;
-        let newRoots = [choice];
-        let subweapons = new Set(items.subweapons.map(item => item.name));
-        if (subweapons.has(choice)) {
-            newRoots.push(`${choice} Ammo`);
+    let onClick = useCallback(item => {
+        let newRoots = [item.root];
+        if (item.hasAmmo()) {
+            newRoots.push(item.ammo.root);
         }
+
         if (onSubmit) {
             onSubmit({
                 newRoots,
@@ -87,134 +69,90 @@ export function StartWeaponTask({id, onSubmit}) {
                 autoClose
                 orbitRadius={180}
             >
-                {Array.from(startingWeapons.entries()).map(([value]) => {
-                    return <StartWeaponTaskSatellite key={value} value={value} onClick={onClick} />;
+                {Universe.items.withTag('start-weapon').map(item => {
+                    return <StartWeaponTaskSatellite key={item.key} item={item} onClick={onClick} />;
                 })}
             </Planet>
         </div>
     );
 }
 
-function TransitionTaskSatellite({name, value, onClick}) {
+function TransitionTaskSatellite({connection, onClick}) {
     return (
-        <button value={value} onClick={onClick}>{name}</button>
+        <button onClick={e => onClick(connection)}>{connection.name}</button>
     );
 }
 
 export function TransitionTask({id, connection, onSubmit}) {
-    let onClick = useCallback(event => {
+    let onClick = useCallback(conn => {
         if (onSubmit) {
-            let conn = connections.byKey.get(event.target.value);
             onSubmit({
-                newRoots: [conn.logic],
+                newRoots: [conn.root],
                 completedTasks: [id]
             });
         }
     }, [id, onSubmit]);
-
-    let candidates = [];
-    let buttonText = `Transition: ${connection.human}`;
-
-    switch (connection.type) {
-        case 'left':
-            candidates = connections.right;
-            break;
-        case 'right':
-            candidates = connections.left;
-            break;
-        case 'up':
-            candidates = connections.down;
-            break;
-        case 'down':
-            candidates = connections.up;
-            break;
-        case 'portal':
-            candidates = connections.portal;
-            break;
-        default:
-            console.error(`unexpected connection type: ${connection.type}`);
-            break;
-    }
 
     return (
         <div
             className='Task TransitionTask'
         >
             <Planet
-                centerContent={<button>{buttonText}</button>}
+                centerContent={<button>Transition: {connection.name}</button>}
                 autoClose
                 orbitRadius={180}
             >
-                {candidates.map(conn => {
-                    return <TransitionTaskSatellite key={conn.key} name={conn.extHuman()} value={conn.key} onClick={onClick} />;
+                {connection.candidates().map(conn => {
+                    return <TransitionTaskSatellite key={conn.key} connection={conn} onClick={onClick} />;
                 })}
             </Planet>
         </div>
     );
 }
 
-function NPCTaskSatellite({name, value, onClick}) {
+class NPCChoice {
+    constructor({name, key}) {
+        this.name = name;
+        this.key = key;
+    }
+}
+
+function NPCTaskSatellite({choice, onClick}) {
     return (
-        <button value={value} onClick={onClick}>{name}</button>
+        <button onClick={e => onClick(choice.key)}>{choice.name}</button>
     );
 }
 
 export function NPCTask({id, location, onSubmit}) {
-    let onClick = useCallback(event => {
+    let onClick = useCallback(key => {
         let newRoots = [];
         let newSleepingPhilosophers = [];
         let newShops = [];
 
-        switch (event.target.value) {
-            case 'Shop':
+        if (key.startsWith('dummy-')) {
+            switch (key) {
+                case 'dummy-shop':
+                    newShops.push(location);
+                    break;
+                case 'dummy-philosopher':
+                    newSleepingPhilosophers.push(location);
+                    break;
+                case 'dummy-generic':
+                    break;
+                default:
+                    console.error(`unknown dummy key ${key}`);
+                    break;
+            }
+        } else {
+            let npc = Universe.npcs.byKey.get(key);
+            if (npc === undefined) {
+                console.error(`unknown NPC key ${key}`);
+            }
+
+            newRoots.push(npc.root);
+            if (npc.tags.has('shop')) {
                 newShops.push(location);
-                break;
-            case 'Xelpud':
-                newRoots.push('NPC: Elder Xelpud');
-                break;
-            case 'Mulbruk':
-                newRoots.push('NPC: Mulbruk');
-                break;
-            case 'Sleeping Philosopher':
-                newSleepingPhilosophers.push(location);
-                break;
-            case 'Giltoriyo':
-                newRoots.push('NPC: Philosopher Giltoriyo');
-                break;
-            case 'Alsedana':
-                newRoots.push('NPC: Philosopher Alsedana');
-                break;
-            case 'Samaranta':
-                newRoots.push('NPC: Philosopher Samaranta');
-                break;
-            case 'Fobos':
-                newRoots.push('NPC: Philosopher Fobos');
-                break;
-            case 'Fairy Queen':
-                newRoots.push('NPC: The Fairy Queen');
-                break;
-            case 'Nebur Shop':
-                newRoots.push('NPC: Nebur');
-                newShops.push(location);
-                break;
-            case 'Lilbro Shop':
-                newRoots.push('NPC: Yiegah Kungfu');
-                newShops.push(location);
-                break;
-            case 'Treasures NPC':
-                newRoots.push('NPC: Mr. Slushfund');
-                break;
-            case 'Mini Doll NPC':
-                newRoots.push('NPC: Priest Alest');
-                break;
-            case 'Mekuri Master':
-                newRoots.push('NPC: Former Mekuri Master');
-                break;
-            case 'Generic':
-                break;
-            default:
-                console.error(`unexpected value: ${event.target.value}`);
-                break;
+            }
         }
 
         if (onSubmit) {
@@ -227,95 +165,65 @@ export function NPCTask({id, location, onSubmit}) {
         }
     }, [id, onSubmit]);
 
-    let choices = [
-        'Shop',
-        'Xelpud',
-        'Mulbruk',
-        'Sleeping Philosopher',
-        'Giltoriyo',
-        'Alsedana',
-        'Samaranta',
-        'Fobos',
-        'Fairy Queen',
-        'Nebur Shop',
-        'Lilbro Shop',
-        'Treasures NPC',
-        'Mekuri Master',
-        'Generic'
-    ];
+    let choices = [].concat(
+        Universe.npcs.all.map(npc => new NPCChoice(npc)),
+        [
+            {name: 'Shop', key: 'dummy-shop'},
+            {name: 'Sleeping Philosopher', key: 'dummy-philosopher'},
+            {name: 'Generic', key: 'dummy-generic'}
+        ].map(x => new NPCChoice(x))
+    );
 
     return (
         <div
             className='Task NPCTask'
         >
             <Planet
-                centerContent={<button>NPC: {location.human}</button>}
+                centerContent={<button>NPC: {location.name}</button>}
                 autoClose
                 orbitRadius={180}
             >
                 {choices.map(choice => {
-                    return <NPCTaskSatellite key={choice} name={choice} value={choice} onClick={onClick} />;
+                    return <NPCTaskSatellite key={choice.key} choice={choice} onClick={onClick} />;
                 })}
             </Planet>
         </div>
     );
 }
 
-function SleepingPhilosopherTaskSatellite({name, value, onClick}) {
+function SleepingPhilosopherTaskSatellite({npc, onClick}) {
     return (
-        <button value={value} onClick={onClick}>{name}</button>
+        <button onClick={e => onClick(npc)}>{npc.name}</button>
     );
 }
 
+const ocarina = Universe.items.byKey.get('philosophers-ocarina');
+if (ocarina === undefined) {
+    console.error('Unable to find philosophers-ocarina item');
+}
+
 export function SleepingPhilosopherTask({id, access, location, onSubmit}) {
-    let onClick = useCallback(event => {
-        let newRoots = [];
-
-        switch (event.target.value) {
-            case 'Giltoriyo':
-                newRoots.push('NPC: Philosopher Giltoriyo');
-                break;
-            case 'Alsedana':
-                newRoots.push('NPC: Philosopher Alsedana');
-                break;
-            case 'Samaranta':
-                newRoots.push('NPC: Philosopher Samaranta');
-                break;
-            case 'Fobos':
-                newRoots.push('NPC: Philosopher Fobos');
-                break;
-            default:
-                console.error(`unexpected value: ${event.target.value}`);
-                break;
-        }
-
+    let onClick = useCallback(npc => {
         if (onSubmit) {
             onSubmit({
-                newRoots,
+                newRoots: [npc.root],
                 completedTasks: [id]
             });
         }
     }, [id, onSubmit]);
 
-    if (access.has('Philosopher\'s Ocarina')) {
-        let choices = [
-            'Giltoriyo',
-            'Alsedana',
-            'Samaranta',
-            'Fobos',
-        ];
-
+    if (access.has(ocarina.root)) {
         return (
             <div
                 className='Task SleepingPhilosopherTask'
             >
                 <Planet
-                    centerContent={<button>Awaken Philosopher: {location.human}</button>}
+                    centerContent={<button>Awaken Philosopher: {location.name}</button>}
                     autoClose
                     orbitRadius={80}
                 >
-                    {choices.map(choice => {
-                        return <SleepingPhilosopherTaskSatellite key={choice} name={choice} value={choice} onClick={onClick} />;
+                    {Universe.npcs.withTag('philosopher').map(npc => {
+                        return <SleepingPhilosopherTaskSatellite key={npc.key} npc={npc} onClick={onClick} />;
                     })}
                 </Planet>
             </div>
@@ -326,34 +234,41 @@ export function SleepingPhilosopherTask({id, access, location, onSubmit}) {
     }
 }
 
-function ItemCheckItemSatellite({name, value, onClick}) {
+class ItemChoice {
+    constructor({name, key}) {
+        this.name = name;
+        this.key = key;
+    }
+}
+
+function ItemCheckItemSatellite({choice, onClick}) {
     return (
-        <button value={value} onClick={onClick}>{name}</button>
+        <button onClick={e => onClick(choice.key)}>{choice.name}</button>
     );
 }
 
-function ItemCheckCategorySatellite({name, items, onClick}) {
+function ItemCheckCategorySatellite({name, choices, onClick}) {
     return (
         <Planet
             centerContent={<button>{name}</button>}
             autoClose
             orbitRadius={180}
         >
-            {items.map(item => {
-                return <ItemCheckItemSatellite key={item.key} name={item.name} value={item.key} onClick={onClick} />;
+            {choices.map(choice => {
+                return <ItemCheckItemSatellite key={choice.key} choice={choice} onClick={onClick} />;
             })}
         </Planet>
     );
 }
 
 export function ItemCheckTask({id, location, onSubmit}) {
-    let onClick = useCallback(event => {
+    let onClick = useCallback(key => {
         let e = {
             completedTasks: [id]
         };
 
-        switch (event.target.value) {
-            case 'junk':
+        switch (key) {
+            case 'dummy-junk':
                 break;
             case 'ankh-jewel':
                 e.newAnkhJewels = 1;
@@ -361,73 +276,78 @@ export function ItemCheckTask({id, location, onSubmit}) {
             case 'sacred-orb':
                 e.newSacredOrbs = 1;
                 break;
-            default:
-                if (!items.byKey.has(event.target.value)) {
-                    console.error(`unknown item key ${event.target.value}`);
-                } else {
-                    let item = items.byKey.get(event.target.value);
-                    e.newRoots = [item.name];
+            default: {
+                let item = Universe.items.byKey.get(key);
+                if (item === undefined) {
+                    console.error(`unknown item key ${key}`);
                 }
+
+                e.newRoots = [item.root];
                 break;
+            }
         }
 
         if (onSubmit) {
             onSubmit(e);
         }
     }, [onSubmit]);
+
+    function getCategoryItemChoices(cat) {
+        return Universe.items.byCategory(cat).map(item => new ItemChoice(item));
+    }
 
     return (
         <div
             className='Task ItemCheckTask'
         >
             <Planet
-                centerContent={<button>{location.human}</button>}
+                centerContent={<button>{location.name}</button>}
                 autoClose
                 orbitRadius={80}
             >
-                <ItemCheckCategorySatellite name='Weapons' items={items.weapons} onClick={onClick} />
-                <ItemCheckCategorySatellite name='Subweapons' items={items.subweapons} onClick={onClick} />
-                <ItemCheckCategorySatellite name='Usable Items' items={items.usable} onClick={onClick} />
-                <ItemCheckCategorySatellite name='Items' items={items.items} onClick={onClick} />
-                <ItemCheckCategorySatellite name='Seals' items={items.seals} onClick={onClick} />
-                <ItemCheckCategorySatellite name='Software' items={items.software} onClick={onClick} />
-                <ItemCheckItemSatellite name='Ankh Jewel' value='ankh-jewel' onClick={onClick}/>
-                <ItemCheckItemSatellite name='Sacred Orb' value='sacred-orb' onClick={onClick}/>
-                <ItemCheckItemSatellite name='Shrine Map' value='map-shrine' onClick={onClick}/>
-                <ItemCheckItemSatellite name='Junk' value='junk' onClick={onClick}/>
+                <ItemCheckCategorySatellite name='Weapons' choices={getCategoryItemChoices('weapon')} onClick={onClick} />
+                <ItemCheckCategorySatellite name='Subweapons' choices={getCategoryItemChoices('subweapon')} onClick={onClick} />
+                <ItemCheckCategorySatellite name='Usable Items' choices={getCategoryItemChoices('usable')} onClick={onClick} />
+                <ItemCheckCategorySatellite name='Items' choices={getCategoryItemChoices('item')} onClick={onClick} />
+                <ItemCheckCategorySatellite name='Seals' choices={getCategoryItemChoices('seal')} onClick={onClick} />
+                <ItemCheckCategorySatellite name='Software' choices={getCategoryItemChoices('software')} onClick={onClick} />
+                <ItemCheckItemSatellite choice={new ItemChoice({name: 'Ankh Jewel', key: 'ankh-jewel'})} onClick={onClick}/>
+                <ItemCheckItemSatellite choice={new ItemChoice({name: 'Sacred Orb', key: 'sacred-orb'})}  onClick={onClick}/>
+                <ItemCheckItemSatellite choice={new ItemChoice({name: 'Map (Shrine)', key: 'map-shrine'})}  onClick={onClick}/>
+                <ItemCheckItemSatellite choice={new ItemChoice({name: 'Junk', key: 'dummy-junk'})} onClick={onClick}/>
             </Planet>
         </div>
     );
 }
 
-function ShopItemItemSatellite({name, value, onClick}) {
+function ShopItemItemSatellite({choice, onClick}) {
     return (
-        <button value={value} onClick={onClick}>{name}</button>
+        <button onClick={e => onClick(choice.key)}>{choice.name}</button>
     );
 }
 
-function ShopItemCategorySatellite({name, items, onClick}) {
+function ShopItemCategorySatellite({name, choices, onClick}) {
     return (
         <Planet
             centerContent={<button>{name}</button>}
             autoClose
             orbitRadius={180}
         >
-            {items.map(item => {
-                return <ShopItemItemSatellite key={item.key} name={item.name} value={item.key} onClick={onClick} />;
+            {choices.map(choice => {
+                return <ShopItemItemSatellite key={choice.key} choice={choice} onClick={onClick} />;
             })}
         </Planet>
     );
 }
 
 export function ShopItemTask({id, location, index, onSubmit}) {
-    let onClick = useCallback(event => {
+    let onClick = useCallback(key => {
         let e = {
             completedTasks: [id]
         };
 
-        switch (event.target.value) {
-            case 'junk':
+        switch (key) {
+            case 'dummy-junk':
                 break;
             case 'ankh-jewel':
                 e.newAnkhJewels = 1;
@@ -435,20 +355,25 @@ export function ShopItemTask({id, location, index, onSubmit}) {
             case 'sacred-orb':
                 e.newSacredOrbs = 1;
                 break;
-            default:
-                if (!items.byKey.has(event.target.value)) {
-                    console.error(`unknown item key ${event.target.value}`);
-                } else {
-                    let item = items.byKey.get(event.target.value);
-                    e.newRoots = [item.name];
+            default: {
+                let item = Universe.items.byKey.get(key);
+                if (item === undefined) {
+                    console.error(`unknown item key ${key}`);
                 }
+
+                e.newRoots = [item.root];
                 break;
+            }
         }
 
         if (onSubmit) {
             onSubmit(e);
         }
     }, [onSubmit]);
+
+    function getCategoryItemChoices(cat) {
+        return Universe.items.byCategory(cat).map(item => new ItemChoice(item));
+    }
 
     return (
         <div
@@ -459,32 +384,32 @@ export function ShopItemTask({id, location, index, onSubmit}) {
                 autoClose
                 orbitRadius={80}
             >
-                <ShopItemCategorySatellite name='Weapons' items={items.weapons} onClick={onClick} />
-                <ShopItemCategorySatellite name='Subweapons' items={items.subweapons} onClick={onClick} />
-                <ShopItemCategorySatellite name='Usable Items' items={items.usable} onClick={onClick} />
-                <ShopItemCategorySatellite name='Items' items={items.items} onClick={onClick} />
-                <ShopItemCategorySatellite name='Seals' items={items.seals} onClick={onClick} />
-                <ShopItemCategorySatellite name='Software' items={items.software} onClick={onClick} />
-                <ShopItemCategorySatellite name='Ammo' items={items.ammo} onClick={onClick} />
-                <ShopItemItemSatellite name='Ankh Jewel' value='ankh-jewel' onClick={onClick}/>
-                <ShopItemItemSatellite name='Sacred Orb' value='sacred-orb' onClick={onClick}/>
-                <ShopItemItemSatellite name='Shrine Map' value='map-shrine' onClick={onClick}/>
-                <ShopItemItemSatellite name='Junk' value='junk' onClick={onClick}/>
+                <ShopItemCategorySatellite name='Weapons' choices={getCategoryItemChoices('weapon')} onClick={onClick} />
+                <ShopItemCategorySatellite name='Subweapons' choices={getCategoryItemChoices('subweapon')} onClick={onClick} />
+                <ShopItemCategorySatellite name='Ammo' choices={getCategoryItemChoices('ammo')} onClick={onClick} />
+                <ShopItemCategorySatellite name='Usable Items' choices={getCategoryItemChoices('usable')} onClick={onClick} />
+                <ShopItemCategorySatellite name='Items' choices={getCategoryItemChoices('item')} onClick={onClick} />
+                <ShopItemCategorySatellite name='Seals' choices={getCategoryItemChoices('seal')} onClick={onClick} />
+                <ShopItemCategorySatellite name='Software' choices={getCategoryItemChoices('software')} onClick={onClick} />
+                <ShopItemItemSatellite choice={new ItemChoice({name: 'Ankh Jewel', key: 'ankh-jewel'})} onClick={onClick}/>
+                <ShopItemItemSatellite choice={new ItemChoice({name: 'Sacred Orb', key: 'sacred-orb'})}  onClick={onClick}/>
+                <ShopItemItemSatellite choice={new ItemChoice({name: 'Map (Shrine)', key: 'map-shrine'})}  onClick={onClick}/>
+                <ShopItemItemSatellite choice={new ItemChoice({name: 'Junk', key: 'dummy-junk'})} onClick={onClick}/>
             </Planet>
         </div>
     );
 }
 
-function SealCheckTaskSatellite({name, value, onClick}) {
+function SealCheckTaskSatellite({item, onClick}) {
     return (
-        <button value={value} onClick={onClick}>{name}</button>
+        <button onClick={e => onClick(item)}>{item.name}</button>
     );
 }
 
-export function SealCheckTask({id, sealLoc, onSubmit}) {
-    let onClick = useCallback(event => {
+export function SealCheckTask({id, location, onSubmit}) {
+    let onClick = useCallback(item => {
         let newSealMappings = new Map([
-            [sealLoc.logic, event.target.value]
+            [location.root, item.root]
         ]);
 
         if (onSubmit) {
@@ -493,38 +418,36 @@ export function SealCheckTask({id, sealLoc, onSubmit}) {
                 completedTasks: [id],
             });
         }
-    }, [id, sealLoc, onSubmit]);
-
-    let choices = items.seals.map(item => item.name);
+    }, [id, location, onSubmit]);
 
     return (
         <div
             className='Task SealCheckTask'
         >
             <Planet
-                centerContent={<button>Seal: {sealLoc.human}</button>}
+                centerContent={<button>Seal: {location.name}</button>}
                 autoClose
                 orbitRadius={180}
             >
-                {choices.map(choice => {
-                    return <SealCheckTaskSatellite key={choice} name={choice} value={choice} onClick={onClick} />;
+                {Universe.items.byCategory('seal').map(item => {
+                    return <SealCheckTaskSatellite key={item.key} item={item} onClick={onClick} />;
                 })}
             </Planet>
         </div>
     );
 }
 
-function DoorCheckTaskSatellite({name, value, onClick}) {
+function DoorCheckTaskSatellite({connection, onClick}) {
     return (
-        <button value={value} onClick={onClick}>{name}</button>
+        <button onClick={e => onClick(connection)}>{connection.name}</button>
     );
 }
 
-export function DoorCheckTask({id, name, onSubmit}) {
-    let onClick = useCallback(event => {
+export function DoorCheckTask({id, connection, onSubmit}) {
+    let onClick = useCallback(conn => {
         if (onSubmit) {
             onSubmit({
-                newRoots: [event.target.value],
+                newRoots: [conn.root],
                 completedTasks: [id]
             });
         }
@@ -535,12 +458,12 @@ export function DoorCheckTask({id, name, onSubmit}) {
             className='Task DoorCheckTask'
         >
             <Planet
-                centerContent={<button>Door: {name}</button>}
+                centerContent={<button>Door: {connection.name}</button>}
                 autoClose
                 orbitRadius={180}
             >
-                {doorLocations.all.map(door => {
-                    return <SealCheckTaskSatellite key={door.key} name={door.human} value={door.logic} onClick={onClick} />;
+                {connection.candidates().map(conn => {
+                    return <DoorCheckTaskSatellite key={conn.key} connection={conn} onClick={onClick} />;
                 })}
             </Planet>
         </div>

@@ -1,0 +1,567 @@
+- name: Main
+  root: 'Location: Surface [Main]'
+  field: field-surface
+  key: region-surface-main
+  tags:
+    - grail-tablet
+
+- name: Ruin Path (Upper)
+  root: 'Location: Surface [Ruin Path Upper]'
+  field: field-surface
+  key: region-surface-ruin-path-upper
+
+- name: Ruin Path (Lower)
+  root: 'Location: Surface [Ruin Path Lower]'
+  field: field-surface
+  key: region-surface-ruin-path-lower
+
+
+- name: Main
+  root: 'Location: Gate of Guidance [Main]'
+  field: field-guidance
+  key: region-guidance-main
+  tags:
+    - grail-tablet
+    - alternate-start
+
+- name: Door
+  root: 'Location: Gate of Guidance [Door]'
+  field: field-guidance
+  key: region-guidance-door
+
+
+- name: All
+  root: 'Location: Mausoleum of the Giants'
+  field: field-mausoleum
+  key: region-mausoleum
+  tags:
+    - grail-tablet
+    - alternate-start
+
+
+- name: Top Entrance
+  root: 'Location: Temple of the Sun [Top Entrance]'
+  field: field-sun
+  key: region-sun-top
+
+- name: Grail
+  root: 'Location: Temple of the Sun [Grail]'
+  field: field-sun
+  key: region-sun-grail
+  tags:
+    - grail-tablet
+    - alternate-start
+
+- name: Main
+  root: 'Location: Temple of the Sun [Main]'
+  field: field-sun
+  key: region-sun-main
+
+- name: West
+  root: 'Location: Temple of the Sun [West]'
+  field: field-sun
+  key: region-sun-west
+
+- name: East
+  root: 'Location: Temple of the Sun [East]'
+  field: field-sun
+  key: region-sun-east
+
+- name: Sphinx
+  root: 'Location: Temple of the Sun [Sphinx]'
+  field: field-sun
+  key: region-sun-sphinx
+
+
+- name: Main
+  root: 'Location: Spring in the Sky [Main]'
+  field: field-spring
+  key: region-spring-main
+  tags:
+    - grail-tablet
+    - alternate-start
+
+- name: Upper
+  root: 'Location: Spring in the Sky [Upper]'
+  field: field-spring
+  key: region-spring-upper
+
+- name: Waterfall
+  root: 'Location: Spring in the Sky [Waterfall]'
+  field: field-spring
+  key: region-spring-waterfall
+
+
+- name: Main
+  root: 'Location: Inferno Cavern [Main]'
+  field: field-inferno
+  key: region-inferno-main
+  tags:
+    - grail-tablet
+    - alternate-start
+
+- name: Viy
+  root: 'Location: Inferno Cavern [Viy]'
+  field: field-inferno
+  key: region-inferno-viy
+
+- name: Lava
+  root: 'Location: Inferno Cavern [Lava]'
+  field: field-inferno
+  key: region-inferno-lava
+
+- name: Annex
+  root: 'Location: Inferno Cavern [Spikes]'
+  field: field-inferno
+  key: region-inferno-annex
+
+
+- name: Map
+  root: 'Location: Chamber of Extinction [Map]'
+  field: field-extinction
+  key: region-extinction-map
+
+- name: Main
+  root: 'Location: Chamber of Extinction [Main]'
+  field: field-extinction
+  key: region-extinction-main
+  tags:
+    - grail-tablet
+    - alternate-start
+
+- name: Main (Left)
+  root: 'Location: Chamber of Extinction [Left Main]'
+  field: field-extinction
+  key: region-extinction-left-main
+
+- name: Palenque (Teleport)
+  root: 'Location: Chamber of Extinction [Teleport]'
+  field: field-extinction
+  key: region-extinction-palenque-teleport
+
+- name: Magatama (Left)
+  root: 'Location: Chamber of Extinction [Magatama Left]'
+  field: field-extinction
+  key: region-extinction-magatama-left
+
+- name: Magatama (Right)
+  root: 'Location: Chamber of Extinction [Magatama Right]'
+  field: field-extinction
+  key: region-extinction-magatama-right
+
+- name: Magatama
+  root: 'Location: Chamber of Extinction [Magatama]'
+  field: field-extinction
+  key: region-extinction-magatama
+
+- name: Magatama (Mantra)
+  root: 'Location: Chamber of Extinction [Magatama Mantra]'
+  field: field-extinction
+  key: region-extinction-magatama-mantra
+
+- name: Palenque (Upper)
+  root: 'Location: Chamber of Extinction [Ankh Upper]'
+  field: field-extinction
+  key: region-extinction-palenque-upper
+
+- name: Palenque (Lower)
+  root: 'Location: Chamber of Extinction [Ankh Lower]'
+  field: field-extinction
+  key: region-extinction-palenque-lower
+
+
+- name: Loop
+  root: 'Location: Twin Labyrinths [Loop]'
+  field: field-twin
+  key: region-twin-loop
+
+- name: Lower
+  root: 'Location: Twin Labyrinths [Lower]'
+  field: field-twin
+  key: region-twin-lower
+  tags:
+    - grail-tablet
+    - backside
+    - alternate-start
+
+- name: Poison (Left)
+  root: 'Location: Twin Labyrinths [Poison 1]'
+  field: field-twin
+  key: region-twin-poison-1
+  tags:
+    - grail-tablet
+    - frontside
+    - start-twin-statue
+    - alternate-start
+
+- name: Poison (Right)
+  root: 'Location: Twin Labyrinths [Poison 2]'
+  field: field-twin
+  key: region-twin-poison-2
+
+- name: Upper Grail
+  root: 'Location: Twin Labyrinths [Upper Grail]'
+  field: field-twin
+  key: region-twin-upper-grail
+
+- name: Ankh Jewel
+  root: 'Location: Twin Labyrinths [Jewel]'
+  field: field-twin
+  key: region-twin-jewel
+
+- name: Katana
+  root: 'Location: Twin Labyrinths [Katana]'
+  field: field-twin
+  key: region-twin-katana
+
+- name: Poseidon
+  root: 'Location: Twin Labyrinths [Poseidon]'
+  field: field-twin
+  key: region-twin-poseidon
+
+- name: Upper Left
+  root: 'Location: Twin Labyrinths [Upper Left]'
+  field: field-twin
+  key: region-twin-upper-left
+
+
+- name: 1F
+  root: 'Location: Endless Corridor [1F]'
+  field: field-endless
+  key: region-endless-1f
+  tags:
+    - grail-tablet
+    - alternate-start
+
+- name: 2F
+  root: 'Location: Endless Corridor [2F]'
+  field: field-endless
+  key: region-endless-2f
+
+- name: 3F Upper
+  root: 'Location: Endless Corridor [3F Upper]'
+  field: field-endless
+  key: region-endless-3f-upper
+
+- name: 3F Lower
+  root: 'Location: Endless Corridor [3F Lower]'
+  field: field-endless
+  key: region-endless-3f-lower
+
+- name: 4F
+  root: 'Location: Endless Corridor [4F]'
+  field: field-endless
+  key: region-endless-4f
+
+- name: 5F
+  root: 'Location: Endless Corridor [5F]'
+  field: field-endless
+  key: region-endless-5f
+
+
+- name: Eden
+  root: 'Location: Gate of Illusion [Eden]'
+  field: field-illusion
+  key: region-illusion-eden
+
+- name: Eden
+  root: 'Location: Gate of Illusion [Eden]'
+  field: field-illusion
+  key: region-illusion-eden
+
+- name: Lower
+  root: 'Location: Gate of Illusion [Lower]'
+  field: field-illusion
+  key: region-illusion-lower
+
+- name: Middle
+  root: 'Location: Gate of Illusion [Middle]'
+  field: field-illusion
+  key: region-illusion-middle
+
+- name: Dracuet
+  root: 'Location: Gate of Illusion [Dracuet]'
+  field: field-illusion
+  key: region-illusion-dracuet
+
+- name: Grail
+  root: 'Location: Gate of Illusion [Grail]'
+  field: field-illusion
+  key: region-illusion-grail
+  tags:
+    - grail-tablet
+    - alternate-start
+
+- name: Ruin Gate
+  root: 'Location: Gate of Illusion [Ruin]'
+  field: field-illusion
+  key: region-illusion-ruin
+
+- name: Upper
+  root: 'Location: Gate of Illusion [Upper]'
+  field: field-illusion
+  key: region-illusion-upper
+
+- name: Dancing Child
+  root: 'Location: Gate of Illusion [Pot Room]'
+  field: field-illusion
+  key: region-illusion-pot-room
+
+
+- name: West
+  root: 'Location: Graveyard of the Giants [West]'
+  field: field-graveyard
+  key: region-graveyard-west
+
+- name: Grail
+  root: 'Location: Graveyard of the Giants [Grail]'
+  field: field-graveyard
+  key: region-graveyard-grail
+
+- name: East 
+  root: 'Location: Graveyard of the Giants [East]'
+  field: field-graveyard
+  key: region-graveyard-east
+
+
+- name: Pyramid
+  root: 'Location: Temple of Moonlight [Pyramid]'
+  field: field-moonlight
+  key: region-moonlight-pyramid
+
+- name: Upper
+  root: 'Location: Temple of Moonlight [Upper]'
+  field: field-moonlight
+  key: region-moonlight-upper
+
+- name: Lower
+  root: 'Location: Temple of Moonlight [Lower]'
+  field: field-moonlight
+  key: region-moonlight-lower
+
+- name: Eden Ladder
+  root: 'Location: Temple of Moonlight [Eden]'
+  field: field-moonlight
+  key: region-moonlight-eden
+
+- name: Grail
+  root: 'Location: Temple of Moonlight [Grail]'
+  field: field-moonlight
+  key: region-moonlight-grail
+  tags:
+    - grail-tablet
+    - alternate-start
+
+- name: Grapple Chest
+  root: 'Location: Temple of Moonlight [Grapple]'
+  field: field-moonlight
+  key: region-moonlight-grapple
+
+- name: Map Chest
+  root: 'Location: Temple of Moonlight [Map]'
+  field: field-moonlight
+  key: region-moonlight-map
+
+- name: Southeast
+  root: 'Location: Temple of Moonlight [Southeast]'
+  field: field-moonlight
+  key: region-moonlight-southeast
+
+
+- name: Lower
+  root: 'Location: Tower of the Goddess [Lower]'
+  field: field-goddess
+  key: region-goddess-lower
+
+- name: Lamp
+  root: 'Location: Tower of the Goddess [Lamp]'
+  field: field-goddess
+  key: region-goddess-lamp
+
+- name: Grail
+  root: 'Location: Tower of the Goddess [Grail]'
+  field: field-goddess
+  key: region-goddess-grail
+  tags:
+    - grail-tablet
+    - start-plane-model
+    - alternate-start
+
+- name: Spaulder Chest
+  root: 'Location: Tower of the Goddess [Spaulder]'
+  field: field-goddess
+  key: region-goddess-spaulder
+
+- name: Shield Trap
+  root: 'Location: Tower of the Goddess [Shield Statue]'
+  field: field-goddess
+  key: region-goddess-shield-statue
+
+
+- name: Southeast
+  root: 'Location: Tower of Ruin [Southeast]'
+  field: field-ruin
+  key: region-ruin-southeast
+
+- name: Southwest
+  root: 'Location: Tower of Ruin [Southwest]'
+  field: field-ruin
+  key: region-ruin-southwest
+
+- name: Lower Door
+  root: 'Location: Tower of Ruin [Southwest Door]'
+  field: field-ruin
+  key: region-ruin-southwest-door
+
+- name: Medicine Unlock
+  root: 'Location: Tower of Ruin [La-Mulanese]'
+  field: field-ruin
+  key: region-ruin-medicine-unlock
+
+- name: Illusion Gate
+  root: 'Location: Tower of Ruin [Illusion]'
+  field: field-ruin
+  key: region-ruin-illusion
+
+- name: Grail
+  root: 'Location: Tower of Ruin [Grail]'
+  field: field-ruin
+  key: region-ruin-grail
+  tags:
+    - grail-tablet
+    - alternate-start
+
+- name: Spirits
+  root: 'Location: Tower of Ruin [Spirits]'
+  field: field-ruin
+  key: region-ruin-spirits
+
+- name: Medicine
+  root: 'Location: Tower of Ruin [Medicine]'
+  field: field-ruin
+  key: region-ruin-medicine
+
+- name: Top
+  root: 'Location: Tower of Ruin [Top]'
+  field: field-ruin
+  key: region-ruin-top
+
+
+- name: Grail Ladder
+  root: 'Location: Chamber of Birth [West Entrance]'
+  field: field-birth
+  key: region-birth-west-entrance
+
+- name: West
+  root: 'Location: Chamber of Birth [West]'
+  field: field-birth
+  key: region-birth-west
+
+- name: Grail
+  root: 'Location: Chamber of Birth [Grail]'
+  field: field-birth
+  key: region-birth-grail
+  tags:
+    - grail-tablet
+    - alternate-start
+
+- name: Skanda
+  root: 'Location: Chamber of Birth [Skanda]'
+  field: field-birth
+  key: region-birth-skanda
+
+- name: Dance
+  root: 'Location: Chamber of Birth [Dance]'
+  field: field-birth
+  key: region-birth-dance
+
+- name: Northeast
+  root: 'Location: Chamber of Birth [Northeast]'
+  field: field-birth
+  key: region-birth-northeast
+
+- name: Southeast
+  root: 'Location: Chamber of Birth [Southeast]'
+  field: field-birth
+  key: region-birth-southeast
+
+
+- name: Grail
+  root: 'Location: Dimensional Corridor [Grail]'
+  field: field-dc
+  key: region-dc-grail
+
+- name: Lower
+  root: 'Location: Dimensional Corridor [Lower]'
+  field: field-dc
+  key: region-dc-lower
+
+- name: Upper
+  root: 'Location: Dimensional Corridor [Upper]'
+  field: field-dc
+  key: region-dc-upper
+
+
+- name: Main
+  root: 'Location: Shrine of the Mother [Main]'
+  field: field-shrine
+  key: region-shrine-main
+
+- name: Lower
+  root: 'Location: Shrine of the Mother [Lower]'
+  field: field-shrine
+  key: region-shrine-lower
+
+- name: Blocked Annex
+  root: 'Location: Shrine of the Mother [Seal]'
+  field: field-shrine
+  key: region-shrine-seal
+
+- name: Unblocked Annex
+  root: 'Location: Shrine of the Mother [Map]'
+  field: field-shrine
+  key: region-shrine-map
+
+- name: True
+  root: 'Location: True Shrine of the Mother'
+  field: field-shrine
+  key: region-shrine-true
+
+
+- name: All
+  root: 'Location: Gate of Time [Surface]'
+  field: field-surface-time
+  key: region-surface-time-all
+
+
+- name: All
+  root: 'Location: Gate of Time [Guidance]'
+  field: field-guidance-time
+  key: region-guidance-time-all
+
+
+- name: Lower
+  root: 'Location: Gate of Time [Mausoleum Lower]'
+  field: field-mausoleum-time
+  key: region-mausoleum-time-lower
+
+- name: Upper
+  root: 'Location: Gate of Time [Mausoleum Upper]'
+  field: field-mausoleum-time
+  key: region-mausoleum-time-upper
+
+
+- name: Entrance
+  root: 'Location: Hell Temple [Entrance]'
+  field: field-hell-temple
+  key: region-hell-temple-entrance
+
+- name: Shop
+  root: 'Location: Hell Temple [Shop]'
+  field: field-hell-temple
+  key: region-hell-temple-shop
+
+- name: Dracuet
+  root: 'Location: Hell Temple [Dracuet]'
+  field: field-hell-temple
+  key: region-hell-temple-dracuet

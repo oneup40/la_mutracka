@@ -1,0 +1,101 @@
+- name: Surface
+  key: field-surface
+  tags:
+    - frontside
+
+- name: Guidance
+  key: field-guidance
+  tags:
+    - frontside
+
+- name: Mausoleum
+  key: field-mausoleum
+  tags:
+    - frontside
+
+- name: Sun
+  key: field-sun
+  tags:
+    - frontside
+
+- name: Spring
+  key: field-spring
+  tags:
+    - frontside
+
+- name: Inferno
+  key: field-inferno
+  tags:
+    - frontside
+
+- name: Extinction
+  key: field-extinction
+  tags:
+    - frontside
+
+- name: Twin
+  key: field-twin
+
+- name: Endless
+  key: field-endless
+  tags:
+    - frontside
+
+- name: Illusion
+  key: field-illusion
+  tags:
+    - backside
+
+- name: Graveyard
+  key: field-graveyard
+  tags:
+    - backside
+
+- name: Moonlight
+  key: field-moonlight
+  tags:
+    - backside
+
+- name: Goddess
+  key: field-goddess
+  tags:
+    - backside
+
+- name: Ruin
+  key: field-ruin
+  tags:
+    - backside
+
+- name: Birth
+  key: field-birth
+  tags:
+    - backside
+
+- name: DC
+  key: field-dc
+  tags:
+    - backside
+
+- name: Shrine
+  key: field-shrine
+
+- name: Surface [Time]
+  key: field-surface-time
+  tags:
+    - time
+    - frontside
+
+- name: Guidance [Time]
+  key: field-guidance-time
+  tags:
+    - time
+    - frontside
+
+- name: Mausoleum [Time]
+  key: field-mausoleum-time
+  tags:
+    - time
+    - frontside
+
+- name: Hell Temple
+  key: field-hell-temple
