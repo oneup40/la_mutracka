@@ -502,6 +502,27 @@ function App() {
             nextState = setGameSetting(nextState, {key: 'frontside-start', value: action.region.isFrontside()});
             nextState = setGameSetting(nextState, {key: 'backside-start', value: action.region.isBackside()});
 
+            if (action.region.isAlternateStart()) {
+                let synthLoc = new Universe.Location({
+                    name: 'Starting Shop',
+                    root: null,
+                    regions: [action.region],
+                    key: 'location-starting-shop'
+                });
+
+                let newTasks = [];
+                for (let i = 1; i <= 3; ++i) {
+                    newTasks.push({
+                        type: 'shop-item',
+                        key: `shop-start-${i}`,
+                        location: synthLoc,
+                        index: i
+                    });
+                }
+
+                nextState = addTasks(nextState, {tasks: newTasks});
+            }
+
             return nextState;
         }
 
