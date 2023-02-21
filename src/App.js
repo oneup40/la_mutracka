@@ -840,6 +840,17 @@ export default App;
 // TODO: save/clear state
 // TODO: break up more blockable tasks (cursed chests, door checks, shop purchases, etc.)
 // TODO: remove field name from connection in field status?
+// TODO: important NPC status
+// TODO: hide collected item choices?
+// TODO: better organization of choices
+// TODO: don't hide transitions for many-to-one
+// TODO: hide transitions to self
+// TODO: Sacred Orb roots < N
+// TODO: fix seal hiding logic
+// TODO: optimize access logic
+// TODO: testing?
+// TODO: fix boss difficulty reqs
+// TODO: add doors to field status
 
 // done:
 // TODO: philosopher visited events
