@@ -579,6 +579,31 @@ function App() {
             };
         }
 
+        function newSeal(state, action) {
+            let nextSealsFound = new Set(state.sealsFound);
+            nextSealsFound.add(action.item);
+
+            let nextState = {
+                ...state,
+                sealsFound: nextSealsFound
+            };
+
+            if (nextSealsFound.size === Universe.items.byCategory('seal').length) {
+                let newRoots = [];
+
+                for (let x of ['O','B','L','D']) {
+                    for (let i = 1; i < 10; ++i) {
+                        let root = `Seal: ${x}${i}`;
+                        newRoots.push(root);
+                    }
+                }
+
+                nextState = addRoots(nextState, {roots: newRoots});
+            }
+
+            return nextState;
+        }
+
         switch (action.type) {
             case 'setReqs':
                 return setReqs(state, action);
@@ -606,6 +631,8 @@ function App() {
                 return connect(state, action);
             case 'newAmmo':
                 return newAmmo(state, action);
+            case 'newSeal':
+                return newSeal(state, action);
             default:
                 console.error(`unexpected action.type '${action.type}'`);
         }
@@ -633,7 +660,8 @@ function App() {
         ]),
         bossesDefeated: 0,
         connectionMap: new Map(),
-        ammoSources: new Map()
+        ammoSources: new Map(),
+        sealsFound: new Set()
     });
 
     let onTaskSubmit = useCallback((args) => {
@@ -730,6 +758,15 @@ function App() {
                     type: 'newAmmo',
                     item,
                     location
+                });
+            });
+        }
+
+        if (args.newSeals !== undefined) {
+            args.newSeals.forEach(item => {
+                dispatch({
+                    type: 'newSeal',
+                    item
                 });
             });
         }
@@ -846,7 +883,6 @@ export default App;
 // TODO: don't hide transitions for many-to-one
 // TODO: hide transitions to self
 // TODO: Sacred Orb roots < N
-// TODO: fix seal hiding logic
 // TODO: optimize access logic
 // TODO: testing?
 // TODO: fix boss difficulty reqs
@@ -876,7 +912,7 @@ export default App;
 // TODO: lint
 // TODO: starting shop
 // TODO: show ammo locations
+// TODO: fix seal hiding logic
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather
-// Test Hidlyda with knife

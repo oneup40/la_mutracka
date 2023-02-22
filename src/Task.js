@@ -288,6 +288,10 @@ export function ItemCheckTask({id, location, onSubmit}) {
                 }
 
                 e.newRoots = [item.root];
+
+                if (item.category === 'seal') {
+                    e.newSeals = [item];
+                }
                 break;
             }
         }
@@ -370,6 +374,10 @@ export function ShopItemTask({id, location, index, onSubmit}) {
 
                 if (item.category === 'ammo') {
                     e.newAmmos = [[item, location]];
+                }
+
+                if (item.category === 'seal') {
+                    e.newSeals = [item];
                 }
 
                 break;
