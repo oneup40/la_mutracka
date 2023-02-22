@@ -1,70 +1,94 @@
 - name: Surface NPC Xelpud
   root: "NPCL: Elder Xelpud"
   key: location-npc-xelpud
+  regions:
+    - region-surface-main
   tags:
     - npc
 
 - name: Surface Tent 1
   root: "NPCL: Nebur"
+  regions:
+    - region-surface-main
   key: location-npc-nebur
   tags:
     - npc
 
 - name: Surface Tent 2
   root: "NPCL: Sidro"
+  regions:
+    - region-surface-main
   key: location-npc-sidro
   tags:
     - npc
 
 - name: Surface Tent 3
   root: "NPCL: Modro"
+  regions:
+    - region-surface-main
   key: location-npc-modro
   tags:
     - npc
 
 - name: Surface Tent 4
   root: "NPCL: Hiner"
+  regions:
+    - region-surface-main
   key: location-npc-hiner
   tags:
     - npc
 
 - name: Surface Tent 5
   root: "NPCL: Moger"
+  regions:
+    - region-surface-main
   key: location-npc-moger
   tags:
     - npc
 
 - name: Surface NPC Mekuri Master
   root: "NPCL: Former Mekuri Master"
+  regions:
+    - region-surface-main
   key: location-npc-mekuri
   tags:
     - npc
 
 - name: Guidance NPC Priest
   root: "NPCL: Priest Zarnac"
+  regions:
+    - region-guidance-main
   key: location-npc-zarnac
   tags:
     - npc
 
 - name: Guidance Shop
   root: "NPCL: Penadvent of ghost"
+  regions:
+    - region-guidance-main
   key: location-npc-penadvent
   tags:
     - npc
 
 - name: Mausoleum NPC Priest
   root: "NPCL: Priest Xanado"
+  regions:
+    - region-mausoleum
   key: location-npc-xanado
   tags:
     - npc
 
 - name: Mausoleum Shop
   root: "NPCL: Greedy Charlie"
+  regions:
+    - region-mausoleum
   key: location-npc-charlie
   tags:
     - npc
 
 - name: Sun NPC Mulbruk
+  regions:
+    - region-sun-main
   root: "NPCL: Mulbruk"
   key: location-npc-mulbruk
   tags:
@@ -72,72 +96,96 @@
 
 - name: Sun NPC Sphinx
   root: "NPCL: Priest Madomono"
+  regions:
+    - region-sun-sphinx
   key: location-npc-madomono
   tags:
     - npc
 
 - name: Sun Shop Pot Smash
   root: "NPCL: Shalom III"
+  regions:
+    - region-sun-main
   key: location-npc-shalom
   tags:
     - npc
 
 - name: Sun Shop Spikes
   root: "NPCL: Usas VI"
+  regions:
+    - region-sun-main
   key: location-npc-usas
   tags:
     - npc
 
 - name: Sun Shop Seal
   root: "NPCL: Kingvalley I"
+  regions:
+    - region-sun-main
   key: location-npc-kingvalley-1
   tags:
     - npc
 
 - name: Spring NPC Hidden Priest
   root: "NPCL: Priest Hidlyda"
+  regions:
+    - region-spring-main
   key: location-npc-hidlyda
   tags:
     - npc
 
 - name: Spring NPC Philosopher
   root: "NPCL: Philosopher Giltoriyo"
+  regions:
+    - region-spring-main
   key: location-npc-giltoriyo
   tags:
     - npc
 
 - name: Spring Shop
   root: "NPCL: Mr. Fishman (Original)"
+  regions:
+    - region-spring-upper
   key: location-npc-fishman
   tags:
     - npc
 
 - name: Spring Shop Secret
   root: "NPCL: Mr. Fishman (Alt)"
+  regions:
+    - region-spring-upper
   key: location-npc-fishman-alt
   tags:
     - npc
 
 - name: Inferno NPC Seal
   root: "NPCL: Priest Gailious"
+  regions:
+    - region-inferno-main
   key: location-npc-gailious
   tags:
     - npc
 
 - name: Inferno NPC Pazuzu
   root: "NPCL: Priest Romancis"
+  regions:
+    - region-inferno-main
   key: location-npc-romancis
   tags:
     - npc
 
 - name: Inferno Shop
   root: "NPCL: Hot-blooded Nemesistwo"
+  regions:
+    - region-inferno-main
   key: location-npc-nemesistwo
   tags:
     - npc
 
 - name: Extinction NPC Main
   root: "NPCL: Priest Aramo"
+  regions:
+    - region-extinction-main
   key: location-npc-aramo
   tags:
     - npc
@@ -145,47 +193,63 @@
 - name: Extinction NPC Palenque
   root: "NPCL: Priest Triton"
   key: location-npc-triton
+  regions:
+    - region-extinction-palenque-lower
   tags:
     - npc
 
 - name: Extinction Shop Palenque
   root: "NPCL: Operator Combaker"
+  regions:
+    - region-extinction-palenque-lower
   key: location-npc-combaker
   tags:
     - npc
 
 - name: TL Shop Little Bro
   root: "NPCL: Yiegah Kungfu"
+  regions:
+    - region-twin-loop
   key: location-npc-yiegah
   tags:
     - npc
 
 - name: TL Shop Big Bro
   root: "NPCL: Yiear Kungfu"
+  regions:
+    - region-twin-loop
   key: location-npc-yiear
   tags:
     - npc
 
 - name: TL Shop Middle Right (Coin Pot)
   root: "NPCL: Arrogant Sturdy Snake"
+  regions:
+    - region-twin-lower
   key: location-npc-sturdy-snake
   tags:
     - npc
 
 - name: TL Shop Middle Left (Bomb)
   root: "NPCL: Arrogant Metagear"
+  regions:
+    - region-twin-lower
   key: location-npc-metagear
   tags:
     - npc
 
 - name: TL NPC Skull Ladder
   root: "NPCL: Priest Jaguarfiv"
+  regions:
+    - region-twin-poseidon
   key: location-npc-jaguarfiv
   tags:
     - npc
 
 - name: Endless NPC Fairy Queen
   root: "NPCL: The Fairy Queen"
+  regions:
+    - region-endless-1f
   key: location-npc-fairy-queen
   tags:
     - npc
@@ -193,119 +257,159 @@
 - name: Endless Shop
   root: "NPCL: Affected Knimare"
   key: location-npc-knimare
+  regions:
+    - region-endless-1f
   tags:
     - npc
 
 - name: Illusion Dev NPC
   root: "NPCL: duplex"
+  regions:
+    - region-illusion-grail
   key: location-npc-duplex
   tags:
     - npc
 
 - name: Illusion NPC Treasures
   root: "NPCL: Mr. Slushfund"
+  regions:
+    - region-illusion-lower
   key: location-npc-slushfund
   tags:
     - npc
 
 - name: Illusion NPC Mini Doll
   root: "NPCL: Priest Alest"
+  regions:
+    - region-illusion-lower
   key: location-npc-alest
   tags:
     - npc
 
 - name: Illusion Shop
   root: "NPCL: Mover Athleland"
+  regions:
+    - region-illusion-middle
   key: location-npc-athleland
   tags:
     - npc
 
 - name: Graveyard Shop
   root: "NPCL: Giant Mopiran"
+  regions:
+    - region-graveyard-west
   key: location-npc-mopiran
   tags:
     - npc
 
 - name: Graveyard NPC Kamitachi
   root: "NPCL: Giant Thexde"
+  regions:
+    - region-graveyard-east
   key: location-npc-thexde
   tags:
     - npc
 
 - name: Moonlight NPC Philosopher
   root: "NPCL: Philosopher Alsedana"
+  regions:
+    - region-moonlight-pyramid
   key: location-npc-alsedana
   tags:
     - npc
 
 - name: Moonlight Dev NPC
   root: "NPCL: Samieru"
+  regions:
+    - region-moonlight-upper
   key: location-npc-samieru
   tags:
     - npc
 
 - name: Moonlight Shop
   root: "NPCL: Kingvalley II"
+  regions:
+    - region-moonlight-southeast
   key: location-npc-kingvalley-2
   tags:
     - npc
 
 - name: Goddess NPC Philosopher
   root: "NPCL: Philosopher Samaranta"
+  regions:
+    - region-goddess-lower
   key: location-npc-samaranta
   tags:
     - npc
 
 - name: Goddess Dev NPC
   root: "NPCL: Naramura"
+  regions:
+    - region-goddess-lower
   key: location-npc-naramura
   tags:
     - npc
 
 - name: Goddess Shop
   root: "NPCL: Energetic Belmont"
+  regions:
+    - region-goddess-lamp
   key: location-npc-belmont
   tags:
     - npc
 
 - name: Ruin NPC Priest
   root: "NPCL: Priest Laydoc"
+  regions:
+    - region-ruin-southwest
   key: location-npc-laydoc
   tags:
     - npc
 
 - name: Ruin Shop
   root: "NPCL: Mechanical Efspi"
+  regions:
+    - region-ruin-grail
   key: location-npc-efspi
   tags:
     - npc
 
 - name: Birth NPC Priest
   root: "NPCL: Priest Ashgine"
+  regions:
+    - region-birth-west
   key: location-npc-ashgine
   tags:
     - npc
 
 - name: Birth Shop
   root: "NPCL: Mud Man Qubert"
+  regions:
+    - region-birth-west
   key: location-npc-qubert
   tags:
     - npc
 
 - name: DC NPC Philosopher
   root: "NPCL: Philosopher Fobos"
+  regions:
+    - region-dc-grail
   key: location-npc-fobos
   tags:
     - npc
 
 - name: Surface [Time] NPC
   root: "NPCL: 8bit Elder"
+  regions:
+    - region-surface-main
   key: location-npc-elder-time
   tags:
     - npc
 
 - name: Hell Temple Shop
   root: "NPCL: Tailor Dracuet"
+  regions:
+    - region-hell-temple-shop
   key: location-npc-dracuet
   tags:
     - npc

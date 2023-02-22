@@ -130,17 +130,17 @@ function NPCTaskSatellite({choice, onClick}) {
 
 export function NPCTask({id, location, onSubmit}) {
     let onClick = useCallback(key => {
-        let newRoots = [];
-        let newSleepingPhilosophers = [];
-        let newShops = [];
+        let e = {
+            completedTasks: [id]
+        };
 
         if (key.startsWith('dummy-')) {
             switch (key) {
                 case 'dummy-shop':
-                    newShops.push(location);
+                    e.newShops = [location];
                     break;
                 case 'dummy-philosopher':
-                    newSleepingPhilosophers.push(location);
+                    e.newSleepingPhilosophers = [location];
                     break;
                 case 'dummy-generic':
                     break;
@@ -154,19 +154,19 @@ export function NPCTask({id, location, onSubmit}) {
                 console.error(`unknown NPC key ${key}`);
             }
 
-            newRoots.push(npc.root);
+            e.newRoots = [npc.root];
+
             if (npc.tags.has('shop')) {
-                newShops.push(location);
+                e.newShops = [location];
+            }
+
+            if (npc.tags.has('revisit')) {
+                e.newNPCs = [[npc, location]];
             }
         }
 
         if (onSubmit) {
-            onSubmit({
-                newRoots,
-                newSleepingPhilosophers,
-                newShops,
-                completedTasks: [id],
-            });
+            onSubmit(e);
         }
     }, [id, location, onSubmit]);
 

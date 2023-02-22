@@ -83,7 +83,7 @@ function AmmoStatus({ammo, ammoSources}) {
     );
 }
 
-function Status({connectionMap, ammoSources, ankhJewels, sacredOrbs}) {
+function Status({connectionMap, ammoSources, ankhJewels, sacredOrbs, importantNPCs}) {
     return (
         <div className="status">
             <fieldset>
@@ -94,32 +94,7 @@ function Status({connectionMap, ammoSources, ankhJewels, sacredOrbs}) {
             <fieldset>
                 <legend>Fields</legend>
                 <div className="field-status-grid">
-                    <FieldStatus field={Universe.fields.byKey.get('field-surface')} connectionMap={connectionMap} />
-
-                    <FieldStatus field={Universe.fields.byKey.get('field-guidance')} connectionMap={connectionMap} />
-                    <FieldStatus field={Universe.fields.byKey.get('field-mausoleum')} connectionMap={connectionMap} />
-                    <FieldStatus field={Universe.fields.byKey.get('field-sun')} connectionMap={connectionMap} />
-                    <FieldStatus field={Universe.fields.byKey.get('field-spring')} connectionMap={connectionMap} />
-                    <FieldStatus field={Universe.fields.byKey.get('field-inferno')} connectionMap={connectionMap} />
-                    <FieldStatus field={Universe.fields.byKey.get('field-extinction')} connectionMap={connectionMap} />
-                    <FieldStatus field={Universe.fields.byKey.get('field-twin')} connectionMap={connectionMap} />
-                    <FieldStatus field={Universe.fields.byKey.get('field-endless')} connectionMap={connectionMap} />
-
-                    <FieldStatus field={Universe.fields.byKey.get('field-shrine')} connectionMap={connectionMap} />
-
-                    <FieldStatus field={Universe.fields.byKey.get('field-illusion')} connectionMap={connectionMap} />
-                    <FieldStatus field={Universe.fields.byKey.get('field-graveyard')} connectionMap={connectionMap} />
-                    <FieldStatus field={Universe.fields.byKey.get('field-moonlight')} connectionMap={connectionMap} />
-                    <FieldStatus field={Universe.fields.byKey.get('field-goddess')} connectionMap={connectionMap} />
-                    <FieldStatus field={Universe.fields.byKey.get('field-ruin')} connectionMap={connectionMap} />
-                    <FieldStatus field={Universe.fields.byKey.get('field-birth')} connectionMap={connectionMap} />
-                    <FieldStatus field={Universe.fields.byKey.get('field-dc')} connectionMap={connectionMap} />
-
-                    <FieldStatus field={Universe.fields.byKey.get('field-surface-time')} connectionMap={connectionMap} />
-                    <FieldStatus field={Universe.fields.byKey.get('field-guidance-time')} connectionMap={connectionMap} />
-                    <FieldStatus field={Universe.fields.byKey.get('field-mausoleum-time')} connectionMap={connectionMap} />
-
-                    <FieldStatus field={Universe.fields.byKey.get('field-hell-temple')} connectionMap={connectionMap} />
+                    {Universe.fields.all.map(field => <FieldStatus key={field.key} field={field} connectionMap={connectionMap} />)}
                 </div>
             </fieldset>
 
@@ -128,6 +103,13 @@ function Status({connectionMap, ammoSources, ankhJewels, sacredOrbs}) {
                 <div className='ammo-status-grid'>
                     {Universe.items.byCategory('ammo').map(item => <AmmoStatus key={item.key} ammo={item} ammoSources={ammoSources}/>)}
                 </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Important NPCs</legend>
+                <ul className="npc-list">
+                    {Array.from(importantNPCs.values()).map(({npc, location}) => <li key={npc.key}>{npc.name}: {location.name}</li>)}
+                </ul>
             </fieldset>
         </div>
     );

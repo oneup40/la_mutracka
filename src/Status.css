@@ -62,7 +62,8 @@
     font-weight: bold;
 }
 
-.connections-list {
+.connections-list,
+.npc-list {
     padding: 0 0 0 1em;
     margin: 0.2em;
 }

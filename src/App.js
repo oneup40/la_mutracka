@@ -604,6 +604,18 @@ function App() {
             return nextState;
         }
 
+        function newNPC(state, action) {
+            let nextImportantNPCs = new Map(state.importantNPCs);
+            nextImportantNPCs.set(action.npc.key, {npc: action.npc, location: action.location});
+
+            let nextState = {
+                ...state,
+                importantNPCs: nextImportantNPCs
+            };
+
+            return nextState;
+        }
+
         switch (action.type) {
             case 'setReqs':
                 return setReqs(state, action);
@@ -633,6 +645,8 @@ function App() {
                 return newAmmo(state, action);
             case 'newSeal':
                 return newSeal(state, action);
+            case 'newNPC':
+                return newNPC(state, action);
             default:
                 console.error(`unexpected action.type '${action.type}'`);
         }
@@ -661,7 +675,8 @@ function App() {
         bossesDefeated: 0,
         connectionMap: new Map(),
         ammoSources: new Map(),
-        sealsFound: new Set()
+        sealsFound: new Set(),
+        importantNPCs: new Map()
     });
 
     let onTaskSubmit = useCallback((args) => {
@@ -770,6 +785,17 @@ function App() {
                 });
             });
         }
+
+        if (args.newNPCs !== undefined) {
+            args.newNPCs.forEach(([npc, location]) => {
+                dispatch({
+                    type: 'newNPC',
+                    npc,
+                    location
+                });
+            });
+        }
+
     }, []);
 
     let onReqsLoaded = useCallback(({reqs}) => {
@@ -832,7 +858,13 @@ function App() {
                 <SelectableItemList name='Software' choices={softwareChoices} selected={state.access} onChange={onSelectableItemsChanged}/>
             </fieldset>
             <RequirementsLoader onLoaded={onReqsLoaded} />
-            <Status connectionMap={state.connectionMap} ammoSources={state.ammoSources} ankhJewels={state.ankhJewels} sacredOrbs={state.sacredOrbs}/>
+            <Status
+                connectionMap={state.connectionMap}
+                ammoSources={state.ammoSources}
+                ankhJewels={state.ankhJewels}
+                sacredOrbs={state.sacredOrbs}
+                importantNPCs={state.importantNPCs}
+            />
             {state.tasks.map(task => {
                 switch (task.type) {
                     case 'start-location':
@@ -877,7 +909,6 @@ export default App;
 // TODO: save/clear state
 // TODO: break up more blockable tasks (cursed chests, door checks, shop purchases, etc.)
 // TODO: remove field name from connection in field status?
-// TODO: important NPC status
 // TODO: hide collected item choices?
 // TODO: better organization of choices
 // TODO: don't hide transitions for many-to-one
@@ -913,6 +944,7 @@ export default App;
 // TODO: fix seal hiding logic
 // TODO: add doors to field status
 // TODO: hide transitions to self
+// TODO: important NPC status
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather
