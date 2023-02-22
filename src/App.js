@@ -262,6 +262,27 @@ function calculateAccess({reqs, prevAccess, roots}) {
 
 function App() {
     let [state, dispatch] = useReducer((state, action) => {
+        function installActiveReqs(state) {
+            let excludedReqs = new Set();
+            switch (state.difficulty) {
+                case 'medium':
+                    excludedReqs.add('bosses_hard');
+                    break;
+                case 'hard':
+                    excludedReqs.add('bosses_medium');
+                    break;
+                default:
+                    console.error(`unknown difficulty: ${state.difficulty}`);
+                    break;
+            }
+
+            let activeReqs = new Map(Array.from(state.allReqs.entries()).filter(([key, _]) => !excludedReqs.has(key)));
+            return {
+                ...state,
+                activeReqs
+            };
+        }
+
         function setReqs(state, action) {
             let reqs = new Map(action.reqs);
             let itemReqs = reqs.get('item');
@@ -274,21 +295,29 @@ function App() {
 
             reqs.set('item', new ReqList(newItemReqs));
 
-            return {
+            let nextState = {
                 ...state,
-                reqs
+                allReqs: reqs
             };
+
+            nextState = installActiveReqs(nextState);
+
+            return nextState;
         }
 
         function setDifficulty(state, action) {
-            return {
+            let nextState = {
                 ...state,
                 difficulty: action.value
             };
+
+            nextState = installActiveReqs(nextState);
+
+            return nextState;
         }
 
         function handleRootChange(state, nextRoots) {
-            let {access, newAccess} = calculateAccess({reqs: state.reqs, prevAccess: state.access, roots: nextRoots});
+            let {access, newAccess} = calculateAccess({reqs: state.activeReqs, prevAccess: state.access, roots: nextRoots});
 
             let nextState = {
                 ...state,
@@ -652,7 +681,8 @@ function App() {
         }
     },
     {
-        reqs: new Map(),
+        allReqs: new Map(),
+        activeReqs: new Map(),
         difficulty: 'medium',
         roots: calculateInitialRoots({settings: defaultSettings}),
         access: new Set(),
@@ -826,13 +856,6 @@ function App() {
         });
     }, []);
 
-    let curReqs = new Map(state.reqs);
-    if (state.difficulty === 'medium') {
-        curReqs.delete('bosses_hard');
-    } else if (state.difficulty === 'hard') {
-        curReqs.delete('bosses_medium');
-    }
-
     return (
         <div className="App">
             <GameSettings settings={state.gameSettings} onChange={onGameSettingsChanged}/>
@@ -892,7 +915,7 @@ function App() {
                         return null;
                 }
             })}
-            <RequirementsList reqs={curReqs} accessible={state.access} />
+            <RequirementsList reqs={state.activeReqs} accessible={state.access} />
         </div>
     );
 }
@@ -914,7 +937,6 @@ export default App;
 // TODO: Sacred Orb roots < N
 // TODO: optimize access logic
 // TODO: testing?
-// TODO: fix boss difficulty reqs
 
 // done:
 // TODO: philosopher visited events
@@ -945,6 +967,7 @@ export default App;
 // TODO: hide transitions to self
 // TODO: important NPC status
 // TODO: don't hide transitions for many-to-one
+// TODO: fix boss difficulty reqs
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather
