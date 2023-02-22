@@ -881,7 +881,6 @@ export default App;
 // TODO: hide collected item choices?
 // TODO: better organization of choices
 // TODO: don't hide transitions for many-to-one
-// TODO: hide transitions to self
 // TODO: Sacred Orb roots < N
 // TODO: optimize access logic
 // TODO: testing?
@@ -913,6 +912,7 @@ export default App;
 // TODO: show ammo locations
 // TODO: fix seal hiding logic
 // TODO: add doors to field status
+// TODO: hide transitions to self
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather
