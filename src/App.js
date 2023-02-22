@@ -886,7 +886,6 @@ export default App;
 // TODO: optimize access logic
 // TODO: testing?
 // TODO: fix boss difficulty reqs
-// TODO: add doors to field status
 
 // done:
 // TODO: philosopher visited events
@@ -913,6 +912,7 @@ export default App;
 // TODO: starting shop
 // TODO: show ammo locations
 // TODO: fix seal hiding logic
+// TODO: add doors to field status
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather

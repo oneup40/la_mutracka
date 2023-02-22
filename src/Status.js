@@ -47,6 +47,7 @@ function FieldStatus({field, connectionMap}) {
                 left: Universe.connections.byType('left').filter(conn => conn.inField(field)),
                 right: Universe.connections.byType('right').filter(conn => conn.inField(field)),
                 down: Universe.connections.byType('down').filter(conn => conn.inField(field)),
+                door: Universe.connections.byType('door').filter(conn => conn.inField(field)),
             }
         },
         [field]
@@ -60,6 +61,7 @@ function FieldStatus({field, connectionMap}) {
                 {connections.left.map(conn => <FieldConnectionStatus key={conn.key} connection={conn} connectionMap={connectionMap} />)}
                 {connections.right.map(conn => <FieldConnectionStatus key={conn.key} connection={conn} connectionMap={connectionMap} />)}
                 {connections.down.map(conn => <FieldConnectionStatus key={conn.key} connection={conn} connectionMap={connectionMap} />)}
+                {connections.door.map(conn => <FieldConnectionStatus key={conn.key} connection={conn} connectionMap={connectionMap} />)}
             </ul>
         </div>
     );
