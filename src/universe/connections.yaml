@@ -35,6 +35,7 @@
   type: left
   tags:
     - source-only
+    - alias
 
 - name: Graveyard (mirai.exe)
   region: region-graveyard-west

@@ -911,7 +911,6 @@ export default App;
 // TODO: remove field name from connection in field status?
 // TODO: hide collected item choices?
 // TODO: better organization of choices
-// TODO: don't hide transitions for many-to-one
 // TODO: Sacred Orb roots < N
 // TODO: optimize access logic
 // TODO: testing?
@@ -945,6 +944,7 @@ export default App;
 // TODO: add doors to field status
 // TODO: hide transitions to self
 // TODO: important NPC status
+// TODO: don't hide transitions for many-to-one
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather

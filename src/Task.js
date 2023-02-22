@@ -106,7 +106,7 @@ export function TransitionTask({id, connection, connectionMap, onSubmit}) {
                     autoClose
                     orbitRadius={180}
                 >
-                    {connection.candidates().filter(conn => conn !== connection && !connectionMap.has(conn.key)).map(conn => {
+                    {connection.candidates().filter(conn => conn !== connection && (connection.tags.has('alias') || !connectionMap.has(conn.key))).map(conn => {
                         return <TransitionTaskSatellite key={conn.key} connection={conn} onClick={onClick} />;
                     })}
                 </Planet>
