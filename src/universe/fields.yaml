@@ -5,79 +5,95 @@
 
 - name: Guidance
   key: field-guidance
+  icon: number-1
   tags:
     - frontside
 
 - name: Mausoleum
   key: field-mausoleum
+  icon: number-2
   tags:
     - frontside
 
 - name: Sun
   key: field-sun
+  icon: number-3
   tags:
     - frontside
 
 - name: Spring
   key: field-spring
+  icon: number-4
   tags:
     - frontside
 
 - name: Inferno
   key: field-inferno
+  icon: number-5
   tags:
     - frontside
 
 - name: Extinction
   key: field-extinction
+  icon: number-6
   tags:
     - frontside
 
 - name: Twin
   key: field-twin
+  icon: number-7
 
 - name: Endless
   key: field-endless
+  icon: number-8
   tags:
     - frontside
 
 - name: Illusion
   key: field-illusion
+  icon: number-1
   tags:
     - backside
 
 - name: Graveyard
   key: field-graveyard
+  icon: number-2
   tags:
     - backside
 
 - name: Moonlight
   key: field-moonlight
+  icon: number-3
   tags:
     - backside
 
 - name: Goddess
   key: field-goddess
+  icon: number-4
   tags:
     - backside
 
 - name: Ruin
   key: field-ruin
+  icon: number-5
   tags:
     - backside
 
 - name: Birth
   key: field-birth
+  icon: number-6
   tags:
     - backside
 
 - name: DC
   key: field-dc
+  icon: number-8
   tags:
     - backside
 
 - name: Shrine
   key: field-shrine
+  icon: number-9
 
 - name: Surface [Time]
   key: field-surface-time

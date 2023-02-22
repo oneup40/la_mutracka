@@ -11,47 +11,176 @@
 
 .field-status.field-surface {
     grid-row: 1;
+    grid-column: 1;
 }
 
-.field-status.field-guidance,
-.field-status.field-mausoleum,
-.field-status.field-sun,
+.field-status.field-guidance {
+    grid-row: 2;
+    grid-column: 1;
+}
+
+.field-status .field-name::before {
+    display: inline-block
+}
+
+.field-status.field-guidance .field-name::before {
+    content: url('img/number-1.png');
+}
+
+.field-status.field-mausoleum {
+    grid-row: 2;
+    grid-column: 2;
+}
+
+.field-status.field-mausoleum .field-name::before {
+    content: url('img/number-2.png');
+}
+
+.field-status.field-sun {
+    grid-row: 2;
+    grid-column: 3;
+}
+
+.field-status.field-sun .field-name::before {
+    content: url('img/number-3.png');
+}
+
 .field-status.field-spring {
     grid-row: 2;
+    grid-column: 4;
 }
 
-.field-status.field-inferno,
-.field-status.field-extinction,
-.field-status.field-twin,
+.field-status.field-spring .field-name::before {
+    content: url('img/number-4.png');
+}
+
+.field-status.field-inferno {
+    grid-row: 3;
+    grid-column: 1;
+}
+
+.field-status.field-inferno .field-name::before {
+    content: url('img/number-5.png');
+}
+
+.field-status.field-extinction {
+    grid-row: 3;
+    grid-column: 2;
+}
+
+.field-status.field-extinction .field-name::before {
+    content: url('img/number-6.png');
+}
+
+.field-status.field-twin {
+    grid-row: 3;
+    grid-column: 3;
+}
+
+.field-status.field-twin .field-name::before {
+    content: url('img/number-7.png');
+}
+
 .field-status.field-endless {
     grid-row: 3;
+    grid-column: 4;
+}
+
+.field-status.field-endless .field-name::before {
+    content: url('img/number-8.png');
 }
 
 .field-status.field-shrine {
     grid-row: 4;
 }
 
-.field-status.field-illusion,
-.field-status.field-graveyard,
-.field-status.field-moonlight,
-.field-status.field-goddess {
-    grid-row: 5;
+.field-status.field-shrine .field-name::before {
+    content: url('img/number-9.png');
 }
 
-.field-status.field-ruin,
+.field-status.field-illusion {
+    grid-row: 5;
+    grid-column: 1;
+}
+
+.field-status.field-illusion .field-name::before {
+    content: url('img/number-1.png');
+    transform: scaleX(-1);
+}
+
+.field-status.field-graveyard {
+    grid-row: 5;
+    grid-column: 2;
+}
+
+.field-status.field-graveyard .field-name::before {
+    content: url('img/number-2.png');
+    transform: scaleX(-1);
+}
+
+.field-status.field-moonlight {
+    grid-row: 5;
+    grid-column: 3;
+}
+
+.field-status.field-moonlight .field-name::before {
+    content: url('img/number-3.png');
+    transform: scaleX(-1);
+}
+
+.field-status.field-goddess {
+    grid-row: 5;
+    grid-column: 4;
+}
+
+.field-status.field-goddess .field-name::before {
+    content: url('img/number-4.png');
+    transform: scaleX(-1);
+}
+
+.field-status.field-ruin {
+    grid-row: 6;
+    grid-column: 1;
+}
+
+.field-status.field-ruin .field-name::before {
+    content: url('img/number-5.png');
+    transform: scaleX(-1);
+}
+
 .field-status.field-birth {
     grid-row: 6;
+    grid-column: 2;
+}
+
+.field-status.field-birth .field-name::before {
+    content: url('img/number-6.png');
+    transform: scaleX(-1);
 }
 
 .field-status.field-dc {
-    grid-column: 4;
     grid-row: 6;
+    grid-column: 4;
 }
 
-.field-status.field-surface-time,
-.field-status.field-guidance-time,
+.field-status.field-dc .field-name::before {
+    content: url('img/number-8.png');
+    transform: scaleX(-1);
+}
+
+.field-status.field-surface-time {
+    grid-row: 7;
+    grid-column: 1;
+}
+
+.field-status.field-guidance-time {
+    grid-row: 7;
+    grid-column: 2;
+}
+
 .field-status.field-mausoleum-time {
     grid-row: 7;
+    grid-column: 3;
 }
 
 .field-status.field-hell-temple {
