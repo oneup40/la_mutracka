@@ -1,5 +1,6 @@
 // import './App.css';
-import {useCallback, useState, useMemo, Fragment} from 'react';
+import {useCallback, useState, useMemo, useEffect, Fragment} from 'react';
+import store from 'store2';
 
 import {ReqList, RequirementsLoader} from './RequirementsLoader.js';
 import RequirementsList from './RequirementsList.js';
@@ -175,20 +176,6 @@ function calculateSettingsRoots({settings}) {
     return [roots, notRoots];
 }
 
-function calculateInitialRoots({settings}) {
-    let [roots, _] = calculateSettingsRoots({settings});
-
-    // TODO: exit logic is confusing
-    for (let frontback of ['F','B']) {
-        for (let i = 1; i < 10; ++i) {
-            let root = `Exit: Door ${frontback}${i}`;
-            roots.add(root);
-        }
-    }
-
-    return roots;
-}
-
 let settings = new Set([
     "Boost: Enemy",
     "Boost: Environment",
@@ -255,9 +242,26 @@ function calculateAccess({reqs, roots}) {
     return access;
 }
 
+const defaultState = {
+    roots: [],
+    gameSettings: {...defaultSettings},
+    connectionMap: [],
+    ammoSources: [],
+    importantNPCs: [],
+    ankhJewels: 0,
+    sacredOrbs: 0,
+    startingRegion: null,
+    sealMappings: [],
+    sleepingPhilosophers: [],
+    shops: [],
+    completedTasks: []
+};
+
+const persistKey = 'lmt-state';
+
 function App() {
     let [allReqs, setAllReqs] = useState(new Map());
-    let [roots, setRoots] = useState(calculateInitialRoots({settings: defaultSettings}));
+    let [roots, setRoots] = useState(new Set());
 
     let [gameSettings, setGameSettings] = useState({...defaultSettings});
 
@@ -275,6 +279,208 @@ function App() {
     let [shops, setShops] = useState(new Map());
 
     let [completedTasks, setCompletedTasks] = useState(new Set());
+
+    let [stateLoaded, setStateLoaded] = useState(false);
+
+    useEffect(() => {
+        if (!stateLoaded) {
+            let persistState = store.get(persistKey, {});
+            for (let key of ['roots', 'gameSettings', 'connectionMap', 'ammoSources', 'importantNPCs',
+                             'ankhJewels', 'sacredOrbs', 'startingRegion', 'sealMappings',
+                             'sleepingPhilosophers', 'shops', 'completedTasks'])
+            {
+                if (persistState[key] === undefined) {
+                    persistState[key] = defaultState[key];
+                }
+            }
+
+            setRoots(new Set(persistState.roots));
+            setGameSettings(persistState.gameSettings);     // XXX FIXME
+
+            let cm = new Map();
+            for (let [srcKey, dstKey] of persistState.connectionMap) {
+                let dst = Universe.connections.byKey.get(dstKey);
+                cm.set(srcKey, dst);
+            }
+            setConnectionMap(cm);
+
+            let as = new Map();
+            for (let [itemKey, srcKeys] of persistState.ammoSources) {
+                let srcs = srcKeys.map(key => Universe.locations.byKey.get(key));
+                as.set(itemKey, srcs);
+            }
+            setAmmoSources(as);
+
+            let npcs = new Map();
+            for (let [npcKey, locKey] of persistState.importantNPCs) {
+                let npc = Universe.npcs.byKey.get(npcKey);
+                let location = Universe.locations.byKey.get(locKey);
+                npcs.set(npcKey, {npc, location});
+            }
+            setImportantNPCs(npcs);
+
+            setAnkhJewels(persistState.ankhJewels);
+            setSacredOrbs(persistState.sacredOrbs);
+
+            let sr = null;
+            if (persistState.startingRegion !== null) {
+                sr = Universe.regions.byKey.get(persistState.startingRegion);
+            }
+            setStartingRegion(sr);
+
+            let sm = new Map(Universe.items.byCategory('seal').map(item => [item.key, new Set()]));
+            for (let [itemKey, root] of persistState.sealMappings) {
+                if (sm.has(itemKey)) {
+                    sm.get(itemKey).add(root);
+                }
+            }
+            setSealMappings(sm);
+
+            let sp = new Map();
+            for (let locKey of persistState.sleepingPhilosophers) {
+                let location = Universe.locations.byKey.get(locKey);
+                sp.set(locKey, location);
+            }
+            setSleepingPhilosophers(sp);
+
+            let s = new Map();
+            for (let locKey of persistState.shops) {
+                let location = Universe.locations.byKey.get(locKey);
+                s.set(locKey, location);
+            }
+            setShops(s);
+
+            setCompletedTasks(new Set(persistState.completedTasks));
+
+            setStateLoaded(true);
+        }
+    }, [stateLoaded]);
+
+    useEffect(() => {
+        store.transact(persistKey, o => {
+            return {
+                ...o,
+                roots: Array.from(roots)
+            };
+        });
+    }, [roots]);
+
+    useEffect(() => {
+        // XXX FIXME
+        store.transact(persistKey, o => {
+            return {
+                ...o,
+                gameSettings
+            };
+        });
+    }, [gameSettings]);
+
+    useEffect(() => {
+        store.transact(persistKey, o => {
+            return {
+                ...o,
+                connectionMap: Array.from(connectionMap.entries()).map(([srcKey, dst]) => [srcKey, dst.key])
+            };
+        });
+    }, [connectionMap]);
+
+    useEffect(() => {
+        store.transact(persistKey, o => {
+            let asSave = [];
+            for (let [itemKey, locations] of ammoSources) {
+                asSave.push([itemKey, locations.map(loc => loc.key)]);
+            }
+
+            return {
+                ...o,
+                ammoSources: asSave
+            };
+        });
+    }, [ammoSources]);
+
+    useEffect(() => {
+        store.transact(persistKey, o => {
+            return {
+                ...o,
+                importantNPCs: Array.from(importantNPCs.values()).map(({npc, location}) => [npc.key, location.key])
+            };
+        });
+    }, [importantNPCs]);
+
+    useEffect(() => {
+        store.transact(persistKey, o => {
+            return {
+                ...o,
+                ankhJewels
+            };
+        });
+    }, [ankhJewels]);
+
+    useEffect(() => {
+        store.transact(persistKey, o => {
+            return {
+                ...o,
+                sacredOrbs
+            };
+        });
+    }, [sacredOrbs]);
+
+    useEffect(() => {
+        store.transact(persistKey, o => {
+            let sr = null;
+            if (startingRegion !== null) {
+                sr = startingRegion.key;
+            }
+
+            return {
+                ...o,
+                startingRegion: sr
+            };
+        });
+    }, [startingRegion]);
+
+    useEffect(() => {
+        store.transact(persistKey, o => {
+            let sm = [];
+            Array.from(sealMappings.entries()).forEach(([itemKey, roots]) => {
+                Array.from(roots).forEach(root => {
+                    sm.push([itemKey, root]);
+                });
+            });
+
+            return {
+                ...o,
+                sealMappings: sm
+            };
+        });
+    }, [sealMappings]);
+
+    useEffect(() => {
+        store.transact(persistKey, o => {
+            return {
+                ...o,
+                sleepingPhilosophers: Array.from(sleepingPhilosophers.keys())
+            };
+        });
+    }, [sleepingPhilosophers]);
+
+    useEffect(() => {
+        store.transact(persistKey, o => {
+            return {
+                ...o,
+                shops: Array.from(shops.keys())
+            };
+        });
+    }, [shops]);
+
+    useEffect(() => {
+        store.transact(persistKey, o => {
+            return {
+                ...o,
+                completedTasks: Array.from(completedTasks)
+            };
+        });
+    }, [completedTasks]);
 
     const activeReqs = useMemo(() => {
         let excludedReqs = new Set();
@@ -295,6 +501,11 @@ function App() {
 
     const access = useMemo(() => {
         let computedRoots = new Set(roots);
+
+        let [settingsRoots, _] = calculateSettingsRoots({settings: gameSettings});
+        for (let root of settingsRoots) {
+            computedRoots.add(root);
+        }
 
         if (ankhJewels > 0) {
             computedRoots.add('Ankh Jewel');
@@ -354,13 +565,17 @@ function App() {
         }
 
         return calculateAccess({reqs: activeReqs, roots: computedRoots});
-    }, [roots, ankhJewels, sacredOrbs, sealMappings, startingRegion, activeReqs]);
+    }, [roots, ankhJewels, sacredOrbs, sealMappings, startingRegion, activeReqs, gameSettings]);
 
     const tasks = useMemo(() => {
-        let tasks = [
-            {type: 'start-region', key: 'start-region'},
-            {type: 'start-weapon', key: 'start-weapon'},
-        ];
+        let tasks = [];
+
+        if (!completedTasks.has('start-region')) {
+            tasks.push({type: 'start-region', key: 'start-region', id: 'start-region'});
+        }
+        if (!completedTasks.has('start-weapon')) {
+            tasks.push({type: 'start-weapon', key: 'start-weapon', id: 'start-weapon'});
+        }
 
         for (let node of access) {
             if (node.startsWith('Transition:')) {
@@ -576,7 +791,11 @@ function App() {
 
         if (args.completedTasks !== undefined) {
             for (let completedTask of args.completedTasks) {
-                setCompletedTasks(tasks => tasks.add(completedTask));
+                setCompletedTasks(tasks => {
+                    let nextTasks = new Set(tasks);
+                    nextTasks.add(completedTask);
+                    return nextTasks;
+                });
             }
         }
 
@@ -626,8 +845,14 @@ function App() {
         });
     }, []);
 
+    let onClearState = useCallback(() => {
+        store.set(persistKey, {});
+        setStateLoaded(false);
+    }, []);
+
     return (
         <div className="App">
+            <button onClick={onClearState}>Clear State</button>
             <GameSettings settings={gameSettings} onChange={onGameSettingsChanged}/>
             <fieldset>
                 <SelectableItemList name='Settings' choices={settings} selected={access} onChange={onSelectableItemsChanged}/>
@@ -688,7 +913,6 @@ export default App;
 // TODO: nebur shop 4+ item
 // TODO: understand exit logic, specifically DC
 // TODO: other location randomization options?
-// TODO: save/clear state
 // TODO: break up more blockable tasks (cursed chests, door checks, shop purchases, etc.)
 // TODO: remove field name from connection in field status?
 // TODO: hide collected item choices?
@@ -729,6 +953,7 @@ export default App;
 // TODO: don't hide transitions for many-to-one
 // TODO: fix boss difficulty reqs
 // TODO: Sacred Orb roots < N
+// TODO: save/clear state
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather

@@ -38,7 +38,6 @@ export function StartRegionTask({id, onSubmit}) {
     );
 }
 
-
 function StartWeaponTaskSatellite({item, onClick}) {
     return (
         <button onClick={() => onClick(item)}>{item.name}</button>
