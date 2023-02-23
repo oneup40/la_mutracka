@@ -271,7 +271,6 @@ function App() {
         let entries = Universe.items.byCategory('seal').map(item => [item.key, new Set()]);
         return new Map(entries);
     });
-    let [sealsFound, setSealsFound] = useState(new Set());
     let [sleepingPhilosophers, setSleepingPhilosophers] = useState(new Map());
     let [shops, setShops] = useState(new Map());
 
@@ -530,14 +529,6 @@ function App() {
         });
     }
 
-    function addSeal(item) {
-        setSealsFound(sf => {
-            let nextSf = new Set(sf);
-            nextSf.add(item);
-            return nextSf;
-        });
-    }
-
     function addNPC({npc, location}) {
         setImportantNPCs(npcs => {
             let nextNPCs = new Map(npcs);
@@ -603,10 +594,6 @@ function App() {
 
         if (args.newAmmos !== undefined) {
             args.newAmmos.forEach(([item, location]) => addAmmo({item, location}));
-        }
-
-        if (args.newSeals !== undefined) {
-            args.newSeals.forEach(item => addSeal(item));
         }
 
         if (args.newNPCs !== undefined) {

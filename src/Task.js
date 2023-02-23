@@ -288,10 +288,6 @@ export function ItemCheckTask({id, location, onSubmit}) {
                 }
 
                 e.newRoots = [item.root];
-
-                if (item.category === 'seal') {
-                    e.newSeals = [item];
-                }
                 break;
             }
         }
