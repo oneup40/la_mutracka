@@ -618,7 +618,7 @@ function App() {
 
     let onSelectableItemsChanged = useCallback(({selected}) => {
         addRoots(selected.keys());
-    }, [setRoots]);
+    }, []);
 
     let onGameSettingsChanged = useCallback(({key, value}) => {
         setGameSettings(settings => {
