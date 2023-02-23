@@ -251,6 +251,7 @@ let npcs = {}
 npcs.all = npcDefs.map(def => new NPC(def));
 npcs.byKey = new Map(npcs.all.map(npc => [npc.key, npc]));
 npcs.byRoot = new Map(npcs.all.map(npc => [npc.root, npc]));
+npcs.byName = new Map(npcs.all.map(npc => [npc.name, npc]));
 npcs.withTag = (tag) => npcs.all.filter(npc => npc.tags.has(tag));
 
 // second pass for initialization that relies on other objects

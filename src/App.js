@@ -658,6 +658,7 @@ function App() {
                 ankhJewels={ankhJewels}
                 sacredOrbs={sacredOrbs}
                 importantNPCs={importantNPCs}
+                startingRegion={startingRegion}
             />
             {tasks.map(task => {
                 switch (task.type) {
@@ -707,6 +708,8 @@ export default App;
 // TODO: better organization of choices
 // TODO: optimize access logic
 // TODO: testing?
+// TODO: take logic into account for shrine/mulbruk distances
+// TODO: handle annexes better for shrine/mulbruk
 
 // done:
 // TODO: philosopher visited events
