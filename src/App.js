@@ -349,7 +349,7 @@ function App() {
                 computedRoots.add('Setting: Frontside Start');
             }
 
-            if (startingRegion.isBackSide()) {
+            if (startingRegion.isBackside()) {
                 computedRoots.add('Setting: Backside Start');
             }
         }

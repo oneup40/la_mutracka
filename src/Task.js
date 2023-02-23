@@ -16,7 +16,7 @@ export function StartRegionTask({id, onSubmit}) {
             onSubmit({
                 newRoots: region.startRoots(),
                 completedTasks: [id],
-                startingLocation: region
+                startingRegion: region
             });
         }
     }, [id, onSubmit]);
