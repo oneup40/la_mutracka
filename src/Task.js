@@ -4,13 +4,13 @@ import {Planet} from 'react-planet';
 
 import Universe from './Universe.js';
 
-function StartLocationTaskSatellite({region, onClick}) {
+function StartRegionTaskSatellite({region, onClick}) {
     return (
         <button onClick={() => onClick(region)}>{region.fullName()}</button>
     );
 }
 
-export function StartLocationTask({id, onSubmit}) {
+export function StartRegionTask({id, onSubmit}) {
     let onClick = useCallback(region => {
         if (onSubmit) {
             onSubmit({
@@ -23,15 +23,15 @@ export function StartLocationTask({id, onSubmit}) {
 
     return (
         <div
-            className='Task StartLocationTask'
+            className='Task StartRegionTask'
         >
             <Planet
-                centerContent={<button>Start Location</button>}
+                centerContent={<button>Start Region</button>}
                 autoClose
                 orbitRadius={180}
             >
                 {Universe.regions.withTag('grail-tablet').map(region => {
-                    return <StartLocationTaskSatellite key={region.key} region={region} onClick={onClick} />;
+                    return <StartRegionTaskSatellite key={region.key} region={region} onClick={onClick} />;
                 })}
             </Planet>
         </div>
@@ -427,7 +427,7 @@ function SealCheckTaskSatellite({item, onClick}) {
 export function SealCheckTask({id, location, access, onSubmit}) {
     let onClick = useCallback(item => {
         let newSealMappings = new Map([
-            [location.root, item.root]
+            [location.root, item]
         ]);
 
         if (onSubmit) {

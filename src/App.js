@@ -1,9 +1,9 @@
 // import './App.css';
-import {useCallback, useReducer, Fragment} from 'react';
+import {useCallback, useState, useMemo, Fragment} from 'react';
 
 import {ReqList, RequirementsLoader} from './RequirementsLoader.js';
 import RequirementsList from './RequirementsList.js';
-import {StartLocationTask, StartWeaponTask, TransitionTask, NPCTask, SleepingPhilosopherTask, ItemCheckTask, ShopItemTask, SealCheckTask, DoorCheckTask, WinTask} from './Task.js';
+import {StartRegionTask, StartWeaponTask, TransitionTask, NPCTask, SleepingPhilosopherTask, ItemCheckTask, ShopItemTask, SealCheckTask, DoorCheckTask, WinTask} from './Task.js';
 import {defaultSettings, GameSettings} from './GameSettings.js';
 import Status from './Status.js';
 
@@ -236,10 +236,8 @@ let settings = new Set([
     "Setting: Screen Mash",
 ]);
 
-function calculateAccess({reqs, prevAccess, roots}) {
-    // let access = new Set([].concat(Array.from(prevAccess), Array.from(roots)));
+function calculateAccess({reqs, roots}) {
     let access = new Set(roots);
-    let newAccess = new Set(Array.from(roots).filter(root => !prevAccess.has(root)));
     let lastSize = -1;
 
     while (access.size !== lastSize) {
@@ -249,129 +247,170 @@ function calculateAccess({reqs, prevAccess, roots}) {
             Array.from(subset.entries()).forEach(([target, choices]) => {
                 if (!access.has(target) && choices.some(choice => choice.every(req => access.has(req)))) {
                     access.add(target);
-                    if (!prevAccess.has(target)) {
-                        newAccess.add(target);
-                    }
                 }
             });
         });
     }
 
-    return {access, newAccess};
+    return access;
 }
 
 function App() {
-    let [state, dispatch] = useReducer((state, action) => {
-        function installActiveReqs(state) {
-            let excludedReqs = new Set();
-            switch (state.difficulty) {
-                case 'medium':
-                    excludedReqs.add('bosses_hard');
-                    break;
-                case 'hard':
-                    excludedReqs.add('bosses_medium');
-                    break;
-                default:
-                    console.error(`unknown difficulty: ${state.difficulty}`);
-                    break;
+    let [allReqs, setAllReqs] = useState(new Map());
+    let [roots, setRoots] = useState(calculateInitialRoots({settings: defaultSettings}));
+
+    let [gameSettings, setGameSettings] = useState({...defaultSettings});
+
+    let [connectionMap, setConnectionMap] = useState(new Map());
+    let [ammoSources, setAmmoSources] = useState(new Map());
+    let [importantNPCs, setImportantNPCs] = useState(new Map());
+    let [ankhJewels, setAnkhJewels] = useState(0);
+    let [sacredOrbs, setSacredOrbs] = useState(0);
+    let [startingRegion, setStartingRegion] = useState(null);
+    let [sealMappings, setSealMappings] = useState(() => {
+        let entries = Universe.items.byCategory('seal').map(item => [item.key, new Set()]);
+        return new Map(entries);
+    });
+    let [sealsFound, setSealsFound] = useState(new Set());
+    let [sleepingPhilosophers, setSleepingPhilosophers] = useState(new Map());
+    let [shops, setShops] = useState(new Map());
+
+    let [completedTasks, setCompletedTasks] = useState(new Set());
+
+    const activeReqs = useMemo(() => {
+        let excludedReqs = new Set();
+        switch (gameSettings.difficulty) {
+            case 'medium':
+                excludedReqs.add('bosses_hard');
+                break;
+            case 'hard':
+                excludedReqs.add('bosses_medium');
+                break;
+            default:
+                console.error(`unknown difficulty: ${gameSettings.difficulty}`);
+                break;
+        }
+
+        return new Map(Array.from(allReqs.entries()).filter(([key, _]) => !excludedReqs.has(key)));
+    }, [allReqs, gameSettings]);
+
+    const access = useMemo(() => {
+        let computedRoots = new Set(roots);
+
+        if (ankhJewels > 0) {
+            computedRoots.add('Ankh Jewel');
+        }
+        if (ankhJewels === 9) {
+            computedRoots.add('Ankh Jewel: 9');
+        }
+
+        for (let i = 0; i <= sacredOrbs; ++i) {
+            computedRoots.add(`State: ${i}-Orb HP`);
+        }
+
+        let bossCount = 0;
+        for (let boss of ['Amphisbaena', 'Sakit', 'Ellmac', 'Bahamut', 'Viy', 'Palenque', 'Baphomet', 'Tiamat']) {
+            let node = `Event: ${boss} Defeated`;
+            if (roots.has(node)) {
+                ++bossCount;
+                computedRoots.add(`Bosses Defeated: ${bossCount}`);
+            }
+        }
+
+        let seals = Universe.items.byCategory('seal');
+        let sealCount = 0;
+        for (let seal of seals) {
+            if (roots.has(seal.root)) {
+                ++sealCount;
+
+                let nodes = Array.from(sealMappings.get(seal.key));
+                for (let node of nodes) {
+                    computedRoots.add(node);
+                }
+            }
+        }
+
+        if (sealCount === seals.length) {
+            for (let x of ['O','B','L','D']) {
+                for (let i = 1; i < 10; ++i) {
+                    let root = `Seal: ${x}${i}`;
+                    computedRoots.add(root);
+                }
+            }
+        }
+
+        if (startingRegion !== null) {
+            if (startingRegion.isAlternateStart()) {
+                computedRoots.add('Setting: Alternate Start');
             }
 
-            let activeReqs = new Map(Array.from(state.allReqs.entries()).filter(([key, _]) => !excludedReqs.has(key)));
-            return {
-                ...state,
-                activeReqs
-            };
+            if (startingRegion.isFrontside()) {
+                computedRoots.add('Setting: Frontside Start');
+            }
+
+            if (startingRegion.isBackSide()) {
+                computedRoots.add('Setting: Backside Start');
+            }
         }
 
-        function setReqs(state, action) {
-            let reqs = new Map(action.reqs);
-            let itemReqs = reqs.get('item');
-            let newItemReqs = new Map();
+        return calculateAccess({reqs: activeReqs, roots: computedRoots});
+    }, [roots, ankhJewels, sacredOrbs, sealMappings, startingRegion, activeReqs]);
 
-            Array.from(itemReqs.entries()).forEach(([key, value]) => {
-                let newKey = `Check: ${key}`;
-                newItemReqs.set(newKey, value);
-            });
+    const tasks = useMemo(() => {
+        let tasks = [
+            {type: 'start-region', key: 'start-region'},
+            {type: 'start-weapon', key: 'start-weapon'},
+        ];
 
-            reqs.set('item', new ReqList(newItemReqs));
-
-            let nextState = {
-                ...state,
-                allReqs: reqs
-            };
-
-            nextState = installActiveReqs(nextState);
-
-            return nextState;
-        }
-
-        function setDifficulty(state, action) {
-            let nextState = {
-                ...state,
-                difficulty: action.value
-            };
-
-            nextState = installActiveReqs(nextState);
-
-            return nextState;
-        }
-
-        function handleRootChange(state, nextRoots) {
-            let {access, newAccess} = calculateAccess({reqs: state.activeReqs, prevAccess: state.access, roots: nextRoots});
-
-            let nextState = {
-                ...state,
-                roots: nextRoots,
-                access
-            };
-
-            let extraRoots = [];
-
-            let newTasks = [];
-            Array.from(newAccess).filter(value => value.startsWith('Transition:')).forEach(value => {
-                let conn = Universe.connections.byRoot.get(value);
+        for (let node of access) {
+            if (node.startsWith('Transition:')) {
+                let conn = Universe.connections.byRoot.get(node);
                 if (conn === undefined) {
-                    console.error(`Unknown transition '${value}'`);
+                    console.error(`Unknown transition '${node}'`);
                 }
                 if (conn.isSource()) {
-                    newTasks.push({
+                    tasks.push({
                         type: 'transition',
                         key: 'trans-' + conn.key,
                         connection: conn
                     });
                 }
-            });
-            Array.from(newAccess).filter(value => value.startsWith('NPCL:')).forEach(value => {
-                let loc = Universe.locations.byRoot.get(value);
+            }
+
+            if (node.startsWith('NPCL:')) {
+                let loc = Universe.locations.byRoot.get(node);
                 if (loc === undefined) {
-                    console.error(`Unknown NPC location '${value}'`);
+                    console.error(`Unknown NPC location '${node}'`);
                 }
-                newTasks.push({
+                tasks.push({
                     type: 'npc',
                     key: 'npc-' + loc.key,
                     location: loc
                 });
-            });
-            Array.from(newAccess).filter(value => value.startsWith('Check:') || value.startsWith('Coin:') || value.startsWith('Trap:')).forEach(value => {
-                let location = Universe.locations.byRoot.get(value);
+            }
+
+            if (node.startsWith('Check:') || node.startsWith('Coin:') || node.startsWith('Trap:')) {
+                let location = Universe.locations.byRoot.get(node);
                 if (location === undefined) {
-                    console.error(`Unknown item location '${value}'`);
+                    console.error(`Unknown item location '${node}'`);
                 }
-                newTasks.push({
+
+                tasks.push({
                     type: 'item-check',
                     key: 'item-' + location.key,
                     location: location
                 });
-            });
-            Array.from(newAccess).filter(value => value.startsWith('Location:')).forEach(value => {
-                let region = Universe.regions.byRoot.get(value);
+            }
+
+            if (node.startsWith('Location:')) {
+                let region = Universe.regions.byRoot.get(node);
                 if (region === undefined) {
-                    console.error(`Unknown region '${value}'`);
+                    console.error(`Unknown region '${node}'`);
                 }
 
                 let locations = Universe.locations.withTag('seal').filter(loc => loc.regions.some(locRegion => locRegion === region));
 
-                locations.forEach(loc => newTasks.push({
+                locations.forEach(loc => tasks.push({
                     type: 'seal-check',
                     key: 'seal-' + loc.key,
                     location: loc
@@ -379,535 +418,266 @@ function App() {
 
                 let connections = Universe.connections.byType('door').filter(conn => conn.region === region);
                 connections.filter(conn => conn.isSource()).forEach(conn => {
-                    newTasks.push({
+                    tasks.push({
                         type: 'door-check',
                         key: 'door-' + conn.key,
                         connection: conn
                     });
                 });
-            });
-            Array.from(newAccess).forEach(value => {
-                switch (value) {
-                    case 'Event: Amphisbaena Defeated':
-                    case 'Event: Sakit Defeated':
-                    case 'Event: Ellmac Defeated':
-                    case 'Event: Bahamut Defeated':
-                    case 'Event: Viy Defeated':
-                    case 'Event: Palenque Defeated':
-                    case 'Event: Baphomet Defeated':
-                    case 'Event: Tiamat Defeated':
-                        ++nextState.bossesDefeated;
-                        extraRoots.push(`Bosses Defeated: ${nextState.bossesDefeated}`);
-                        break;
-                    default:
-                        break;
-                }
-            });
-            Array.from(newAccess).forEach(value => {
-                if (value.startsWith('Win:')) {
-                    newTasks.push({
-                        type: 'win',
-                        key: 'win'
-                    });
-                }
-            });
-
-            newTasks = newTasks.filter(task => !state.completedTasks.has(task.key));
-
-            nextState = addTasks(nextState, {tasks: newTasks});
-            if (extraRoots.length > 0) {
-                nextState = addRoots(nextState, {roots: extraRoots});
-            }
-            return nextState;
-        }
-
-        function addRoots(state, action) {
-            let nextRoots = new Set(state.roots);
-            action.roots.forEach(value => {
-                nextRoots.add(value);
-                if (state.sealMappings.has(value)) {
-                    Array.from(state.sealMappings.get(value)).forEach(seal => {
-                        nextRoots.add(seal);
-                    });
-                }
-            });
-
-            return handleRootChange(state, nextRoots);
-        }
-
-        function removeRoots(state, action) {
-            let nextRoots = new Set(state.roots);
-            action.roots.forEach(value => {
-                nextRoots.delete(value);
-
-                if (state.sealMappings.has(value)) {
-                    Array.from(state.sealMappings.get(value)).forEach(seal => {
-                        nextRoots.delete(seal);
-                    });
-                }
-            });
-
-            return handleRootChange(state, nextRoots);
-        }
-
-        function addTasks(state, action) {
-            let nextTasks = [].concat(state.tasks, action.tasks);
-            return {
-                ...state,
-                tasks: nextTasks
-            };
-        }
-
-        function completeTasks(state, action) {
-            let completedIds = new Set(action.taskIds);
-
-            let nextTasks = state.tasks.filter(task => !completedIds.has(task.key));
-
-            let nextCompletedTasks = new Set(state.completedTasks);
-            Array.from(completedIds).forEach(id => nextCompletedTasks.add(id));
-
-            return {
-                ...state,
-                tasks: nextTasks,
-                completedTasks: nextCompletedTasks,
-            };
-        }
-
-        function addAnkhJewels(state, action) {
-            let nextAnkhJewels = state.ankhJewels + action.ankhJewels;
-            let nextState = {
-                ...state,
-                ankhJewels: nextAnkhJewels
-            }
-            if (nextAnkhJewels > 0) {
-                nextState = addRoots(nextState, {roots: ['Ankh Jewel']});
-            }
-            if (nextAnkhJewels === 9) {
-                nextState = addRoots(nextState, {roots: ['Ankh Jewel: 9']});
-            }
-            
-            return nextState;   
-        }
-
-        function addSacredOrbs(state, action) {
-            let nextSacredOrbs = state.sacredOrbs + action.sacredOrbs;
-            let nextState = {
-                ...state,
-                sacredOrbs: nextSacredOrbs
             }
 
-            let newRoots = [];
-            for (let i = 0; i <= nextSacredOrbs; ++i) {
-                newRoots.push(`State: ${i}-Orb HP`);
-            }
-
-            nextState = addRoots(nextState, {roots: newRoots});
-
-            return nextState;
-        }
-
-        function setGameSetting(state, action) {
-            let nextGameSettings = {
-                ...state.gameSettings,
-                [action.key]: action.value
-            };
-
-            let nextState = {
-                ...state,
-                gameSettings: nextGameSettings
-            };
-
-            let [roots, notRoots] = calculateSettingsRoots({settings: nextState.gameSettings});
-
-            nextState = addRoots(nextState, {roots: roots});
-            nextState = removeRoots(nextState, {roots: notRoots});
-
-            return nextState;
-        }
-
-        function setStartingLocation(state, action) {
-            let nextState = state;
-            nextState = setGameSetting(nextState, {key: 'alternate-start', value: action.region.isAlternateStart()});
-            nextState = setGameSetting(nextState, {key: 'frontside-start', value: action.region.isFrontside()});
-            nextState = setGameSetting(nextState, {key: 'backside-start', value: action.region.isBackside()});
-
-            if (action.region.isAlternateStart()) {
-                let synthLoc = new Universe.Location({
-                    name: 'Starting Shop',
-                    root: null,
-                    regions: [action.region],
-                    key: 'location-starting-shop'
+            if (node.startsWith('Win:')) {
+                tasks.push({
+                    type: 'win',
+                    key: 'win'
                 });
-
-                let newTasks = [];
-                for (let i = 1; i <= 3; ++i) {
-                    newTasks.push({
-                        type: 'shop-item',
-                        key: `shop-start-${i}`,
-                        location: synthLoc,
-                        index: i
-                    });
-                }
-
-                nextState = addTasks(nextState, {tasks: newTasks});
             }
-
-            return nextState;
         }
 
-        function addSealMapping(state, action) {
-            let nextLogics = new Set(state.sealMappings.get(action.item));
-            nextLogics.add(action.logic);
+        Array.from(sleepingPhilosophers.entries()).forEach(([_, location]) => {
+            tasks.push({
+                type: 'sleeping-philosopher',
+                key: 'philo-' + location.key,
+                location: location
+            });
+        });
 
-            let nextSealMappings = new Map(state.sealMappings);
-            nextSealMappings.set(action.item, nextLogics);
-
-            let nextState = {
-                ...state,
-                sealMappings: nextSealMappings
-            };
-
-            if (state.roots.has(action.item)) {
-                nextState = addRoots(state, {roots: [action.logic]});
+        Array.from(shops.entries()).forEach(([_, location]) => {
+            for (let i = 1; i <= 3; ++i) {
+                tasks.push({
+                    type: 'shop-item',
+                    key: `shop-${location.key}-${i}`,
+                    location: location,
+                    index: i
+                });
             }
+        });
 
-            return nextState;
+        if (startingRegion !== null && startingRegion.isAlternateStart()) {
+            let synthLoc = new Universe.Location({
+                name: 'Starting Shop',
+                root: null,
+                regions: [startingRegion],
+                key: 'location-starting-shop'
+            });
+
+            for (let i = 1; i <= 3; ++i) {
+                tasks.push({
+                    type: 'shop-item',
+                    key: `shop-start-${i}`,
+                    location: synthLoc,
+                    index: i
+                });
+            }
         }
 
-        function connect(state, action) {
-            let nextConnectionMap = new Map(state.connectionMap);
+        return tasks.filter(task => !completedTasks.has(task.key));
 
-            if (action.src.isSource() && action.dst.isDestination()) {
-                nextConnectionMap.set(action.src.key, action.dst);
+    }, [access, startingRegion, sleepingPhilosophers, shops, completedTasks]);
+
+    function addRoots(roots) {
+        setRoots(r => {
+            let nextR = new Set(r);
+            for (let root of roots) {
+                nextR.add(root);
+            }
+            return nextR;
+        });
+    }
+
+    function addSealMapping({item, node}) {
+        setSealMappings(sealMappings => {
+            let nextNodes = new Set(sealMappings.get(item.key));
+            nextNodes.add(node);
+
+            let nextSealMappings = new Map(sealMappings);
+            nextSealMappings.set(item.key, nextNodes);
+
+            return nextSealMappings;
+        });
+    }
+
+    function connect(src, dst) {
+        setConnectionMap(cm => {
+            let nextCm = new Map(cm);
+
+            if (src.isSource() && dst.isDestination()) {
+                nextCm.set(src.key, dst);
             }
 
-            if (action.dst.isSource() && action.src.isDestination()) {
-                nextConnectionMap.set(action.dst.key, action.src);
+            if (dst.isSource() && src.isDestination()) {
+                nextCm.set(dst.key, src);
             }
 
-            return {
-                ...state,
-                connectionMap: nextConnectionMap
-            };
-        }
+            return nextCm;
+        });
+    }
 
-        function newAmmo(state, action) {
-            let nextAmmoSources = new Map(state.ammoSources);
+    function addAmmo({item, location}) {
+        setAmmoSources(as => {
+            let nextAs = new Map(as);
 
-            let sourceList = nextAmmoSources.get(action.item.key);
+            let sourceList = nextAs.get(item.key);
             if (sourceList === undefined) {
                 sourceList = [];
-                nextAmmoSources.set(action.item.key, sourceList);
+                nextAs.set(item.key, sourceList);
             }
 
-            sourceList.push(action.location);
+            sourceList.push(location);
 
-            return {
-                ...state,
-                ammoSources: nextAmmoSources
-            };
-        }
+            return nextAs;
+        });
+    }
 
-        function newSeal(state, action) {
-            let nextSealsFound = new Set(state.sealsFound);
-            nextSealsFound.add(action.item);
+    function addSeal(item) {
+        setSealsFound(sf => {
+            let nextSf = new Set(sf);
+            nextSf.add(item);
+            return nextSf;
+        });
+    }
 
-            let nextState = {
-                ...state,
-                sealsFound: nextSealsFound
-            };
+    function addNPC({npc, location}) {
+        setImportantNPCs(npcs => {
+            let nextNPCs = new Map(npcs);
+            nextNPCs.set(npc.key, {npc, location});
+            return nextNPCs;
+        });
+    }
 
-            if (nextSealsFound.size === Universe.items.byCategory('seal').length) {
-                let newRoots = [];
+    function addSleepingPhilosopher(location) {
+        setSleepingPhilosophers(sp => {
+            let nextSp = new Map(sp);
+            nextSp.set(location.key, location);
+            return nextSp;
+        });
+    }
 
-                for (let x of ['O','B','L','D']) {
-                    for (let i = 1; i < 10; ++i) {
-                        let root = `Seal: ${x}${i}`;
-                        newRoots.push(root);
-                    }
-                }
-
-                nextState = addRoots(nextState, {roots: newRoots});
-            }
-
-            return nextState;
-        }
-
-        function newNPC(state, action) {
-            let nextImportantNPCs = new Map(state.importantNPCs);
-            nextImportantNPCs.set(action.npc.key, {npc: action.npc, location: action.location});
-
-            let nextState = {
-                ...state,
-                importantNPCs: nextImportantNPCs
-            };
-
-            return nextState;
-        }
-
-        switch (action.type) {
-            case 'setReqs':
-                return setReqs(state, action);
-            case 'setDifficulty':
-                return setDifficulty(state, action);
-            case 'addRoots':
-                return addRoots(state, action);
-            case 'removeRoots':
-                return removeRoots(state, action);
-            case 'addTasks':
-                return addTasks(state, action);
-            case 'addAnkhJewels':
-                return addAnkhJewels(state, action);
-            case 'addSacredOrbs':
-                return addSacredOrbs(state, action);
-            case 'setGameSetting':
-                return setGameSetting(state, action);
-            case 'completeTasks':
-                return completeTasks(state, action);
-            case 'setStartingLocation':
-                return setStartingLocation(state, action);
-            case 'addSealMapping':
-                return addSealMapping(state, action);
-            case 'connect':
-                return connect(state, action);
-            case 'newAmmo':
-                return newAmmo(state, action);
-            case 'newSeal':
-                return newSeal(state, action);
-            case 'newNPC':
-                return newNPC(state, action);
-            default:
-                console.error(`unexpected action.type '${action.type}'`);
-        }
-    },
-    {
-        allReqs: new Map(),
-        activeReqs: new Map(),
-        difficulty: 'medium',
-        roots: calculateInitialRoots({settings: defaultSettings}),
-        access: new Set(),
-        ankhJewels: 0,
-        sacredOrbs: 0,
-        tasks: [
-            {type: 'start-location', key: 'start-location'},
-            {type: 'start-weapon', key: 'start-weapon'}
-        ],
-        completedTasks: new Set(),
-        gameSettings: {
-            ...defaultSettings
-        },
-        sealMappings: new Map([
-            ['Origin Seal', new Set()],
-            ['Birth Seal', new Set()],
-            ['Life Seal', new Set()],
-            ['Death Seal', new Set()]
-        ]),
-        bossesDefeated: 0,
-        connectionMap: new Map(),
-        ammoSources: new Map(),
-        sealsFound: new Set(),
-        importantNPCs: new Map()
-    });
+    function addShop(location) {
+        setShops(s => {
+            let nextS = new Map(s);
+            nextS.set(location.key, location);
+            return nextS;
+        });
+    }
 
     let onTaskSubmit = useCallback((args) => {
         if (args.newRoots !== undefined) {
-            dispatch({
-                type: 'addRoots',
-                roots: args.newRoots
-            });
+            addRoots(args.newRoots);
         }
 
         if (args.newSleepingPhilosophers !== undefined) {
-            let newTasks = args.newSleepingPhilosophers.map(location => {
-                return {
-                    type: 'sleeping-philosopher',
-                    key: 'philo-' + location.key,
-                    location: location
-                }
-            });
-            dispatch({
-                type: 'addTasks',
-                tasks: newTasks
-            });
+            args.newSleepingPhilosophers.forEach(location => addSleepingPhilosopher(location));
         }
 
         if (args.newShops !== undefined) {
-            let newTasks = [];
-            args.newShops.forEach(location => {
-                for (let i = 1; i <= 3; ++i) {
-                    newTasks.push({
-                        type: 'shop-item',
-                        key: `shop-${location.key}-${i}`,
-                        location: location,
-                        index: i
-                    });
-                }
-            });
-            dispatch({
-                type: 'addTasks',
-                tasks: newTasks
-            });
+            args.newShops.forEach(location => addShop(location));
         }
 
         if (args.newAnkhJewels !== undefined) {
-            dispatch({
-                type: 'addAnkhJewels',
-                ankhJewels: args.newAnkhJewels
-            });
+            setAnkhJewels(n => n + args.newAnkhJewels);
         }
 
         if (args.newSacredOrbs !== undefined) {
-            dispatch({
-                type: 'addSacredOrbs',
-                sacredOrbs: args.newSacredOrbs
-            });
+            setSacredOrbs(n => n + args.newSacredOrbs);
         }
 
         if (args.completedTasks !== undefined) {
-            dispatch({
-                type: 'completeTasks',
-                taskIds: args.completedTasks
-            });
+            for (let completedTask of args.completedTasks) {
+                setCompletedTasks(tasks => tasks.add(completedTask));
+            }
         }
 
-        if (args.startingLocation !== undefined) {
-            dispatch({
-                type: 'setStartingLocation',
-                region: args.startingLocation
-            });
+        if (args.startingRegion !== undefined) {
+            setStartingRegion(args.startingRegion);
         }
 
         if (args.newSealMappings !== undefined) {
-            Array.from(args.newSealMappings.entries()).forEach(([logic, item]) => {
-                dispatch({
-                    type: 'addSealMapping',
-                    item,
-                    logic
-                });
-            });
+            Array.from(args.newSealMappings.entries()).forEach(([node, item]) => addSealMapping({item, node}));
         }
 
         if (args.newConnections !== undefined) {
-            args.newConnections.forEach(([src, dst]) => {
-                dispatch({
-                    type: 'connect',
-                    src,
-                    dst
-                });
-            });
+            args.newConnections.forEach(([src, dst]) => connect(src, dst));
         }
 
         if (args.newAmmos !== undefined) {
-            args.newAmmos.forEach(([item, location]) => {
-                dispatch({
-                    type: 'newAmmo',
-                    item,
-                    location
-                });
-            });
+            args.newAmmos.forEach(([item, location]) => addAmmo({item, location}));
         }
 
         if (args.newSeals !== undefined) {
-            args.newSeals.forEach(item => {
-                dispatch({
-                    type: 'newSeal',
-                    item
-                });
-            });
+            args.newSeals.forEach(item => addSeal(item));
         }
 
         if (args.newNPCs !== undefined) {
-            args.newNPCs.forEach(([npc, location]) => {
-                dispatch({
-                    type: 'newNPC',
-                    npc,
-                    location
-                });
-            });
+            args.newNPCs.forEach(([npc, location]) => addNPC({npc, location}));
         }
 
     }, []);
 
     let onReqsLoaded = useCallback(({reqs}) => {
-        dispatch({
-            type: 'setReqs',
-            reqs: reqs
+        let itemReqs = reqs.get('item');
+        let newItemReqs = new Map();
+
+        Array.from(itemReqs.entries()).forEach(([key, value]) => {
+            let newKey = `Check: ${key}`;
+            newItemReqs.set(newKey, value);
         });
-    }, []);
-    let onDifficultyChanged = useCallback(event => {
-        dispatch({
-            type: 'setDifficulty',
-            value: event.target.value
-        });
-    }, []);
+
+        reqs.set('item', new ReqList(newItemReqs));
+
+        setAllReqs(reqs);
+    }, [setAllReqs]);
 
     let onSelectableItemsChanged = useCallback(({selected}) => {
-        dispatch({
-            type: 'addRoots',
-            roots: Array.from(selected.keys())
-        });
-    }, []);
+        addRoots(selected.keys());
+    }, [setRoots]);
 
     let onGameSettingsChanged = useCallback(({key, value}) => {
-        dispatch({
-            type: 'setGameSetting',
-            key,
-            value
+        setGameSettings(settings => {
+            return { ...settings, [key]: value }
         });
     }, []);
 
     return (
         <div className="App">
-            <GameSettings settings={state.gameSettings} onChange={onGameSettingsChanged}/>
+            <GameSettings settings={gameSettings} onChange={onGameSettingsChanged}/>
             <fieldset>
-                <legend>Settings</legend>
-                <fieldset>
-                    <legend>Difficulty</legend>
-                    <select name="difficulty" id="difficulty" onChange={onDifficultyChanged}>
-                        <option value="medium">medium</option>
-                        <option value="hard">hard</option>
-                    </select>
-                </fieldset>
-
-                <SelectableItemList name='Settings' choices={settings} selected={state.access} onChange={onSelectableItemsChanged}/>
-            </fieldset>
-            <fieldset>
-                <legend>Status</legend>
-                <SelectableItemList name='Weapons' choices={weaponChoices} selected={state.access} onChange={onSelectableItemsChanged}/>
-                <SelectableItemList name='Subweapons' choices={subweaponChoices} selected={state.access} onChange={onSelectableItemsChanged}/>
-                <SelectableItemList name='Usable Items' choices={usableChoices} selected={state.access} onChange={onSelectableItemsChanged}/>
-                <SelectableItemList name='Items' choices={itemChoices} selected={state.access} onChange={onSelectableItemsChanged}/>
-                <SelectableItemList name='Seals' choices={sealChoices} selected={state.access} onChange={onSelectableItemsChanged}/>
-                <SelectableItemList name='Software' choices={softwareChoices} selected={state.access} onChange={onSelectableItemsChanged}/>
+                <SelectableItemList name='Settings' choices={settings} selected={access} onChange={onSelectableItemsChanged}/>
+                <SelectableItemList name='Weapons' choices={weaponChoices} selected={access} onChange={onSelectableItemsChanged}/>
+                <SelectableItemList name='Subweapons' choices={subweaponChoices} selected={access} onChange={onSelectableItemsChanged}/>
+                <SelectableItemList name='Usable Items' choices={usableChoices} selected={access} onChange={onSelectableItemsChanged}/>
+                <SelectableItemList name='Items' choices={itemChoices} selected={access} onChange={onSelectableItemsChanged}/>
+                <SelectableItemList name='Seals' choices={sealChoices} selected={access} onChange={onSelectableItemsChanged}/>
+                <SelectableItemList name='Software' choices={softwareChoices} selected={access} onChange={onSelectableItemsChanged}/>
             </fieldset>
             <RequirementsLoader onLoaded={onReqsLoaded} />
             <Status
-                connectionMap={state.connectionMap}
-                ammoSources={state.ammoSources}
-                ankhJewels={state.ankhJewels}
-                sacredOrbs={state.sacredOrbs}
-                importantNPCs={state.importantNPCs}
+                connectionMap={connectionMap}
+                ammoSources={ammoSources}
+                ankhJewels={ankhJewels}
+                sacredOrbs={sacredOrbs}
+                importantNPCs={importantNPCs}
             />
-            {state.tasks.map(task => {
+            {tasks.map(task => {
                 switch (task.type) {
-                    case 'start-location':
-                        return <StartLocationTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
+                    case 'start-region':
+                        return <StartRegionTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
                     case 'start-weapon':
                         return <StartWeaponTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
                     case 'transition':
-                        return <TransitionTask key={task.key} id={task.key} connection={task.connection} connectionMap={state.connectionMap} onSubmit={onTaskSubmit}/>;
+                        return <TransitionTask key={task.key} id={task.key} connection={task.connection} connectionMap={connectionMap} onSubmit={onTaskSubmit}/>;
                     case 'npc':
                         return <NPCTask key={task.key} id={task.key} location={task.location} onSubmit={onTaskSubmit}/>;
                     case 'sleeping-philosopher':
-                        return <SleepingPhilosopherTask key={task.key} id={task.key} access={state.access} location={task.location} onSubmit={onTaskSubmit}/>;
+                        return <SleepingPhilosopherTask key={task.key} id={task.key} access={access} location={task.location} onSubmit={onTaskSubmit}/>;
                     case 'item-check':
                         return <ItemCheckTask key={task.key} id={task.key} location={task.location} onSubmit={onTaskSubmit}/>;
                     case 'shop-item':
                         return <ShopItemTask key={task.key} id={task.key} location={task.location} index={task.index} onSubmit={onTaskSubmit}/>;
                     case 'seal-check':
-                        return <SealCheckTask key={task.key} id={task.key} location={task.location} access={state.access} onSubmit={onTaskSubmit}/>;
+                        return <SealCheckTask key={task.key} id={task.key} location={task.location} access={access} onSubmit={onTaskSubmit}/>;
                     case 'door-check':
-                        return <DoorCheckTask key={task.key} id={task.key} connection={task.connection} connectionMap={state.connectionMap} onSubmit={onTaskSubmit}/>;
+                        return <DoorCheckTask key={task.key} id={task.key} connection={task.connection} connectionMap={connectionMap} onSubmit={onTaskSubmit}/>;
                     case 'win':
                         return <WinTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
                     default:
@@ -915,7 +685,7 @@ function App() {
                         return null;
                 }
             })}
-            <RequirementsList reqs={state.activeReqs} accessible={state.access} />
+            <RequirementsList reqs={activeReqs} accessible={access} />
         </div>
     );
 }
