@@ -230,6 +230,15 @@ function calculateAccess({reqs, roots}) {
     while (access.size !== lastSize) {
         lastSize = access.size;
 
+        let bossCount = 0;
+        for (let boss of ['Amphisbaena', 'Sakit', 'Ellmac', 'Bahamut', 'Viy', 'Palenque', 'Baphomet', 'Tiamat']) {
+            let node = `Event: ${boss} Defeated`;
+            if (access.has(node)) {
+                ++bossCount;
+                access.add(`Bosses Defeated: ${bossCount}`);
+            }
+        }
+
         Array.from(reqs.entries()).forEach(([_, subset]) => {
             Array.from(subset.entries()).forEach(([target, choices]) => {
                 if (!access.has(target) && choices.some(choice => choice.every(req => access.has(req)))) {
@@ -517,15 +526,6 @@ function App() {
         for (let i = 0; i <= sacredOrbs; ++i) {
             computedRoots.add(`State: ${i}-Orb HP`);
             computedRoots.add(`Sacred Orb: ${i}`);
-        }
-
-        let bossCount = 0;
-        for (let boss of ['Amphisbaena', 'Sakit', 'Ellmac', 'Bahamut', 'Viy', 'Palenque', 'Baphomet', 'Tiamat']) {
-            let node = `Event: ${boss} Defeated`;
-            if (roots.has(node)) {
-                ++bossCount;
-                computedRoots.add(`Bosses Defeated: ${bossCount}`);
-            }
         }
 
         let seals = Universe.items.byCategory('seal');
