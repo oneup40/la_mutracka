@@ -511,6 +511,9 @@ function App() {
     const access = useMemo(() => {
         let computedRoots = new Set(roots);
 
+        // TODO: exit logic?
+        computedRoots.add('Exit: Door F8');
+
         let [settingsRoots, _] = calculateSettingsRoots({settings: gameSettings});
         for (let root of settingsRoots) {
             computedRoots.add(root);
