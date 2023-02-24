@@ -50,6 +50,10 @@ export function StartWeaponTask({id, onSubmit}) {
         if (item.hasAmmo()) {
             newRoots.push(item.ammo.root);
         }
+        if (item.name === 'Pistol') {
+            // probably a better way to do this, but matches Main::getStartingNodes
+            newRoots.push('Attack: Pistol');
+        }
 
         if (onSubmit) {
             onSubmit({
