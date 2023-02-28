@@ -4,7 +4,7 @@ import store from 'store2';
 
 import {ReqList, RequirementsLoader} from './RequirementsLoader.js';
 import RequirementsList from './RequirementsList.js';
-import {StartRegionTask, StartWeaponTask, TransitionTask, NPCTask, AwakenTask, ItemCheckTask, ShopItemTask, SealCheckTask, DoorCheckTask, WinTask} from './Task.js';
+import {StartRegionTask, StartWeaponTask, TransitionTask, NPCTask, AwakenTask, ItemCheckTask, ShopItemTask, SealCheckTask, WinTask} from './Task.js';
 import {defaultSettings, GameSettings} from './GameSettings.js';
 import Status from './Status.js';
 
@@ -295,14 +295,6 @@ class TaskData {
         return new TaskData({
             type: 'transition',
             key: `trans-${connection.key}`,
-            connection
-        });
-    }
-
-    static newDoorCheckTask(connection) {
-        return new TaskData({
-            type: 'door-check',
-            key: `door-${connection.key}`,
             connection
         });
     }
@@ -708,7 +700,7 @@ function App() {
 
                 let connections = Universe.connections.byType('door').filter(conn => conn.region === region);
                 connections.filter(conn => conn.isSource()).forEach(conn => {
-                    tasks.push(TaskData.newDoorCheckTask(conn));
+                    tasks.push(TaskData.newTransitionTask(conn));
                 });
             }
 
@@ -945,8 +937,6 @@ function App() {
                             return <ShopItemTask key={task.key} id={task.key} location={task.location} index={task.shopIndex} onSubmit={onTaskSubmit}/>;
                         case 'seal-check':
                             return <SealCheckTask key={task.key} id={task.key} location={task.location} access={access} onSubmit={onTaskSubmit}/>;
-                        case 'door-check':
-                            return <DoorCheckTask key={task.key} id={task.key} connection={task.connection} connectionMap={connectionMap} onSubmit={onTaskSubmit}/>;
                         case 'win':
                             return <WinTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
                         default:

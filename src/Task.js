@@ -148,13 +148,23 @@ export function TransitionTask({id, connection, connectionMap, onSubmit}) {
                    .filter(dstConn => dstConn !== srcConn)
                    .filter(dstConn => (srcConn.tags.has('alias') || !connectionMap.has(dstConn.key)));
 
+    let taskText = null;
+    switch (srcConn.type) {
+        case 'door':
+            taskText = `Door: ${srcConn.name}`;
+            break;
+        default:
+            taskText = `Transition: ${srcConn.region.field.name} ${srcConn.name}`;
+            break;
+    }
+
     if (connectionMap.has(connection.key)) {
         return null;
     } else {
         return (
             <Popup
                 className='task-root'
-                trigger={<div className='task-root'>Transition: {srcConn.region.field.name} {srcConn.name}</div>}
+                trigger={<div className='task-root'>{taskText}</div>}
                 position="right center"
                 arrow={false}
             >
@@ -495,39 +505,6 @@ export function SealCheckTask({id, location, access, onSubmit}) {
                         onClick={() => onClick(Universe.items.byKey.get('death-seal'))}
                     />
                 </div>
-            </Popup>
-        );
-    }
-}
-
-export function DoorCheckTask({id, connection, connectionMap, onSubmit}) {
-    let srcConn = connection;
-
-    let onClick = useCallback(dstConn => {
-        if (onSubmit) {
-            onSubmit({
-                newRoots: [dstConn.root],
-                newConnections: [[srcConn, dstConn]],
-                completedTasks: [id]
-            });
-        }
-    }, [srcConn, id, onSubmit]);
-
-    let dstConns = srcConn.candidates()
-                   .filter(dstConn => dstConn !== srcConn)
-                   .filter(dstConn => (srcConn.tags.has('alias') || !connectionMap.has(dstConn.key)));
-
-    if (connectionMap.has(connection.key)) {
-        return null;
-    } else {
-        return (
-            <Popup
-                className='task-root'
-                trigger={<div className='task-root'>Door: {srcConn.region.field.name} {srcConn.name}</div>}
-                position="right center"
-                arrow={false}
-            >
-                <ConnectionList dstConns={dstConns} onClick={onClick} />
             </Popup>
         );
     }
