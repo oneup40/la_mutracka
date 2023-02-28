@@ -268,6 +268,94 @@ const defaultState = {
 
 const persistKey = 'lmt-state';
 
+class TaskData {
+    constructor({type, key, connection, location, shopIndex}) {
+        this.type = type;
+        this.key = key;
+        this.connection = (connection === undefined) ? null : connection;
+        this.location = (location === undefined) ? null : location;
+        this.shopIndex = (shopIndex === undefined) ? null : shopIndex;
+    }
+
+    static newStartRegionTask() {
+        return new TaskData({
+            type: 'start-region',
+            key: 'start-region',
+        });
+    }
+
+    static newStartWeaponTask() {
+        return new TaskData({
+            type: 'start-weapon',
+            key: 'start-weapon',
+        });
+    }
+
+    static newTransitionTask(connection) {
+        return new TaskData({
+            type: 'transition',
+            key: `trans-${connection.key}`,
+            connection
+        });
+    }
+
+    static newDoorCheckTask(connection) {
+        return new TaskData({
+            type: 'door-check',
+            key: `door-${connection.key}`,
+            connection
+        });
+    }
+
+    static newNPCTask(location) {
+        return new TaskData({
+            type: 'npc',
+            key: `npc-${location.key}`,
+            location
+        });
+    }
+
+    static newItemCheckTask(location) {
+        return new TaskData({
+            type: 'item-check',
+            key: `item-${location.key}`,
+            location
+        });
+    }
+
+    static newSealCheckTask(location) {
+        return new TaskData({
+            type: 'seal-check',
+            key: `item-${location.key}`,
+            location
+        });
+    }
+
+    static newAwakenTask(location) {
+        return new TaskData({
+            type: 'awaken',
+            key: `philo-${location.key}`,
+            location
+        });
+    }
+
+    static newShopItemTask(location, shopIndex) {
+        return new TaskData({
+            type: 'shop-item',
+            key: `shop-${location.key}-${shopIndex}`,
+            location,
+            shopIndex
+        });
+    }
+
+    static newWinTask() {
+        return new TaskData({
+            type: 'win',
+            key: 'win'
+        });
+    }
+}
+
 function App() {
     let [allReqs, setAllReqs] = useState(new Map());
     let [roots, setRoots] = useState(new Set());
@@ -574,10 +662,10 @@ function App() {
         let tasks = [];
 
         if (!completedTasks.has('start-region')) {
-            tasks.push({type: 'start-region', key: 'start-region', id: 'start-region'});
+            tasks.push(TaskData.newStartRegionTask());
         }
         if (!completedTasks.has('start-weapon')) {
-            tasks.push({type: 'start-weapon', key: 'start-weapon', id: 'start-weapon'});
+            tasks.push(TaskData.newStartWeaponTask());
         }
 
         for (let node of access) {
@@ -587,11 +675,7 @@ function App() {
                     console.error(`Unknown transition '${node}'`);
                 }
                 if (conn.isSource()) {
-                    tasks.push({
-                        type: 'transition',
-                        key: 'trans-' + conn.key,
-                        connection: conn
-                    });
+                    tasks.push(TaskData.newTransitionTask(conn));
                 }
             }
 
@@ -600,11 +684,7 @@ function App() {
                 if (loc === undefined) {
                     console.error(`Unknown NPC location '${node}'`);
                 }
-                tasks.push({
-                    type: 'npc',
-                    key: 'npc-' + loc.key,
-                    location: loc
-                });
+                tasks.push(TaskData.newNPCTask(loc));
             }
 
             if (node.startsWith('Check:') || node.startsWith('Coin:') || node.startsWith('Trap:')) {
@@ -613,11 +693,7 @@ function App() {
                     console.error(`Unknown item location '${node}'`);
                 }
 
-                tasks.push({
-                    type: 'item-check',
-                    key: 'item-' + location.key,
-                    location: location
-                });
+                tasks.push(TaskData.newItemCheckTask(location));
             }
 
             if (node.startsWith('Location:')) {
@@ -628,46 +704,26 @@ function App() {
 
                 let locations = Universe.locations.withTag('seal').filter(loc => loc.regions.some(locRegion => locRegion === region));
 
-                locations.forEach(loc => tasks.push({
-                    type: 'seal-check',
-                    key: 'seal-' + loc.key,
-                    location: loc
-                }));
+                locations.forEach(loc => tasks.push(TaskData.newSealCheckTask(loc)));
 
                 let connections = Universe.connections.byType('door').filter(conn => conn.region === region);
                 connections.filter(conn => conn.isSource()).forEach(conn => {
-                    tasks.push({
-                        type: 'door-check',
-                        key: 'door-' + conn.key,
-                        connection: conn
-                    });
+                    tasks.push(TaskData.newDoorCheckTask(conn));
                 });
             }
 
             if (node.startsWith('Win:')) {
-                tasks.push({
-                    type: 'win',
-                    key: 'win'
-                });
+                tasks.push(TaskData.newWinTask());
             }
         }
 
         Array.from(sleepingPhilosophers.entries()).forEach(([_, location]) => {
-            tasks.push({
-                type: 'awaken',
-                key: 'philo-' + location.key,
-                location: location
-            });
+            tasks.push(TaskData.newAwakenTask(location));
         });
 
         Array.from(shops.entries()).forEach(([_, location]) => {
             for (let i = 1; i <= 3; ++i) {
-                tasks.push({
-                    type: 'shop-item',
-                    key: `shop-${location.key}-${i}`,
-                    location: location,
-                    index: i
-                });
+                tasks.push(TaskData.newShopItemTask(location, i));
             }
         });
 
@@ -680,12 +736,7 @@ function App() {
             });
 
             for (let i = 1; i <= 3; ++i) {
-                tasks.push({
-                    type: 'shop-item',
-                    key: `shop-start-${i}`,
-                    location: synthLoc,
-                    index: i
-                });
+                tasks.push(TaskData.newShopItemTask(synthLoc, i));
             }
         }
 
@@ -891,7 +942,7 @@ function App() {
                         case 'item-check':
                             return <ItemCheckTask key={task.key} id={task.key} location={task.location} onSubmit={onTaskSubmit}/>;
                         case 'shop-item':
-                            return <ShopItemTask key={task.key} id={task.key} location={task.location} index={task.index} onSubmit={onTaskSubmit}/>;
+                            return <ShopItemTask key={task.key} id={task.key} location={task.location} index={task.shopIndex} onSubmit={onTaskSubmit}/>;
                         case 'seal-check':
                             return <SealCheckTask key={task.key} id={task.key} location={task.location} access={access} onSubmit={onTaskSubmit}/>;
                         case 'door-check':
