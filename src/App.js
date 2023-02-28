@@ -1,10 +1,10 @@
-// import './App.css';
+import './App.css';
 import {useCallback, useState, useMemo, useEffect, Fragment} from 'react';
 import store from 'store2';
 
 import {ReqList, RequirementsLoader} from './RequirementsLoader.js';
 import RequirementsList from './RequirementsList.js';
-import {StartRegionTask, StartWeaponTask, TransitionTask, NPCTask, SleepingPhilosopherTask, ItemCheckTask, ShopItemTask, SealCheckTask, DoorCheckTask, WinTask} from './Task.js';
+import {StartRegionTask, StartWeaponTask, TransitionTask, NPCTask, AwakenTask, ItemCheckTask, ShopItemTask, SealCheckTask, DoorCheckTask, WinTask} from './Task.js';
 import {defaultSettings, GameSettings} from './GameSettings.js';
 import Status from './Status.js';
 
@@ -654,7 +654,7 @@ function App() {
 
         Array.from(sleepingPhilosophers.entries()).forEach(([_, location]) => {
             tasks.push({
-                type: 'sleeping-philosopher',
+                type: 'awaken',
                 key: 'philo-' + location.key,
                 location: location
             });
@@ -875,38 +875,39 @@ function App() {
                 importantNPCs={importantNPCs}
                 startingRegion={startingRegion}
             />
-            {tasks.map(task => {
-                switch (task.type) {
-                    case 'start-region':
-                        return <StartRegionTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
-                    case 'start-weapon':
-                        return <StartWeaponTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
-                    case 'transition':
-                        return <TransitionTask key={task.key} id={task.key} connection={task.connection} connectionMap={connectionMap} onSubmit={onTaskSubmit}/>;
-                    case 'npc':
-                        return <NPCTask key={task.key} id={task.key} location={task.location} onSubmit={onTaskSubmit}/>;
-                    case 'sleeping-philosopher':
-                        return <SleepingPhilosopherTask key={task.key} id={task.key} access={access} location={task.location} onSubmit={onTaskSubmit}/>;
-                    case 'item-check':
-                        return <ItemCheckTask key={task.key} id={task.key} location={task.location} onSubmit={onTaskSubmit}/>;
-                    case 'shop-item':
-                        return <ShopItemTask key={task.key} id={task.key} location={task.location} index={task.index} onSubmit={onTaskSubmit}/>;
-                    case 'seal-check':
-                        return <SealCheckTask key={task.key} id={task.key} location={task.location} access={access} onSubmit={onTaskSubmit}/>;
-                    case 'door-check':
-                        return <DoorCheckTask key={task.key} id={task.key} connection={task.connection} connectionMap={connectionMap} onSubmit={onTaskSubmit}/>;
-                    case 'win':
-                        return <WinTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
-                    default:
-                        console.error('unknown task type:', task.type);
-                        return null;
-                }
-            })}
+            <div className='tasks-list'>
+                {tasks.map(task => {
+                    switch (task.type) {
+                        case 'start-region':
+                            return <StartRegionTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
+                        case 'start-weapon':
+                            return <StartWeaponTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
+                        case 'transition':
+                            return <TransitionTask key={task.key} id={task.key} connection={task.connection} connectionMap={connectionMap} onSubmit={onTaskSubmit}/>;
+                        case 'npc':
+                            return <NPCTask key={task.key} id={task.key} location={task.location} onSubmit={onTaskSubmit}/>;
+                        case 'awaken':
+                            return <AwakenTask key={task.key} id={task.key} access={access} location={task.location} onSubmit={onTaskSubmit}/>;
+                        case 'item-check':
+                            return <ItemCheckTask key={task.key} id={task.key} location={task.location} onSubmit={onTaskSubmit}/>;
+                        case 'shop-item':
+                            return <ShopItemTask key={task.key} id={task.key} location={task.location} index={task.index} onSubmit={onTaskSubmit}/>;
+                        case 'seal-check':
+                            return <SealCheckTask key={task.key} id={task.key} location={task.location} access={access} onSubmit={onTaskSubmit}/>;
+                        case 'door-check':
+                            return <DoorCheckTask key={task.key} id={task.key} connection={task.connection} connectionMap={connectionMap} onSubmit={onTaskSubmit}/>;
+                        case 'win':
+                            return <WinTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
+                        default:
+                            // console.error('unknown task type:', task.type);
+                            return null;
+                    }
+                })}
+            </div>
             <RequirementsList reqs={activeReqs} accessible={access} />
         </div>
     );
 }
-            
 
 export default App;
 
@@ -924,6 +925,7 @@ export default App;
 // TODO: testing?
 // TODO: take logic into account for shrine/mulbruk distances
 // TODO: handle annexes better for shrine/mulbruk
+// TODO: gate of time start
 
 // done:
 // TODO: philosopher visited events
@@ -960,3 +962,4 @@ export default App;
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather
+// NPC sphinx logic

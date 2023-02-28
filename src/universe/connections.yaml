@@ -1,34 +1,34 @@
-- name: Guidance (Entrance)
+- name: Entrance
   region: region-guidance-main
   root: "Transition: Guidance L1"
   key: guidance-l1
   type: left
 
-- name: Mausoleum (Ankh)
+- name: Ankh
   region: region-mausoleum
   root: "Transition: Mausoleum L1"
   key: mausoleum-l1
   type: left
 
-- name: Sun (Buer)
+- name: Buer
   region: region-sun-west
   root: "Transition: Sun L1"
   key: sun-l1
   type: left
 
-- name: Extinction (Upper)
+- name: Upper
   region: region-extinction-left-main
   root: "Transition: Extinction L1"
   key: extinction-l1
   type: left
 
-- name: Extinction (Lower)
+- name: Lower
   region: region-extinction-map
   root: "Transition: Extinction L2"
   key: extinction-l2
   type: left
 
-- name: Endless One-way (Top)
+- name: One-way (Top)
   region: region-endless-1f
   root: "Transition: Endless L1"
   key: endless-l1
@@ -37,223 +37,223 @@
     - source-only
     - alias
 
-- name: Graveyard (mirai.exe)
+- name: mirai.exe
   region: region-graveyard-west
   root: "Transition: Graveyard L1"
   key: graveyard-l1
   type: left
 
-- name: Moonlight (Anubis)
+- name: Anubis
   region: region-moonlight-lower
   root: "Transition: Moonlight L1"
   key: moonlight-l1
   type: left
 
-- name: Goddess (Spaulder)
+- name: Spaulder
   region: region-goddess-spaulder
   root: "Transition: Goddess L1"
   key: goddess-l1
   type: left
 
-- name: Goddess (Lower)
+- name: Lower
   region: region-goddess-lower
   root: "Transition: Goddess L2"
   key: goddess-l2
   type: left
 
-- name: Ruin (Map)
+- name: Map
   region: region-ruin-illusion
   root: "Transition: Ruin L1"
   key: ruin-l1
   type: left
 
-- name: Birth (Woman Statue)
+- name: Woman Statue
   region: region-birth-southeast
   root: "Transition: Birth L1"
   key: birth-l1
   type: left
 
-- name: Guidance [Time]
+- name: Entrance
   region: region-guidance-time
   root: "Transition: Retroguidance L1"
   key: retroguidance-l1
   type: left
 
-- name: Surface (Ruins Entrance)
+- name: Ruins Entrance
   region: region-surface-main
   root: "Transition: Surface R1"
   key: surface-r1
   type: right
 
-- name: Sun (Flooded Upper)
+- name: Flooded Upper
   region: region-sun-east
   root: "Transition: Sun R1"
   key: sun-r1
   type: right
 
-- name: Sun (Flooded Lower)
+- name: Flooded Lower
   region: region-sun-east
   root: "Transition: Sun R2"
   key: sun-r2
   type: right
 
-- name: Inferno (Floats)
+- name: Floats
   region: region-inferno-main
   root: "Transition: Inferno R1"
   key: inferno-r1
   type: right
 
-- name: Endless Normal (Top)
+- name: Normal (Top)
   region: region-endless-1f
   root: "Transition: Endless R1"
   key: endless-r1
   type: right
 
-- name: Illusion (Dancing Child)
+- name: Dancing Child
   region: region-illusion-pot-room
   root: "Transition: Illusion R1"
   key: illusion-r1
   type: right
 
-- name: Illusion (Chi You)
+- name: Chi You
   region: region-illusion-lower
   root: "Transition: Illusion R2"
   key: illusion-r2
   type: right
 
-- name: Graveyard (Grail)
+- name: Grail
   region: region-graveyard-grail
   root: "Transition: Graveyard R1"
   key: graveyard-r1
   type: right
 
-- name: Ruin (Medicine)
+- name: Medicine
   region: region-ruin-medicine
   root: "Transition: Ruin R1"
   key: ruin-r1
   type: right
 
-- name: Ruin (Sacred Orb)
+- name: Sacred Orb
   region: region-ruin-southeast
   root: "Transition: Ruin R2"
   key: ruin-r2
   type: right
 
-- name: Birth (Skanda)
+- name: Skanda
   region: region-birth-skanda
   root: "Transition: Birth R1"
   key: birth-r1
   type: right
 
-- name: Surface [Time]
+- name: Entrance
   region: region-surface-time
   root: "Transition: Retrosurface R1"
   key: retrosurface-r1
   type: right
 
-- name: Guidance (Shuriken)
+- name: Shuriken
   region: region-guidance-main
   root: "Transition: Guidance U1"
   key: guidance-u1
   type: up
 
-- name: Mausoleum (Top)
+- name: Top
   region: region-mausoleum
   root: "Transition: Mausoleum U1"
   key: mausoleum-u1
   type: up
 
-- name: Sun (Top)
+- name: Top
   region: region-sun-top
   root: "Transition: Sun U1"
   key: sun-u1
   type: up
 
-- name: Inferno (Lower/Map)
+- name: Lower/Map
   region: region-inferno-main
   root: "Transition: Inferno U1"
   key: inferno-u1
   type: up
 
-- name: Inferno (Annex/Spikes)
+- name: Annex/Spikes
   region: region-inferno-annex
   root: "Transition: Inferno U2"
   key: inferno-u2
   type: up
 
-- name: Extinction (Main)
+- name: Main
   region: region-extinction-main
   root: "Transition: Extinction U1"
   key: extinction-u1
   type: up
 
-- name: Extinction (Magatama)
+- name: Magatama
   region: region-extinction-magatama-right
   root: "Transition: Extinction U2"
   key: extinction-u2
   type: up
 
-- name: Extinction (Palenque)
+- name: Palenque
   region: region-extinction-palenque-upper
   root: "Transition: Extinction U3"
   key: extinction-u3
   type: up
 
-- name: TL (Outer Wall)
+- name: Outer Wall
   region: region-twin-loop
   root: "Transition: Twin U1"
   key: twin-u1
   type: up
 
-- name: TL (Poison)
+- name: Poison
   region: region-twin-poison-2
   root: "Transition: Twin U2"
   key: twin-u2
   type: up
 
-- name: TL (Crystal Skull)
+- name: Crystal Skull
   region: region-twin-poseidon
   root: "Transition: Twin U3"
   key: twin-u3
   type: up
 
-- name: Endless (Philosopher)
+- name: Philosopher
   region: region-endless-2f
   root: "Transition: Endless U1"
   key: endless-u1
   type: up
 
-- name: Graveyard (Hot Spring)
+- name: Hot Spring
   region: region-graveyard-west
   root: "Transition: Graveyard U1"
   key: graveyard-u1
   type: up
 
-- name: Graveyard (Lamp Refill)
+- name: Lamp Refill
   region: region-graveyard-east
   root: "Transition: Graveyard U2"
   key: graveyard-u2
   type: up
 
-- name: Moonlight (CC)
+- name: Coin Chest
   region: region-moonlight-eden
   root: "Transition: Moonlight U1"
   key: moonlight-u1
   type: up
 
-- name: Moonlight (Trap)
+- name: Trap
   region: region-moonlight-upper
   root: "Transition: Moonlight U2"
   key: moonlight-u2
   type: up
 
-- name: Goddess (Lamp Refill)
+- name: Lamp Refill
   region: region-goddess-lamp
   root: "Transition: Goddess U1"
   key: goddess-u1
   type: up
 
-- name: Goddess (Secret Exit)
+- name: Secret Exit
   region: region-goddess-lamp
   root: "Transition: Goddess W1"
   key: goddess-w1
@@ -261,61 +261,61 @@
   tags:
     - destination-only
 
-- name: Birth (Backside Door)
+- name: Backside Door
   region: region-birth-northeast
   root: "Transition: Birth U1"
   key: birth-u1
   type: up
 
-- name: Shrine (Entrance)
+- name: Entrance
   region: region-shrine-main
   root: "Transition: Shrine U1"
   key: shrine-u1
   type: up
 
-- name: Mausoleum Upper [Time]
+- name: Upper
   region: region-mausoleum-time-upper
   root: "Transition: Retromausoleum U1"
   key: retromausoleum-u1
   type: up
 
-- name: Surface (Left)
+- name: Left
   region: region-surface-ruin-path-lower
   root: "Transition: Surface D1"
   key: surface-d1
   type: down
 
-- name: Surface (Right)
+- name: Right
   region: region-surface-ruin-path-upper
   root: "Transition: Surface D2"
   key: surface-d2
   type: down
 
-- name: Guidance (Shop)
+- name: Shop
   region: region-guidance-main
   root: "Transition: Guidance D1"
   key: guidance-d1
   type: down
 
-- name: Guidance (Ankh Jewel)
+- name: Ankh Jewel
   region: region-guidance-main
   root: "Transition: Guidance D2"
   key: guidance-d2
   type: down
 
-- name: Mausoleum (Ankh Switch)
+- name: Ankh Switch
   region: region-mausoleum
   root: "Transition: Mausoleum D1"
   key: mausoleum-d1
   type: down
 
-- name: Spring
+- name: Entrance
   region: region-spring-main
   root: "Transition: Spring D1"
   key: spring-d1
   type: down
 
-- name: Inferno (LAVA)
+- name: LAVA
   region: region-inferno-lava
   root: "Transition: Inferno W1"
   key: inferno-w1
@@ -323,55 +323,55 @@
   tags:
     - destination-only
 
-- name: TL (Fairy Point)
+- name: Fairy Point
   region: region-twin-lower
   root: "Transition: Twin D1"
   key: twin-d1
   type: down
 
-- name: TL (Elevator)
+- name: Elevator
   region: region-twin-lower
   root: "Transition: Twin D2"
   key: twin-d2
   type: down
 
-- name: Endless (Bottom)
+- name: Bottom
   region: region-endless-5f
   root: "Transition: Endless D1"
   key: endless-d1
   type: down
 
-- name: Illusion (One Way Doors)
+- name: One Way Doors
   region: region-illusion-lower
   root: "Transition: Illusion D1"
   key: illusion-d1
   type: down
 
-- name: Illusion (Eden)
+- name: Eden
   region: region-illusion-eden
   root: "Transition: Illusion D2"
   key: illusion-d2
   type: down
 
-- name: Graveyard (Kamitachi)
+- name: Kamitachi
   region: region-graveyard-east
   root: "Transition: Graveyard D1"
   key: graveyard-d1
   type: down
 
-- name: Goddess (Shield Trap)
+- name: Shield Trap
   region: region-goddess-shield-statue
   root: "Transition: Goddess D1"
   key: goddess-d1
   type: down
 
-- name: Birth (Grail)
+- name: Grail
   region: region-birth-west-entrance
   root: "Transition: Birth D1"
   key: birth-d1
   type: down
 
-- name: DC (Entrance)
+- name: Entrance
   region: region-dc-lower
   root: "Transition: Dimensional D1"
   key: dimensional-d1
@@ -379,31 +379,31 @@
   tags:
     - destination-only
 
-- name: Shrine (Elevator)
+- name: Elevator
   region: region-shrine-lower
   root: "Transition: Shrine D1"
   key: shrine-d1
   type: down
 
-- name: Shrine (Blocked Annex)
+- name: Blocked Annex
   region: region-shrine-seal
   root: "Transition: Shrine D2"
   key: shrine-d2
   type: down
 
-- name: Shrine (Open Annex)
+- name: Open Annex
   region: region-shrine-map
   root: "Transition: Shrine D3"
   key: shrine-d3
   type: down
 
-- name: Guidance [Time]
+- name: Entrance
   region: region-guidance-time
   root: "Transition: Retroguidance D1"
   key: retroguidance-d1
   type: down
 
-- name: Mausoleum Secret [Time]
+- name: Secret
   region: region-mausoleum-time-lower
   root: "Transition: Retromausoleum D1"
   key: retromausoleum-d1
@@ -428,7 +428,7 @@
   key: door-f3
   type: door
 
-- name: Ruin Lower (Earth Spear)
+- name: Lower (Earth Spear)
   region: region-ruin-southwest-door
   root: "Door: F4"
   key: door-f4
@@ -446,7 +446,7 @@
   key: door-f6
   type: door
 
-- name: Ruin Upper (Nuwa)
+- name: Upper (Nuwa)
   region: region-ruin-top
   root: "Door: F7"
   key: door-f7
@@ -482,31 +482,31 @@
   key: door-b3
   type: door
 
-- name: Inferno Lower (Ankh)
+- name: Lower (Ankh)
   region: region-inferno-viy
   root: "Door: B4"
   key: door-b4
   type: door
 
-- name: Surface (Waterfall)
+- name: Waterfall
   region: region-surface-main
   root: "Door: B5"
   key: door-b5
   type: door
 
-- name: Extinction Upper (Magatama)
+- name: Annex (Magatama)
   region: region-extinction-magatama-left
   root: "Door: B6"
   key: door-b6
   type: door
 
-- name: Inferno Annex
+- name: Annex (Spikes)
   region: region-inferno-annex
   root: "Door: B7"
   key: door-b7
   type: door
 
-- name: Endless (Exit Only)
+- name: Exit Only
   region: region-endless-1f
   root: "Door: B8"
   key: door-b8
@@ -514,7 +514,7 @@
   tags:
     - destination-only
 
-- name: Extinction Lower (Main)
+- name: Main
   region: region-extinction-main
   root: "Door: B9"
   key: door-b9

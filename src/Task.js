@@ -1,14 +1,8 @@
-import './Task.css';
+import './Task.scss';
 import {useCallback} from 'react';
-import {Planet} from 'react-planet';
+import Popup from 'reactjs-popup';
 
 import Universe from './Universe.js';
-
-function StartRegionTaskSatellite({region, onClick}) {
-    return (
-        <button onClick={() => onClick(region)}>{region.fullName()}</button>
-    );
-}
 
 export function StartRegionTask({id, onSubmit}) {
     let onClick = useCallback(region => {
@@ -20,27 +14,35 @@ export function StartRegionTask({id, onSubmit}) {
             });
         }
     }, [id, onSubmit]);
-
+ 
     return (
-        <div
-            className='Task StartRegionTask'
+        <Popup
+            className='task-root'
+            trigger={<div className='task-root'>Start Region</div>}
+            position="right center"
+            arrow={false}
         >
-            <Planet
-                centerContent={<button>Start Region</button>}
-                autoClose
-                orbitRadius={180}
-            >
+            <div className='task-choice-field-grid'>
                 {Universe.regions.withTag('grail-tablet').map(region => {
-                    return <StartRegionTaskSatellite key={region.key} region={region} onClick={onClick} />;
-                })}
-            </Planet>
-        </div>
-    );
-}
+                    let icon = null;
+                    if (region.field.icon !== null) {
+                        let classes = ["region-field-icon"];
+                        if (region.isBackside()) {
+                            classes.push("region-backside");
+                        }
+                        icon = <img className={classes.join(" ")} alt="" src={`/assets/img/${region.field.icon}.png`} />;
+                    }
 
-function StartWeaponTaskSatellite({item, onClick}) {
-    return (
-        <button onClick={() => onClick(item)}>{item.name}</button>
+                    return (
+                        <div key={region.key} className={['task-choice','start-region',region.field.key,region.key].join(' ')} onClick={() => onClick(region)}>
+                            {icon}
+                            <span className='region-field-name'>{region.field.name}</span>
+                            <span className='region-name'>{region.name}</span>
+                        </div>
+                    );
+                })}
+            </div>
+        </Popup>
     );
 }
 
@@ -64,71 +66,122 @@ export function StartWeaponTask({id, onSubmit}) {
     }, [id, onSubmit]);
 
     return (
-        <div
-            className='Task StartWeaponTask'
+        <Popup
+            className='task-root'
+            trigger={<div className='task-root'>Start Weapon</div>}
+            position="right center"
+            arrow={false}
         >
-            <Planet
-                centerContent={<button>Start Weapon</button>}
-                autoClose
-                orbitRadius={180}
-            >
+            <div className='task-choice-start-weapon-grid'>
                 {Universe.items.withTag('start-weapon').map(item => {
-                    return <StartWeaponTaskSatellite key={item.key} item={item} onClick={onClick} />;
+                    return (<img
+                                key={item.key}
+                                src={`/assets/img/item/${item.key}.png`}
+                                alt={item.name}
+                                className={['task-choice','weapon',item.key].join(' ')}
+                                onClick={() => onClick(item)} 
+                    />);
                 })}
-            </Planet>
+            </div>
+        </Popup>
+    );
+}
+
+function ConnectionChoice({connection, onClick}) {
+    return (
+        <div
+            className={['task-choice','connection',connection.region.field.key,connection.region.key].join(' ')}
+            onClick={() => onClick(connection)}
+        >
+            <span className='connection-name'>{connection.name}</span>
         </div>
     );
 }
 
-function TransitionTaskSatellite({connection, onClick}) {
+function ConnectionList({dstConns, onClick}) {
     return (
-        <button onClick={() => onClick(connection)}>{connection.name}</button>
+        <div className='task-choice-connection-grid'>
+            {Universe.fields.all.map(field => {
+                let conns = dstConns.filter(conn => conn.region.field === field);
+
+                if (conns.length > 0) {
+                    let icon = null;
+                    if (field.icon !== null) {
+                        let classes = ["region-field-icon"];
+                        if (field.tags.has('backside')) {
+                            classes.push("region-backside");
+                        }
+                        icon = <img className={classes.join(" ")} alt="" src={`/assets/img/${field.icon}.png`} />;
+                    }
+
+                    return (
+                        <div key={field.key} className={['task-choice-connection-field',field.key].join(' ')}>
+                            <div className='field-label'>
+                                {icon}
+                                <div className='region-name'>{field.name}</div>
+                            </div>
+                            {conns.map(conn => <ConnectionChoice key={conn.key} connection={conn} onClick={onClick} />)}
+                        </div>
+                    );
+                } else {
+                    return null;
+                }
+            })}
+        </div>
     );
 }
 
 export function TransitionTask({id, connection, connectionMap, onSubmit}) {
+    let srcConn = connection;
+
     let onClick = useCallback(dstConn => {
         if (onSubmit) {
             onSubmit({
                 newRoots: [dstConn.root],
-                newConnections: [[connection, dstConn]],
+                newConnections: [[srcConn, dstConn]],
                 completedTasks: [id]
             });
         }
-    }, [connection, id, onSubmit]);
+    }, [srcConn, id, onSubmit]);
+
+    let dstConns = srcConn.candidates()
+                   .filter(dstConn => dstConn !== srcConn)
+                   .filter(dstConn => (srcConn.tags.has('alias') || !connectionMap.has(dstConn.key)));
 
     if (connectionMap.has(connection.key)) {
         return null;
     } else {
         return (
-            <div
-                className='Task TransitionTask'
+            <Popup
+                className='task-root'
+                trigger={<div className='task-root'>Transition: {srcConn.region.field.name} {srcConn.name}</div>}
+                position="right center"
+                arrow={false}
             >
-                <Planet
-                    centerContent={<button>Transition: {connection.name}</button>}
-                    autoClose
-                    orbitRadius={180}
-                >
-                    {connection.candidates().filter(conn => conn !== connection && (connection.tags.has('alias') || !connectionMap.has(conn.key))).map(conn => {
-                        return <TransitionTaskSatellite key={conn.key} connection={conn} onClick={onClick} />;
-                    })}
-                </Planet>
-            </div>
+                <ConnectionList dstConns={dstConns} onClick={onClick} />
+            </Popup>
         );
     }
 }
 
-class NPCChoice {
+class Choice {
     constructor({name, key}) {
         this.name = name;
         this.key = key;
     }
 }
 
-function NPCTaskSatellite({choice, onClick}) {
+export function ChoiceCategory({name, nameKey, choices, onClick}) {
     return (
-        <button onClick={() => onClick(choice.key)}>{choice.name}</button>
-    );
+        <div className={['category', nameKey].join(' ')}>
+            <div className='label'>
+                <div className='text'>{name}</div>
+            </div>
+            {choices.map(choice => {
+                return <div key={choice.key} className='task-choice' onClick={() => onClick(choice.key)}>{choice.name}</div>;
+            })}
+        </div>
+    )
 }
 
 export function NPCTask({id, location, onSubmit}) {
@@ -142,7 +195,7 @@ export function NPCTask({id, location, onSubmit}) {
                 case 'dummy-shop':
                     e.newShops = [location];
                     break;
-                case 'dummy-philosopher':
+                case 'dummy-sleeping':
                     e.newSleepingPhilosophers = [location];
                     break;
                 case 'dummy-generic':
@@ -173,35 +226,29 @@ export function NPCTask({id, location, onSubmit}) {
         }
     }, [id, location, onSubmit]);
 
-    let choices = [].concat(
-        Universe.npcs.all.map(npc => new NPCChoice(npc)),
-        [
-            {name: 'Shop', key: 'dummy-shop'},
-            {name: 'Sleeping Philosopher', key: 'dummy-philosopher'},
-            {name: 'Generic', key: 'dummy-generic'}
-        ].map(x => new NPCChoice(x))
-    );
+    let miscChoices = Universe.npcs.withTag('important').map(npc => new Choice(npc));
+    let itemChoices = Universe.npcs.withTag('item').map(npc => new Choice(npc));
+    let shopChoices = Universe.npcs.withTag('shop').map(npc => new Choice(npc));
+    let philoChoices = Universe.npcs.withTag('philosopher').map(npc => new Choice(npc));
+
+    miscChoices.push(new Choice({name: 'Generic', key: 'dummy-generic'}));
+    shopChoices.push(new Choice({name: 'Shop', key: 'dummy-shop'}));
+    philoChoices.push(new Choice({name: 'Sleeping', key: 'dummy-sleeping'}));
 
     return (
-        <div
-            className='Task NPCTask'
+        <Popup
+            className='task-root'
+            trigger={<div className='task-root'>NPC: {location.name}</div>}
+            position='right center'
+            arrow={false}
         >
-            <Planet
-                centerContent={<button>NPC: {location.name}</button>}
-                autoClose
-                orbitRadius={180}
-            >
-                {choices.map(choice => {
-                    return <NPCTaskSatellite key={choice.key} choice={choice} onClick={onClick} />;
-                })}
-            </Planet>
-        </div>
-    );
-}
-
-function SleepingPhilosopherTaskSatellite({npc, onClick}) {
-    return (
-        <button onClick={() => onClick(npc)}>{npc.name}</button>
+            <div className='task-choice-npc-grid'>
+                <ChoiceCategory name="Misc" nameKey="misc" choices={miscChoices} onClick={onClick} />
+                <ChoiceCategory name="Items" nameKey="item" choices={itemChoices} onClick={onClick} />
+                <ChoiceCategory name="Shops" nameKey="shop" choices={shopChoices} onClick={onClick} />
+                <ChoiceCategory name="Philosophers" nameKey="philosopher" choices={philoChoices} onClick={onClick} />
+            </div>
+        </Popup>
     );
 }
 
@@ -210,9 +257,14 @@ if (ocarina === undefined) {
     console.error('Unable to find philosophers-ocarina item');
 }
 
-export function SleepingPhilosopherTask({id, access, location, onSubmit}) {
-    let onClick = useCallback(npc => {
+export function AwakenTask({id, access, location, onSubmit}) {
+    let onClick = useCallback(key => {
         if (onSubmit) {
+            let npc = Universe.npcs.byKey.get(key);
+            if (npc === undefined) {
+                console.error(`unknown NPC key ${key}`);
+            }
+
             onSubmit({
                 newRoots: [npc.root],
                 completedTasks: [id]
@@ -221,51 +273,45 @@ export function SleepingPhilosopherTask({id, access, location, onSubmit}) {
     }, [id, onSubmit]);
 
     if (access.has(ocarina.root)) {
+        let philoChoices = Universe.npcs.withTag('philosopher').map(npc => new Choice(npc));
+
         return (
-            <div
-                className='Task SleepingPhilosopherTask'
+            <Popup
+                className='task-root'
+                trigger={<div className='task-root'>Awaken Philosopher: {location.name}</div>}
+                position='right center'
+                arrow={false}
             >
-                <Planet
-                    centerContent={<button>Awaken Philosopher: {location.name}</button>}
-                    autoClose
-                    orbitRadius={80}
-                >
-                    {Universe.npcs.withTag('philosopher').map(npc => {
-                        return <SleepingPhilosopherTaskSatellite key={npc.key} npc={npc} onClick={onClick} />;
-                    })}
-                </Planet>
-            </div>
+                <div className='task-choice-philosopher-grid'>
+                    <ChoiceCategory name="Philosophers" nameKey="philosopher" choices={philoChoices} onClick={onClick} />
+                </div>
+            </Popup>
         );
-                
     } else {
         return null;
     }
 }
 
-class ItemChoice {
-    constructor({name, key}) {
-        this.name = name;
-        this.key = key;
-    }
-}
-
-function ItemCheckItemSatellite({choice, onClick}) {
+function ItemCategory ({name, category, onClick}) {
     return (
-        <button onClick={() => onClick(choice.key)}>{choice.name}</button>
-    );
-}
-
-function ItemCheckCategorySatellite({name, choices, onClick}) {
-    return (
-        <Planet
-            centerContent={<button>{name}</button>}
-            autoClose
-            orbitRadius={180}
-        >
-            {choices.map(choice => {
-                return <ItemCheckItemSatellite key={choice.key} choice={choice} onClick={onClick} />;
-            })}
-        </Planet>
+        <div className={['category','tag'].join(' ')}>
+            <div className='label'>
+                <div className='text'>{name}</div>
+            </div>
+            <div className={`task-choice-${category}-grid`}>
+                {Universe.items.byCategory(category).map(item => {
+                    return (
+                        <img
+                            src={`/assets/img/item/${item.key}.png`}
+                            alt={item.name}
+                            className={['task-choice',item.key].join(' ')}
+                            key={item.key}
+                            onClick={() => onClick(item.key)}
+                        />
+                    );
+                })}
+            </div>
+        </div>
     );
 }
 
@@ -300,51 +346,31 @@ export function ItemCheckTask({id, location, onSubmit}) {
         }
     }, [id, onSubmit]);
 
-    function getCategoryItemChoices(cat) {
-        return Universe.items.byCategory(cat).map(item => new ItemChoice(item));
-    }
+    let miscChoices = [
+        new Choice({name: 'Ankh Jewel', key: 'ankh-jewel'}),
+        new Choice({name: 'Sacred Orb', key: 'sacred-orb'}),
+        new Choice({name: 'Map (Shrine)', key: 'map-shrine'}),
+        new Choice({name: 'Junk', key: 'dummy-junk'})
+    ];
 
     return (
-        <div
-            className='Task ItemCheckTask'
+        <Popup
+            className='task-root'
+            trigger={<div className='task-root'>{location.name}</div>}
+            position='right center'
+            arrow={false}
         >
-            <Planet
-                centerContent={<button>{location.name}</button>}
-                autoClose
-                orbitRadius={80}
-            >
-                <ItemCheckCategorySatellite name='Weapons' choices={getCategoryItemChoices('weapon')} onClick={onClick} />
-                <ItemCheckCategorySatellite name='Subweapons' choices={getCategoryItemChoices('subweapon')} onClick={onClick} />
-                <ItemCheckCategorySatellite name='Usable Items' choices={getCategoryItemChoices('usable')} onClick={onClick} />
-                <ItemCheckCategorySatellite name='Items' choices={getCategoryItemChoices('item')} onClick={onClick} />
-                <ItemCheckCategorySatellite name='Seals' choices={getCategoryItemChoices('seal')} onClick={onClick} />
-                <ItemCheckCategorySatellite name='Software' choices={getCategoryItemChoices('software')} onClick={onClick} />
-                <ItemCheckItemSatellite choice={new ItemChoice({name: 'Ankh Jewel', key: 'ankh-jewel'})} onClick={onClick}/>
-                <ItemCheckItemSatellite choice={new ItemChoice({name: 'Sacred Orb', key: 'sacred-orb'})}  onClick={onClick}/>
-                <ItemCheckItemSatellite choice={new ItemChoice({name: 'Map (Shrine)', key: 'map-shrine'})}  onClick={onClick}/>
-                <ItemCheckItemSatellite choice={new ItemChoice({name: 'Junk', key: 'dummy-junk'})} onClick={onClick}/>
-            </Planet>
-        </div>
-    );
-}
+            <div className='task-choice-item-category-grid'>
+                <ItemCategory name="Weapons" category="weapon" onClick={onClick} />
+                <ItemCategory name="Subweapons" category="subweapon" onClick={onClick} />
+                <ItemCategory name="Usable Items" category="usable" onClick={onClick} />
+                <ItemCategory name="Items" category="item" onClick={onClick} />
+                <ItemCategory name="Seals" category="seal" onClick={onClick} />
+                <ItemCategory name="Software" category="software" onClick={onClick} />
 
-function ShopItemItemSatellite({choice, onClick}) {
-    return (
-        <button onClick={() => onClick(choice.key)}>{choice.name}</button>
-    );
-}
-
-function ShopItemCategorySatellite({name, choices, onClick}) {
-    return (
-        <Planet
-            centerContent={<button>{name}</button>}
-            autoClose
-            orbitRadius={180}
-        >
-            {choices.map(choice => {
-                return <ShopItemItemSatellite key={choice.key} choice={choice} onClick={onClick} />;
-            })}
-        </Planet>
+                <ChoiceCategory name='Misc' nameKey='misc' choices={miscChoices} onClick={onClick} />
+            </div>
+        </Popup>
     );
 }
 
@@ -388,38 +414,34 @@ export function ShopItemTask({id, location, index, onSubmit}) {
         }
     }, [id, location, onSubmit]);
 
-    function getCategoryItemChoices(cat) {
-        return Universe.items.byCategory(cat).map(item => new ItemChoice(item));
-    }
+    let miscChoices = [
+        new Choice({name: 'Ankh Jewel', key: 'ankh-jewel'}),
+        new Choice({name: 'Sacred Orb', key: 'sacred-orb'}),
+        new Choice({name: 'Map (Shrine)', key: 'map-shrine'}),
+        new Choice({name: 'Junk', key: 'dummy-junk'})
+    ];
+
+    let ammoChoices = Universe.items.byCategory('ammo').map(item => new Choice(item));
 
     return (
-        <div
-            className='Task ShopItemTask'
+        <Popup
+            className='task-root'
+            trigger={<div className='task-root'>Shop: {location.name} Item {index}</div>}
+            position='right center'
+            arrow={false}
         >
-            <Planet
-                centerContent={<button>{location.name} Shop Item {index}</button>}
-                autoClose
-                orbitRadius={80}
-            >
-                <ShopItemCategorySatellite name='Weapons' choices={getCategoryItemChoices('weapon')} onClick={onClick} />
-                <ShopItemCategorySatellite name='Subweapons' choices={getCategoryItemChoices('subweapon')} onClick={onClick} />
-                <ShopItemCategorySatellite name='Ammo' choices={getCategoryItemChoices('ammo')} onClick={onClick} />
-                <ShopItemCategorySatellite name='Usable Items' choices={getCategoryItemChoices('usable')} onClick={onClick} />
-                <ShopItemCategorySatellite name='Items' choices={getCategoryItemChoices('item')} onClick={onClick} />
-                <ShopItemCategorySatellite name='Seals' choices={getCategoryItemChoices('seal')} onClick={onClick} />
-                <ShopItemCategorySatellite name='Software' choices={getCategoryItemChoices('software')} onClick={onClick} />
-                <ShopItemItemSatellite choice={new ItemChoice({name: 'Ankh Jewel', key: 'ankh-jewel'})} onClick={onClick}/>
-                <ShopItemItemSatellite choice={new ItemChoice({name: 'Sacred Orb', key: 'sacred-orb'})}  onClick={onClick}/>
-                <ShopItemItemSatellite choice={new ItemChoice({name: 'Map (Shrine)', key: 'map-shrine'})}  onClick={onClick}/>
-                <ShopItemItemSatellite choice={new ItemChoice({name: 'Junk', key: 'dummy-junk'})} onClick={onClick}/>
-            </Planet>
-        </div>
-    );
-}
+            <div className='task-choice-item-category-grid'>
+                <ItemCategory name="Weapons" category="weapon" onClick={onClick} />
+                <ItemCategory name="Subweapons" category="subweapon" onClick={onClick} />
+                <ItemCategory name="Usable Items" category="usable" onClick={onClick} />
+                <ItemCategory name="Items" category="item" onClick={onClick} />
+                <ItemCategory name="Seals" category="seal" onClick={onClick} />
+                <ItemCategory name="Software" category="software" onClick={onClick} />
 
-function SealCheckTaskSatellite({item, onClick}) {
-    return (
-        <button onClick={() => onClick(item)}>{item.name}</button>
+                <ChoiceCategory name="Ammo" category="ammo" choices={ammoChoices} onClick={onClick} />
+                <ChoiceCategory name='Misc' nameKey='misc' choices={miscChoices} onClick={onClick} />
+            </div>
+        </Popup>
     );
 }
 
@@ -441,81 +463,83 @@ export function SealCheckTask({id, location, access, onSubmit}) {
         return null;
     } else {
         return (
-            <div
-                className='Task SealCheckTask'
+            <Popup
+                className='task-root'
+                trigger={<div className='task-root'>Seal: {location.name}</div>}
+                position='right center'
+                arrow={false}
             >
-                <Planet
-                    centerContent={<button>Seal: {location.name}</button>}
-                    autoClose
-                    orbitRadius={180}
-                >
-                    {Universe.items.byCategory('seal').map(item => {
-                        return <SealCheckTaskSatellite key={item.key} item={item} onClick={onClick} />;
-                    })}
-                </Planet>
-            </div>
+                <div className='task-choice-seal'>
+                    <img
+                        src='assets/img/sigil-origin.png'
+                        alt='Origin Seal'
+                        className='task-choice'
+                        onClick={() => onClick(Universe.items.byKey.get('origin-seal'))}
+                    />
+                    <img
+                        src='assets/img/sigil-birth.png'
+                        alt='Birth Seal'
+                        className='task-choice'
+                        onClick={() => onClick(Universe.items.byKey.get('birth-seal'))}
+                    />
+                    <img
+                        src='assets/img/sigil-life.png'
+                        alt='Life Seal'
+                        className='task-choice'
+                        onClick={() => onClick(Universe.items.byKey.get('life-seal'))}
+                    />
+                    <img
+                        src='assets/img/sigil-death.png'
+                        alt='Death Seal'
+                        className='task-choice'
+                        onClick={() => onClick(Universe.items.byKey.get('death-seal'))}
+                    />
+                </div>
+            </Popup>
         );
     }
 }
 
-function DoorCheckTaskSatellite({connection, onClick}) {
-    return (
-        <button onClick={() => onClick(connection)}>{connection.name}</button>
-    );
-}
-
 export function DoorCheckTask({id, connection, connectionMap, onSubmit}) {
+    let srcConn = connection;
+
     let onClick = useCallback(dstConn => {
         if (onSubmit) {
             onSubmit({
                 newRoots: [dstConn.root],
-                newConnections: [[connection, dstConn]],
+                newConnections: [[srcConn, dstConn]],
                 completedTasks: [id]
             });
         }
-    }, [connection, id, onSubmit]);
+    }, [srcConn, id, onSubmit]);
+
+    let dstConns = srcConn.candidates()
+                   .filter(dstConn => dstConn !== srcConn)
+                   .filter(dstConn => (srcConn.tags.has('alias') || !connectionMap.has(dstConn.key)));
 
     if (connectionMap.has(connection.key)) {
         return null;
     } else {
         return (
-            <div
-                className='Task DoorCheckTask'
+            <Popup
+                className='task-root'
+                trigger={<div className='task-root'>Door: {srcConn.region.field.name} {srcConn.name}</div>}
+                position="right center"
+                arrow={false}
             >
-                <Planet
-                    centerContent={<button>Door: {connection.name}</button>}
-                    autoClose
-                    orbitRadius={180}
-                >
-                    {connection.candidates().filter(conn => conn !== connection && !connectionMap.has(conn.key)).map(conn => {
-                        return <DoorCheckTaskSatellite key={conn.key} connection={conn} onClick={onClick} />;
-                    })}
-                </Planet>
-            </div>
+                <ConnectionList dstConns={dstConns} onClick={onClick} />
+            </Popup>
         );
     }
 }
 
-// export function WinTask({id, onSubmit}) {
-    /*let onClick = useCallback(event => {
-        if (onSubmit) {
-            onSubmit({
-                completedTasks: [id]
-            });
-        }
-    }, [id, onSubmit]);*/
-
 export function WinTask() {
     return (
-        <div
-            className='Task WinTask'
-        >
-            <Planet
-                centerContent={<button>Win the Game</button>}
-                autoClose
-                orbitRadius={180}
-            >
-            </Planet>
-        </div>
+        <Popup
+            className='task-root'
+            trigger={<div className='task-root'>Win the Game</div>}
+            position='right center'
+            arrow={false}
+        />
     );
 }

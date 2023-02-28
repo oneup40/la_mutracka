@@ -1,0 +1,508 @@
+.Task {
+    display: flex;
+    justify-content: center;
+    padding: 1.5em;
+}
+
+.Task button {
+    width: 10em;
+}
+
+.task-root {
+    color: white;
+    background-color: dodgerblue;
+    margin: 0.25em 0 0.25em 0.5em;
+    padding: 0.5em 2.5em 0.5em 2.5em;
+    border-radius: 0.25em;
+    font-weight: bold;
+}
+
+.task-root:hover {
+    cursor: pointer;
+    filter: brightness(1.2);
+}
+
+.task-root::after {
+    content: "  ➢";
+}
+
+.task-root-overlay {
+    background-color: rgba(0,0,0,0.15);
+}
+
+.task-root-content {
+    /*background-color: white;*/
+}
+
+.task-choice {
+    color: white;
+    background-color: dodgerblue;
+    margin: 0.2em 0 0.2em 0.5em;
+    padding: 0.25em 0.5em 0.25em 0.5em;
+    border-radius: 0.25em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.task-choice:hover {
+    cursor: pointer;
+    filter: brightness(1.2);
+}
+
+.task-choice-field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+        "sf .  .  . "
+        "f1 f2 f3 f4"
+        "f5 f6 f7 f8"
+        "b1 b2 b3 b4"
+        "b5 b6 b7 b8";
+}
+
+.task-choice.start-region {
+    display: grid;
+    grid-template-columns: 2em 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+        "icon field"
+        "icon region";
+}
+
+.region-field-icon {
+    filter: invert(100%);
+    grid-area: icon;
+}
+
+.region-field-icon.region-backside {
+    transform: scaleX(-1);
+}
+
+.region-field-name {
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+    grid-area: field;
+}
+
+.region-name {
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+    grid-area: region;
+}
+
+.field-surface {
+    grid-area: sf;
+}
+
+.field-guidance {
+    grid-area: f1;
+}
+
+.field-mausoleum {
+    grid-area: f2;
+}
+
+.field-sun {
+    grid-area: f3;
+}
+
+.field-spring {
+    grid-area: f4;
+}
+
+.field-inferno {
+    grid-area: f5;
+}
+
+.field-extinction {
+    grid-area: f6;
+}
+
+.field-twin,
+.region-twin-poison-1 {
+    grid-area: f7;
+}
+
+.field-endless {
+    grid-area: f8;
+}
+
+.field-shrine {
+    grid-area: sh;
+}
+
+.field-illusion {
+    grid-area: b1;
+}
+
+.field-graveyard {
+    grid-area: b2;
+}
+
+.field-moonlight {
+    grid-area: b3;
+}
+
+.field-goddess {
+    grid-area: b4;
+}
+
+.field-ruin {
+    grid-area: b5;
+}
+
+.field-birth {
+    grid-area: b6;
+}
+
+.region-twin-lower {
+    grid-area: b7;
+}
+
+.field-dc {
+    grid-area: b8;
+}
+
+.field-surface-time {
+    grid-area: t1;
+}
+
+.field-guidance-time {
+    grid-area: t2;
+}
+
+.field-mausoleum-time {
+    grid-area: t3;
+}
+
+.field-hell-temple {
+    grid-area: hl;
+}
+
+.task-choice-start-weapon-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+
+    grid-template-areas:
+        "whp chw flw .   .  "
+        "knf key axe kat .  "
+        "shk rsh esp flr bmb"
+        "chk cal gun .   .  ";
+}
+
+.task-choice.whip { grid-area: whp; }
+.task-choice.chain-whip { grid-area: chw; }
+.task-choice.flail-whip { grid-area: flw; }
+
+.task-choice.knife { grid-area: knf; }
+.task-choice.key-sword { grid-area: key; }
+.task-choice.axe { grid-area: axe; }
+.task-choice.katana { grid-area: kat;  }
+
+.task-choice.shuriken { grid-area: shk; }
+.task-choice.rolling-shuriken { grid-area: rsh; }
+.task-choice.earth-spear { grid-area: esp; }
+.task-choice.flare-gun { grid-area: flr; }
+.task-choice.bomb { grid-area: bmb; }
+
+.task-choice.chakram { grid-area: chk; }
+.task-choice.caltrops { grid-area: cal; }
+.task-choice.pistol { grid-area: gun; }
+
+/*@media {
+    .task-choice-connection-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+            "sf .  .  .  .  .  .  . "
+            "f1 f2 f3 f4 f5 f6 f7 f8"
+            "sh .  .  .  .  .  .  . "
+            "b1 b2 b3 b4 b5 b6 b7 b8"
+            "t1 t2 t3 .  .  .  .  . "
+            "hl .  .  .  .  .  .  . ";
+    }
+}
+
+@media (max-width: 1200px) {*/
+    .task-choice-connection-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+            "sf .  .  . "
+            "f1 f2 f3 f4"
+            "f5 f6 f7 f8"
+            "sh .  .  ."
+            "b1 b2 b3 b4"
+            "b5 b6 b7 b8"
+            "t1 t2 t3 . "
+            "hl .  .  . ";
+    }
+/*}*/
+
+.task-choice-connection-field {
+    color: white;
+    background-color: #1780e0;
+    margin: 0.2em;
+    padding: 0.25em 0 0.25em 0;
+    border-radius: 0.25em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.field-label {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-bottom: solid 1px;
+}
+
+.task-choice.connection {
+    text-align: left;
+    width: 100%;
+    margin: 0.2em 0;
+    padding: 0;
+}
+
+.connection-name {
+    padding: 0 0.2em;
+}
+
+.task-choice-npc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+        "imp itm shp phi";
+}
+
+.task-choice-philosopher-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+        "phi";
+}
+
+.task-choice-item-category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas:
+        "wep sub use itm"
+        "sel sft msc .  ";
+
+    & .category.weapon { grid-area: wep; }
+    & .category.subweapon { grid-area: sub; }
+    & .category.usable { grid-area: use; }
+    & .category.item { grid-area: itm; }
+
+    & .category.seal { grid-area: sel; }
+    & .category.software { grid-area: sft; }
+    & .category.misc { grid-area: msc; }
+}
+
+.task-choice-weapon-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas:
+        "whp chw flw .   .  "
+        "knf key axe kat .  ";
+
+    & .whip { grid-area: whp; }
+    & .chain-whip { grid-area: chw; }
+    & .flail-whip { grid-area: flw; }
+
+    & .knife { grid-area: knf; }
+    & .key-sword { grid-area: key; }
+    & .axe { grid-area: axe; }
+    & .katana { grid-area: kat; }
+}
+
+.task-choice-subweapon-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas:
+        "shk rsh esp flr bmb"
+        "chk cal gun sld .  ";
+
+    & .shuriken { grid-area: shk; }
+    & .rolling-shuriken { grid-area: rsh; }
+    & .earth-spear { grid-area: esp; }
+    & .flare-gun { grid-area: flr; }
+    & .bomb { grid-area: bmb; }
+
+    & .chakram { grid-area: chk; }
+    & .caltrops { grid-area: cal; }
+    & .pistol { grid-area: gun; }
+    & .angel-shield { grid-area: sld; }
+}
+
+.task-choice-usable-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-areas:
+        "scn djd min mag cog"
+        "lmp pch drg cry vsl"
+        "pep wmn etn srp .  "
+        "tal dry mtl .   .  ";
+
+    & .hand-scanner { grid-area: scn; }
+    & .djed-pillar { grid-area: djd; }
+    & .mini-doll { grid-area: min; }
+    & .magatama-jewel { grid-area: mag; }
+    & .cog-of-the-soul { grid-area: cog; }
+
+    & .lamp-of-time { grid-area: lmp; }
+    & .pochette-key { grid-area: pch; }
+    & .dragon-bone { grid-area: drg; }
+    & .crystal-skull { grid-area: cry; }
+    & .vessel { grid-area: vsl; }
+
+    & .pepper { grid-area: pep; }
+    & .woman-statue { grid-area: wmn; }
+    & .key-of-eternity { grid-area: etn; }
+    & .serpent-staff { grid-area: srp; }
+
+    & .talisman { grid-area: tal; }
+    & .diary { grid-area: dry; }
+    & .mulana-talisman { grid-area: mtl; }
+}
+
+.task-choice-item-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    grid-template-areas:
+        "msx .   .   .   glv"
+        "grl pen .   hel grp"
+        "mir eye rng scl gnt"
+        "trs anc .   .   .  "
+        ".   pln ocr fth bkd"
+        "fcl .   bts frt twn"
+        "brc .   .   dim ice";
+
+    & .mobile-super-x2 { grid-area: msx; }
+    & .glove { grid-area: glv; }
+
+    & .holy-grail { grid-area: grl; }
+    & .isis-pendant { grid-area: pen; }
+    & .helmet { grid-area: hel; }
+    & .grapple-claw { grid-area: grp; }
+
+    & .bronze-mirror { grid-area: mir; }
+    & .eye-of-truth { grid-area: eye; }
+    & .ring { grid-area: rng; }
+    & .scalesphere { grid-area: scl; }
+    & .gauntlet { grid-area: gnt; }
+
+    & .treasures { grid-area: trs; }
+    & .anchor { grid-area: anc; }
+
+    & .plane-model { grid-area: pln; }
+    & .philosophers-ocarina { grid-area: ocr; }
+    & .feather { grid-area: fth; }
+    & .book-of-the-dead { grid-area: bkd; }
+
+    & .fairy-clothes { grid-area: fcl; }
+    & .hermes-boots { grid-area: bts; }
+    & .fruit-of-eden { grid-area: frt; }
+    & .twin-statue { grid-area: twn; }
+
+    & .bracelet { grid-area: brc; }
+    & .dimensional-key { grid-area: dim; }
+    & .ice-cape { grid-area: ice; }
+}
+
+.task-choice-seal-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    grid-template-areas:
+        "org brt lif dth .";
+
+    & .origin-seal { grid-area: org; }
+    & .birth-seal { grid-area: brt; }
+    & .life-seal { grid-area: lif; }
+    & .death-seal { grid-area: dth; }
+}
+
+.task-choice-software-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-areas:
+        "rdr .   ymp yst .  "
+        ".   .   tor gld .  "
+        "man .   .   dth .  "
+        "rnd .   mov mek .  "
+        ".   mrc mra lam .  ";
+
+    & .reader-exe { grid-area: rdr; }
+    & .yagomap-exe { grid-area: ymp; }
+    & .yagostr-exe { grid-area: yst; }
+
+    & .torude-exe { grid-area: tor; }
+    & .guild-exe { grid-area: gld; }
+
+    & .mantra-exe { grid-area: man; }
+    & .deathv-exe { grid-area: dth; }
+
+    & .randc-exe { grid-area: rnd; }
+    & .move-exe { grid-area: mov; }
+    & .mekuri-exe { grid-area: mek; }
+
+    & .miracle-exe { grid-area: mrc; }
+    & .mirai-exe { grid-area: mra; }
+    & .lamulana-exe { grid-area: lam; }
+}
+
+.task-choice-npc-grid .category,
+.task-choice-philosopher-grid .category,
+.task-choice-item-category-grid .category {
+    color: white;
+    background-color: #1780e0;
+    margin: 0.2em;
+    padding: 0.25em 0 0.25em 0;
+    border-radius: 0.25em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.task-choice-npc-grid .category.important,
+.task-choice-philosopher-grid .category.important {
+    grid-area: imp;
+}
+
+.task-choice-npc-grid .category.item,
+.task-choice-philosopher-grid .category.item {
+    grid-area: itm;
+}
+
+.task-choice-npc-grid .category.shop,
+.task-choice-philosopher-grid .category.shop {
+    grid-area: shp;
+}
+
+.task-choice-npc-grid .category.philosopher,
+.task-choice-philosopher-grid .category.philosopher {
+    grid-area: phi;
+}
+
+.task-choice-npc-grid .task-choice,
+.task-choice-philosopher-grid .task-choice,
+.task-choice-item-category-grid .task-choice {
+    text-align: left;
+    width: 100%;
+    margin: 0.2em 0;
+    padding: 0;
+}
+

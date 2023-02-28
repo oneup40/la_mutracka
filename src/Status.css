@@ -24,7 +24,7 @@
 }
 
 .field-status.field-guidance .field-name::before {
-    content: url('img/number-1.png');
+    content: url('../public/assets/img/number-1.png');
 }
 
 .field-status.field-mausoleum {
@@ -33,7 +33,7 @@
 }
 
 .field-status.field-mausoleum .field-name::before {
-    content: url('img/number-2.png');
+    content: url('../public/assets/img/number-2.png');
 }
 
 .field-status.field-sun {
@@ -42,7 +42,7 @@
 }
 
 .field-status.field-sun .field-name::before {
-    content: url('img/number-3.png');
+    content: url('../public/assets/img/number-3.png');
 }
 
 .field-status.field-spring {
@@ -51,7 +51,7 @@
 }
 
 .field-status.field-spring .field-name::before {
-    content: url('img/number-4.png');
+    content: url('../public/assets/img/number-4.png');
 }
 
 .field-status.field-inferno {
@@ -60,7 +60,7 @@
 }
 
 .field-status.field-inferno .field-name::before {
-    content: url('img/number-5.png');
+    content: url('../public/assets/img/number-5.png');
 }
 
 .field-status.field-extinction {
@@ -69,7 +69,7 @@
 }
 
 .field-status.field-extinction .field-name::before {
-    content: url('img/number-6.png');
+    content: url('../public/assets/img/number-6.png');
 }
 
 .field-status.field-twin {
@@ -78,7 +78,7 @@
 }
 
 .field-status.field-twin .field-name::before {
-    content: url('img/number-7.png');
+    content: url('../public/assets/img/number-7.png');
 }
 
 .field-status.field-endless {
@@ -87,7 +87,7 @@
 }
 
 .field-status.field-endless .field-name::before {
-    content: url('img/number-8.png');
+    content: url('../public/assets/img/number-8.png');
 }
 
 .field-status.field-shrine {
@@ -95,7 +95,7 @@
 }
 
 .field-status.field-shrine .field-name::before {
-    content: url('img/number-9.png');
+    content: url('../public/assets/img/number-9.png');
 }
 
 .field-status.field-illusion {
@@ -104,7 +104,7 @@
 }
 
 .field-status.field-illusion .field-name::before {
-    content: url('img/number-1.png');
+    content: url('../public/assets/img/number-1.png');
     transform: scaleX(-1);
 }
 
@@ -114,7 +114,7 @@
 }
 
 .field-status.field-graveyard .field-name::before {
-    content: url('img/number-2.png');
+    content: url('../public/assets/img/number-2.png');
     transform: scaleX(-1);
 }
 
@@ -124,7 +124,7 @@
 }
 
 .field-status.field-moonlight .field-name::before {
-    content: url('img/number-3.png');
+    content: url('../public/assets/img/number-3.png');
     transform: scaleX(-1);
 }
 
@@ -134,7 +134,7 @@
 }
 
 .field-status.field-goddess .field-name::before {
-    content: url('img/number-4.png');
+    content: url('../public/assets/img/number-4.png');
     transform: scaleX(-1);
 }
 
@@ -144,7 +144,7 @@
 }
 
 .field-status.field-ruin .field-name::before {
-    content: url('img/number-5.png');
+    content: url('../public/assets/img/number-5.png');
     transform: scaleX(-1);
 }
 
@@ -154,7 +154,7 @@
 }
 
 .field-status.field-birth .field-name::before {
-    content: url('img/number-6.png');
+    content: url('../public/assets/img/number-6.png');
     transform: scaleX(-1);
 }
 
@@ -164,7 +164,7 @@
 }
 
 .field-status.field-dc .field-name::before {
-    content: url('img/number-8.png');
+    content: url('../public/assets/img/number-8.png');
     transform: scaleX(-1);
 }
 

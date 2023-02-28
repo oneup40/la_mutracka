@@ -36,7 +36,7 @@ function FieldConnectionStatus({connection, connectionMap}) {
             break;
     }
 
-    return <li className="connection-item">{connection.name} {dirEmoji} {dst.name}</li>;
+    return <li className="connection-item">{connection.name} {dirEmoji} {dst.region.field.name} {dst.name}</li>;
 }
 
 function FieldStatus({field, connectionMap, shrineDistance, mulbrukDistance}) {

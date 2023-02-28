@@ -6,12 +6,13 @@ import locationDefs from './universe/locations.yaml';
 import npcDefs from './universe/npcs.yaml';
 
 class Field {
-    constructor({name, key, tags}) {
+    constructor({name, key, icon, tags}) {
         let tagValues = (tags === undefined ? [] : Array.from(tags));
         let tagSet = new Set(tagValues);
 
         this.name = name;
         this.key = key;
+        this.icon = (icon === undefined ? null : icon);
         this.tags = tagSet;
     }
 }
@@ -187,6 +188,19 @@ class Connection {
 
     field() { return this.region.field; }
     inField(field) { return field === this.field(); }
+
+    reciprocalType() {
+        switch (this.type) {
+            case 'left': return 'right';
+            case 'right': return 'left';
+            case 'up': return 'down';
+            case 'down': return 'up';
+            case 'door': return 'door';
+            default:
+                console.error(`unknown Connection.type ${this.type}`);
+                return null;
+        }
+    }
 }
 let connections = {}
 connections.all = connectionDefs.map(def => new Connection(def));
