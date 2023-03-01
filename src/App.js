@@ -269,12 +269,21 @@ const defaultState = {
 const persistKey = 'lmt-state';
 
 class TaskData {
-    constructor({type, key, connection, location, shopIndex}) {
+    static nextTaskId = 0;
+
+    constructor({type, key, connection, location, shopIndex, id}) {
         this.type = type;
         this.key = key;
         this.connection = (connection === undefined) ? null : connection;
         this.location = (location === undefined) ? null : location;
         this.shopIndex = (shopIndex === undefined) ? null : shopIndex;
+
+        if (id === undefined) {
+            this.id = TaskData.nextTaskId;
+            ++TaskData.nextTaskId;
+        } else {
+            this.id = id;
+        }
     }
 
     static newStartRegionTask() {
@@ -309,7 +318,7 @@ class TaskData {
 
     static newItemCheckTask(location) {
         return new TaskData({
-            type: 'item-check',
+            type: 'check-item',
             key: `item-${location.key}`,
             location
         });
@@ -345,6 +354,41 @@ class TaskData {
             type: 'win',
             key: 'win'
         });
+    }
+
+    locationIndex() {
+        let region = null;
+        if (this.location !== null && this.location.regions.length > 0) {
+            region = this.location.regions[0];
+        } else if (this.connection !== null) {
+            region = this.connection.region;
+        } else {
+            return -1;
+        }
+
+        return region.field.index;
+    }
+
+    static compare(a, b) {
+        let n = a.locationIndex() - b.locationIndex();
+
+        if (n === 0) {
+            n = a.type.localeCompare(b.type);
+        }
+
+        if (n === 0 && a.shopIndex !== null && b.shopIndex !== null) {
+            n = a.shopIndex - b.shopIndex;
+        }
+
+        if (n === 0) {
+            n = a.key.localeCompare(b.key);
+        }
+
+        if (n === 0) {
+            n = a.id - b.id;
+        }
+
+        return n;
     }
 }
 
@@ -732,7 +776,10 @@ function App() {
             }
         }
 
-        return tasks.filter(task => !completedTasks.has(task.key));
+        window.tasks = tasks.filter(task => !completedTasks.has(task.key))
+                    .sort(TaskData.compare);
+        return tasks.filter(task => !completedTasks.has(task.key))
+                    .sort(TaskData.compare);
 
     }, [access, startingRegion, sleepingPhilosophers, shops, completedTasks]);
 
@@ -931,7 +978,7 @@ function App() {
                             return <NPCTask key={task.key} id={task.key} location={task.location} onSubmit={onTaskSubmit}/>;
                         case 'awaken':
                             return <AwakenTask key={task.key} id={task.key} access={access} location={task.location} onSubmit={onTaskSubmit}/>;
-                        case 'item-check':
+                        case 'check-item':
                             return <ItemCheckTask key={task.key} id={task.key} location={task.location} onSubmit={onTaskSubmit}/>;
                         case 'shop-item':
                             return <ShopItemTask key={task.key} id={task.key} location={task.location} index={task.shopIndex} onSubmit={onTaskSubmit}/>;

@@ -1,117 +1,138 @@
 - name: Surface
   key: field-surface
+  index: 0
   tags:
     - frontside
 
 - name: Guidance
   key: field-guidance
   icon: number-1
+  index: 1
   tags:
     - frontside
 
 - name: Mausoleum
   key: field-mausoleum
   icon: number-2
+  index: 2
   tags:
     - frontside
 
 - name: Sun
   key: field-sun
   icon: number-3
+  index: 3
   tags:
     - frontside
 
 - name: Spring
   key: field-spring
   icon: number-4
+  index: 4
   tags:
     - frontside
 
 - name: Inferno
   key: field-inferno
   icon: number-5
+  index: 5
   tags:
     - frontside
 
 - name: Extinction
   key: field-extinction
   icon: number-6
+  index: 6
   tags:
     - frontside
 
 - name: Twin
   key: field-twin
   icon: number-7
+  index: 7
 
 - name: Endless
   key: field-endless
   icon: number-8
+  index: 8
   tags:
     - frontside
+
+- name: Shrine
+  key: field-shrine
+  icon: number-9
+  index: 9
 
 - name: Illusion
   key: field-illusion
   icon: number-1
+  index: 10
   tags:
     - backside
 
 - name: Graveyard
   key: field-graveyard
   icon: number-2
+  index: 11
   tags:
     - backside
 
 - name: Moonlight
   key: field-moonlight
   icon: number-3
+  index: 12
   tags:
     - backside
 
 - name: Goddess
   key: field-goddess
   icon: number-4
+  index: 13
   tags:
     - backside
 
 - name: Ruin
   key: field-ruin
   icon: number-5
+  index: 14
   tags:
     - backside
 
 - name: Birth
   key: field-birth
   icon: number-6
+  index: 15
   tags:
     - backside
 
 - name: DC
   key: field-dc
   icon: number-8
+  index: 16
   tags:
     - backside
 
-- name: Shrine
-  key: field-shrine
-  icon: number-9
-
 - name: Surface [Time]
   key: field-surface-time
+  index: 17
   tags:
     - time
     - frontside
 
 - name: Guidance [Time]
   key: field-guidance-time
+  index: 18
   tags:
     - time
     - frontside
 
 - name: Mausoleum [Time]
   key: field-mausoleum-time
+  index: 19
   tags:
     - time
     - frontside
 
 - name: Hell Temple
   key: field-hell-temple
+  index: 20

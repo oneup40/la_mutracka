@@ -1,8 +1,8 @@
 - name: Surface NPC Xelpud
   root: "NPCL: Elder Xelpud"
-  key: location-npc-xelpud
   regions:
     - region-surface-main
+  key: location-npc-xelpud
   tags:
     - npc
 
@@ -414,15 +414,10 @@
   tags:
     - npc
 
-- name: "Check: Whip"
-  root: "Check: Whip"
-  key: location-item-whip
-  tags:
-    - item
-    - check
-
 - name: "Check: Chain Whip"
   root: "Check: Chain Whip"
+  regions:
+    - region-inferno-main
   key: location-item-chain-whip
   tags:
     - item
@@ -430,6 +425,8 @@
 
 - name: "Check: Flail Whip"
   root: "Check: Flail Whip"
+  regions:
+    - region-goddess-lower
   key: location-item-flail-whip
   tags:
     - item
@@ -437,6 +434,8 @@
 
 - name: "Check: Knife"
   root: "Check: Knife"
+  regions:
+    - region-sun-main
   key: location-item-knife
   tags:
     - item
@@ -444,6 +443,8 @@
 
 - name: "Check: Key Sword"
   root: "Check: Key Sword"
+  regions:
+    - region-endless-2f
   key: location-item-key-sword
   tags:
     - item
@@ -451,6 +452,8 @@
 
 - name: "Check: Axe"
   root: "Check: Axe"
+  regions:
+    - region-moonlight-upper
   key: location-item-axe
   tags:
     - item
@@ -458,6 +461,8 @@
 
 - name: "Check: Katana"
   root: "Check: Katana"
+  regions:
+    - region-twin-katana
   key: location-item-katana
   tags:
     - item
@@ -465,6 +470,8 @@
 
 - name: "Check: Shuriken"
   root: "Check: Shuriken"
+  regions:
+    - region-guidance-main
   key: location-item-shuriken
   tags:
     - item
@@ -472,6 +479,8 @@
 
 - name: "Check: Rolling Shuriken"
   root: "Check: Rolling Shuriken"
+  regions:
+    - region-mausoleum
   key: location-item-rolling-shuriken
   tags:
     - item
@@ -479,6 +488,8 @@
 
 - name: "Check: Earth Spear"
   root: "Check: Earth Spear"
+  regions:
+    - region-ruin-southwest
   key: location-item-earth-spear
   tags:
     - item
@@ -486,6 +497,8 @@
 
 - name: "Check: Flare Gun"
   root: "Check: Flare Gun"
+  regions:
+    - region-inferno-main
   key: location-item-flare-gun
   tags:
     - item
@@ -493,6 +506,8 @@
 
 - name: "Check: Bomb"
   root: "Check: Bomb"
+  regions:
+    - region-graveyard-east
   key: location-item-bomb
   tags:
     - item
@@ -500,6 +515,8 @@
 
 - name: "Check: Chakram"
   root: "Check: Chakram"
+  regions:
+    - region-extinction-main
   key: location-item-chakram
   tags:
     - item
@@ -507,90 +524,26 @@
 
 - name: "Check: Caltrops"
   root: "Check: Caltrops"
+  regions:
+    - region-spring-main
   key: location-item-caltrops
-  tags:
-    - item
-    - check
-
-- name: "Check: Pistol"
-  root: "Check: Pistol"
-  key: location-item-pistol
   tags:
     - item
     - check
 
 - name: "Check: Angel Shield"
   root: "Check: Angel Shield"
+  regions:
+    - region-dc-upper
   key: location-item-angel-shield
-  tags:
-    - item
-    - check
-
-- name: "Check: Shuriken Ammo"
-  root: "Check: Shuriken Ammo"
-  key: location-item-shuriken-ammo
-  tags:
-    - item
-    - check
-
-- name: "Check: Rolling Shuriken Ammo"
-  root: "Check: Rolling Shuriken Ammo"
-  key: location-item-rolling-shuriken-ammo
-  tags:
-    - item
-    - check
-
-- name: "Check: Earth Spear Ammo"
-  root: "Check: Earth Spear Ammo"
-  key: location-item-earth-spear-ammo
-  tags:
-    - item
-    - check
-
-- name: "Check: Flare Gun Ammo"
-  root: "Check: Flare Gun Ammo"
-  key: location-item-flare-gun-ammo
-  tags:
-    - item
-    - check
-
-- name: "Check: Bomb Ammo"
-  root: "Check: Bomb Ammo"
-  key: location-item-bomb-ammo
-  tags:
-    - item
-    - check
-
-- name: "Check: Chakram Ammo"
-  root: "Check: Chakram Ammo"
-  key: location-item-chakram-ammo
-  tags:
-    - item
-    - check
-
-- name: "Check: Caltrops Ammo"
-  root: "Check: Caltrops Ammo"
-  key: location-item-caltrops-ammo
-  tags:
-    - item
-    - check
-
-- name: "Check: Pistol Ammo"
-  root: "Check: Pistol Ammo"
-  key: location-item-pistol-ammo
-  tags:
-    - item
-    - check
-
-- name: "Check: Hand Scanner"
-  root: "Check: Hand Scanner"
-  key: location-item-hand-scanner
   tags:
     - item
     - check
 
 - name: "Check: Djed Pillar"
   root: "Check: Djed Pillar"
+  regions:
+    - region-ruin-top
   key: location-item-djed-pillar
   tags:
     - item
@@ -605,6 +558,8 @@
 
 - name: "Check: Magatama Jewel"
   root: "Check: Magatama Jewel"
+  regions:
+    - region-dc-upper
   key: location-item-magatama-jewel
   tags:
     - item
@@ -612,34 +567,26 @@
 
 - name: "Check: Cog of the Soul"
   root: "Check: Cog of the Soul"
+  regions:
+    - region-illusion-upper
   key: location-item-cog-of-the-soul
-  tags:
-    - item
-    - check
-
-- name: "Check: Lamp of Time"
-  root: "Check: Lamp of Time"
-  key: location-item-lamp-of-time
   tags:
     - item
     - check
 
 - name: "Check: Pochette Key"
   root: "Check: Pochette Key"
+  regions:
+    - region-birth-skanda
   key: location-item-pochette-key
-  tags:
-    - item
-    - check
-
-- name: "Check: Dragon Bone"
-  root: "Check: Dragon Bone"
-  key: location-item-dragon-bone
   tags:
     - item
     - check
 
 - name: "Check: Crystal Skull"
   root: "Check: Crystal Skull"
+  regions:
+    - region-shrine-main
   key: location-item-crystal-skull
   tags:
     - item
@@ -647,6 +594,8 @@
 
 - name: "Check: Vessel"
   root: "Check: Vessel"
+  regions:
+    - region-birth-northeast
   key: location-item-vessel
   tags:
     - item
@@ -661,6 +610,8 @@
 
 - name: "Check: Woman Statue"
   root: "Check: Woman Statue"
+  regions:
+    - region-birth-southeast
   key: location-item-woman-statue
   tags:
     - item
@@ -668,6 +619,8 @@
 
 - name: "Check: Key of Eternity"
   root: "Check: Key of Eternity"
+  regions:
+    - region-illusion-grail
   key: location-item-key-of-eternity
   tags:
     - item
@@ -675,6 +628,8 @@
 
 - name: "Check: Serpent Staff"
   root: "Check: Serpent Staff"
+  regions:
+    - region-moonlight-southeast
   key: location-item-serpent-staff
   tags:
     - item
@@ -682,6 +637,8 @@
 
 - name: "Check: Diary"
   root: "Check: Diary"
+  regions:
+    - region-shrine-main
   key: location-item-diary
   tags:
     - item
@@ -689,6 +646,8 @@
 
 - name: "Check: Talisman"
   root: "Check: Talisman"
+  regions:
+    - region-sun-east
   key: location-item-talisman
   tags:
     - item
@@ -701,15 +660,10 @@
     - item
     - check
 
-- name: "Check: Mobile Super X2"
-  root: "Check: Mobile Super X2"
-  key: location-item-mobile-super-x2
-  tags:
-    - item
-    - check
-
 - name: "Check: Glove"
   root: "Check: Glove"
+  regions:
+    - region-spring-upper
   key: location-item-glove
   tags:
     - item
@@ -717,6 +671,8 @@
 
 - name: "Check: Holy Grail"
   root: "Check: Holy Grail"
+  regions:
+    - region-guidance-main
   key: location-item-holy-grail
   tags:
     - item
@@ -724,20 +680,17 @@
 
 - name: "Check: Isis' Pendant"
   root: "Check: Isis' Pendant"
+  regions:
+    - region-sun-west
   key: location-item-isis-pendant
-  tags:
-    - item
-    - check
-
-- name: "Check: Helmet"
-  root: "Check: Helmet"
-  key: location-item-helmet
   tags:
     - item
     - check
 
 - name: "Check: Grapple Claw"
   root: "Check: Grapple Claw"
+  regions:
+    - region-moonlight-grapple
   key: location-item-grapple-claw
   tags:
     - item
@@ -745,6 +698,8 @@
 
 - name: "Check: Bronze Mirror"
   root: "Check: Bronze Mirror"
+  regions:
+    - region-sun-east
   key: location-item-bronze-mirror
   tags:
     - item
@@ -752,6 +707,8 @@
 
 - name: "Check: Eye of Truth"
   root: "Check: Eye of Truth"
+  regions:
+    - region-goddess-lower
   key: location-item-eye-of-truth
   tags:
     - item
@@ -759,6 +716,8 @@
 
 - name: "Check: Ring"
   root: "Check: Ring"
+  regions:
+    - region-twin-upper-left
   key: location-item-ring
   tags:
     - item
@@ -766,6 +725,8 @@
 
 - name: "Check: Scalesphere"
   root: "Check: Scalesphere"
+  regions:
+    - region-spring-upper
   key: location-item-scalesphere
   tags:
     - item
@@ -773,6 +734,8 @@
 
 - name: "Check: Gauntlet"
   root: "Check: Gauntlet"
+  regions:
+    - region-graveyard-west
   key: location-item-gauntlet
   tags:
     - item
@@ -780,6 +743,8 @@
 
 - name: "Check: Treasures"
   root: "Check: Treasures"
+  regions:
+    - region-guidance-main
   key: location-item-treasures
   tags:
     - item
@@ -794,6 +759,8 @@
 
 - name: "Check: Plane Model"
   root: "Check: Plane Model"
+  regions:
+    - region-goddess-grail
   key: location-item-plane-model
   tags:
     - item
@@ -801,6 +768,8 @@
 
 - name: "Check: Philosopher's Ocarina"
   root: "Check: Philosopher's Ocarina"
+  regions:
+    - region-moonlight-pyramid
   key: location-item-philosophers-ocarina
   tags:
     - item
@@ -808,6 +777,8 @@
 
 - name: "Check: Feather"
   root: "Check: Feather"
+  regions:
+    - region-surface-main
   key: location-item-feather
   tags:
     - item
@@ -822,20 +793,17 @@
 
 - name: "Check: Fairy Clothes"
   root: "Check: Fairy Clothes"
+  regions:
+    - region-guidance-main
   key: location-item-fairy-clothes
-  tags:
-    - item
-    - check
-
-- name: "Check: Hermes' Boots"
-  root: "Check: Hermes' Boots"
-  key: location-item-hermes-boots
   tags:
     - item
     - check
 
 - name: "Check: Fruit of Eden"
   root: "Check: Fruit of Eden"
+  regions:
+    - region-moonlight-upper
   key: location-item-fruit-of-eden
   tags:
     - item
@@ -843,20 +811,17 @@
 
 - name: "Check: Twin Statue"
   root: "Check: Twin Statue"
+  regions:
+    - region-endless-3f-upper
   key: location-item-twin-statue
-  tags:
-    - item
-    - check
-
-- name: "Check: Bracelet"
-  root: "Check: Bracelet"
-  key: location-item-bracelet
   tags:
     - item
     - check
 
 - name: "Check: Dimensional Key"
   root: "Check: Dimensional Key"
+  regions:
+    - region-birth-grail
   key: location-item-dimensional-key
   tags:
     - item
@@ -864,6 +829,8 @@
 
 - name: "Check: Ice Cape"
   root: "Check: Ice Cape"
+  regions:
+    - region-inferno-main
   key: location-item-ice-cape
   tags:
     - item
@@ -871,6 +838,8 @@
 
 - name: "Check: Origin Seal"
   root: "Check: Origin Seal"
+  regions:
+    - region-spring-upper
   key: location-item-origin-seal
   tags:
     - item
@@ -878,6 +847,8 @@
 
 - name: "Check: Birth Seal"
   root: "Check: Birth Seal"
+  regions:
+    - region-surface-main
   key: location-item-birth-seal
   tags:
     - item
@@ -885,6 +856,8 @@
 
 - name: "Check: Life Seal"
   root: "Check: Life Seal"
+  regions:
+    - region-extinction-main
   key: location-item-life-seal
   tags:
     - item
@@ -892,48 +865,26 @@
 
 - name: "Check: Death Seal"
   root: "Check: Death Seal"
+  regions:
+    - region-shrine-seal
   key: location-item-death-seal
-  tags:
-    - item
-    - check
-
-- name: "Check: reader.exe"
-  root: "Check: reader.exe"
-  key: location-item-reader-exe
-  tags:
-    - item
-    - check
-
-- name: "Check: yagomap.exe"
-  root: "Check: yagomap.exe"
-  key: location-item-yagomap-exe
   tags:
     - item
     - check
 
 - name: "Check: yagostr.exe"
   root: "Check: yagostr.exe"
+  regions:
+    - region-guidance-door
   key: location-item-yagostr-exe
-  tags:
-    - item
-    - check
-
-- name: "Check: torude.exe"
-  root: "Check: torude.exe"
-  key: location-item-torude-exe
-  tags:
-    - item
-    - check
-
-- name: "Check: guild.exe"
-  root: "Check: guild.exe"
-  key: location-item-guild-exe
   tags:
     - item
     - check
 
 - name: "Check: mantra.exe"
   root: "Check: mantra.exe"
+  regions:
+    - region-extinction-main
   key: location-item-mantra-exe
   tags:
     - item
@@ -941,21 +892,9 @@
 
 - name: "Check: deathv.exe"
   root: "Check: deathv.exe"
+  regions:
+    - region-surface-main
   key: location-item-deathv-exe
-  tags:
-    - item
-    - check
-
-- name: "Check: randc.exe"
-  root: "Check: randc.exe"
-  key: location-item-randc-exe
-  tags:
-    - item
-    - check
-
-- name: "Check: move.exe"
-  root: "Check: move.exe"
-  key: location-item-move-exe
   tags:
     - item
     - check
@@ -967,15 +906,10 @@
     - item
     - check
 
-- name: "Check: miracle.exe"
-  root: "Check: miracle.exe"
-  key: location-item-miracle-exe
-  tags:
-    - item
-    - check
-
 - name: "Check: mirai.exe"
   root: "Check: mirai.exe"
+  regions:
+    - region-graveyard-west
   key: location-item-mirai-exe
   tags:
     - item
@@ -983,6 +917,8 @@
 
 - name: "Check: lamulana.exe"
   root: "Check: lamulana.exe"
+  regions:
+    - region-surface-time
   key: location-item-lamulana-exe
   tags:
     - item
@@ -990,6 +926,8 @@
 
 - name: "Check: Map (Shrine of the Mother)"
   root: "Check: Map (Shrine of the Mother)"
+  regions:
+    - region-shrine-map
   key: location-item-map-shrine
   tags:
     - item
@@ -997,6 +935,8 @@
 
 - name: "Check: Ankh Jewel (Guidance)"
   root: "Check: Ankh Jewel (Gate of Guidance)"
+  regions:
+    - region-guidance-main
   key: location-item-ankh-jewel-guidance
   tags:
     - item
@@ -1004,6 +944,8 @@
 
 - name: "Check: Ankh Jewel (Mausoleum)"
   root: "Check: Ankh Jewel (Mausoleum of the Giants)"
+  regions:
+    - region-mausoleum
   key: location-item-ankh-jewel-mausoleum
   tags:
     - item
@@ -1011,6 +953,8 @@
 
 - name: "Check: Ankh Jewel (Sun)"
   root: "Check: Ankh Jewel (Temple of the Sun)"
+  regions:
+    - region-sun-main
   key: location-item-ankh-jewel-sun
   tags:
     - item
@@ -1018,6 +962,8 @@
 
 - name: "Check: Ankh Jewel (Spring)"
   root: "Check: Ankh Jewel (Spring in the Sky)"
+  regions:
+    - region-spring-main
   key: location-item-ankh-jewel-spring
   tags:
     - item
@@ -1025,6 +971,8 @@
 
 - name: "Check: Ankh Jewel (Ruin)"
   root: "Check: Ankh Jewel (Tower of Ruin)"
+  regions:
+    - region-ruin-southwest
   key: location-item-ankh-jewel-ruin
   tags:
     - item
@@ -1032,6 +980,8 @@
 
 - name: "Check: Ankh Jewel (Twin)"
   root: "Check: Ankh Jewel (Twin Labyrinths)"
+  regions:
+    - region-twin-jewel
   key: location-item-ankh-jewel-twin
   tags:
     - item
@@ -1039,6 +989,8 @@
 
 - name: "Check: Ankh Jewel (DC)"
   root: "Check: Ankh Jewel (Dimensional Corridor)"
+  regions:
+    - region-dc-upper
   key: location-item-ankh-jewel-dc
   tags:
     - item
@@ -1046,6 +998,8 @@
 
 - name: "Check: Crucifix"
   root: "Check: Crucifix"
+  regions:
+    - region-guidance-main
   key: location-item-crucifix
   tags:
     - item
@@ -1053,6 +1007,8 @@
 
 - name: "Check: Map (Surface)"
   root: "Check: Map (Surface)"
+  regions:
+    - region-surface-main
   key: location-item-map-surface
   tags:
     - item
@@ -1060,6 +1016,8 @@
 
 - name: "Check: Map (Guidance)"
   root: "Check: Map (Gate of Guidance)"
+  regions:
+    - region-guidance-main
   key: location-item-map-guidance
   tags:
     - item
@@ -1067,6 +1025,8 @@
 
 - name: "Check: Map (Mausoleum)"
   root: "Check: Map (Mausoleum of the Giants)"
+  regions:
+    - region-mausoleum
   key: location-item-map-mausoleum
   tags:
     - item
@@ -1074,6 +1034,8 @@
 
 - name: "Check: Map (Sun)"
   root: "Check: Map (Temple of the Sun)"
+  regions:
+    - region-sun-top
   key: location-item-map-sun
   tags:
     - item
@@ -1081,6 +1043,8 @@
 
 - name: "Check: Map (Spring)"
   root: "Check: Map (Spring in the Sky)"
+  regions:
+    - region-spring-main
   key: location-item-map-spring
   tags:
     - item
@@ -1088,6 +1052,8 @@
 
 - name: "Check: Map (Inferno)"
   root: "Check: Map (Inferno Cavern)"
+  regions:
+    - region-inferno-main
   key: location-item-map-inferno
   tags:
     - item
@@ -1095,6 +1061,8 @@
 
 - name: "Check: Map (Extinction)"
   root: "Check: Map (Chamber of Extinction)"
+  regions:
+    - region-extinction-map
   key: location-item-map-extinction
   tags:
     - item
@@ -1102,6 +1070,8 @@
 
 - name: "Check: Map (Twin)"
   root: "Check: Map (Twin Labyrinths)"
+  regions:
+    - region-twin-poison-1
   key: location-item-map-twin
   tags:
     - item
@@ -1109,6 +1079,8 @@
 
 - name: "Check: Map (Endless)"
   root: "Check: Map (Endless Corridor)"
+  regions:
+    - region-endless-1f
   key: location-item-map-endless
   tags:
     - item
@@ -1116,6 +1088,8 @@
 
 - name: "Check: Map (Illusion)"
   root: "Check: Map (Gate of Illusion)"
+  regions:
+    - region-illusion-dracuet
   key: location-item-map-illusion
   tags:
     - item
@@ -1123,6 +1097,8 @@
 
 - name: "Check: Map (Graveyard)"
   root: "Check: Map (Graveyard of the Giants)"
+  regions:
+    - region-graveyard-west
   key: location-item-map-graveyard
   tags:
     - item
@@ -1130,6 +1106,8 @@
 
 - name: "Check: Map (Moonlight)"
   root: "Check: Map (Temple of Moonlight)"
+  regions:
+    - region-moonlight-map
   key: location-item-map-moonlight
   tags:
     - item
@@ -1137,6 +1115,8 @@
 
 - name: "Check: Map (Goddess)"
   root: "Check: Map (Tower of the Goddess)"
+  regions:
+    - region-goddess-lower
   key: location-item-map-goddess
   tags:
     - item
@@ -1144,6 +1124,8 @@
 
 - name: "Check: Map (Ruin)"
   root: "Check: Map (Tower of Ruin)"
+  regions:
+    - region-ruin-illusion
   key: location-item-map-ruin
   tags:
     - item
@@ -1151,6 +1133,8 @@
 
 - name: "Check: Map (Birth)"
   root: "Check: Map (Chamber of Birth)"
+  regions:
+    - region-birth-west
   key: location-item-map-birth
   tags:
     - item
@@ -1158,6 +1142,8 @@
 
 - name: "Check: Map (DC)"
   root: "Check: Map (Dimensional Corridor)"
+  regions:
+    - region-dc-grail
   key: location-item-map-dc
   tags:
     - item
@@ -1165,6 +1151,8 @@
 
 - name: "Check: Perfume"
   root: "Check: Perfume"
+  regions:
+    - region-birth-northeast
   key: location-item-perfume
   tags:
     - item
@@ -1179,6 +1167,8 @@
 
 - name: "Check: Sacred Orb (Surface)"
   root: "Check: Sacred Orb (Surface)"
+  regions:
+    - region-surface-main
   key: location-item-sacred-orb-surface
   tags:
     - item
@@ -1186,6 +1176,8 @@
 
 - name: "Check: Sacred Orb (Guidance)"
   root: "Check: Sacred Orb (Gate of Guidance)"
+  regions:
+    - region-guidance-main
   key: location-item-sacred-orb-guidance
   tags:
     - item
@@ -1193,6 +1185,8 @@
 
 - name: "Check: Sacred Orb (Mausoleum)"
   root: "Check: Sacred Orb (Mausoleum of the Giants)"
+  regions:
+    - region-mausoleum
   key: location-item-sacred-orb-mausoleum
   tags:
     - item
@@ -1200,6 +1194,8 @@
 
 - name: "Check: Sacred Orb (Sun)"
   root: "Check: Sacred Orb (Temple of the Sun)"
+  regions:
+    - region-sun-main
   key: location-item-sacred-orb-sun
   tags:
     - item
@@ -1207,6 +1203,8 @@
 
 - name: "Check: Sacred Orb (Spring)"
   root: "Check: Sacred Orb (Spring in the Sky)"
+  regions:
+    - region-spring-main
   key: location-item-sacred-orb-spring
   tags:
     - item
@@ -1214,6 +1212,8 @@
 
 - name: "Check: Sacred Orb (Extinction)"
   root: "Check: Sacred Orb (Chamber of Extinction)"
+  regions:
+    - region-extinction-main
   key: location-item-sacred-orb-extinction
   tags:
     - item
@@ -1221,6 +1221,8 @@
 
 - name: "Check: Sacred Orb (Twin)"
   root: "Check: Sacred Orb (Twin Labyrinths)"
+  regions:
+    - region-twin-lower
   key: location-item-sacred-orb-twin
   tags:
     - item
@@ -1228,6 +1230,8 @@
 
 - name: "Check: Sacred Orb (Shrine)"
   root: "Check: Sacred Orb (Shrine of the Mother)"
+  regions:
+    - region-shrine-main
   key: location-item-sacred-orb-shrine
   tags:
     - item
@@ -1235,6 +1239,8 @@
 
 - name: "Check: Sacred Orb (Ruin)"
   root: "Check: Sacred Orb (Tower of Ruin)"
+  regions:
+    - region-ruin-southeast
   key: location-item-sacred-orb-ruin
   tags:
     - item
@@ -1242,6 +1248,8 @@
 
 - name: "Check: Sacred Orb (DC)"
   root: "Check: Sacred Orb (Dimensional Corridor)"
+  regions:
+    - region-dc-upper
   key: location-item-sacred-orb-dc
   tags:
     - item
@@ -1249,6 +1257,8 @@
 
 - name: "Check: Shell Horn"
   root: "Check: Shell Horn"
+  regions:
+    - region-surface-main
   key: location-item-shell-horn
   tags:
     - item
@@ -1256,6 +1266,8 @@
 
 - name: "Check: Silver Shield"
   root: "Check: Silver Shield"
+  regions:
+    - region-graveyard-west
   key: location-item-silver-shield
   tags:
     - item
@@ -1263,20 +1275,17 @@
 
 - name: "Check: Spaulder"
   root: "Check: Spaulder"
+  regions:
+    - region-goddess-grail
   key: location-item-spaulder
-  tags:
-    - item
-    - check
-
-- name: "Check: Treasures"
-  root: "Check: Treasures"
-  key: location-item-treasures
   tags:
     - item
     - check
 
 - name: "Check: beolamu.exe"
   root: "Check: beolamu.exe"
+  regions:
+    - region-dc-upper
   key: location-item-beolamu-exe
   tags:
     - item
@@ -1284,6 +1293,8 @@
 
 - name: "Check: bounce.exe"
   root: "Check: bounce.exe"
+  regions:
+    - region-shrine-main
   key: location-item-bounce-exe
   tags:
     - item
@@ -1291,6 +1302,8 @@
 
 - name: "Check: bunplus.com"
   root: "Check: bunplus.com"
+  regions:
+    - region-inferno-main
   key: location-item-bunplus-com
   tags:
     - item
@@ -1298,6 +1311,8 @@
 
 - name: "Check: emusic.exe"
   root: "Check: emusic.exe"
+  regions:
+     - region-graveyard-east
   key: location-item-emusic-exe
   tags:
     - item
@@ -1312,6 +1327,8 @@
 
 - name: "Coin: Birth (Dance)"
   root: "Coin: Birth (Dance)"
+  regions:
+    - region-birth-dance
   key: location-coin-birth-dance
   tags:
     - coin
@@ -1319,6 +1336,8 @@
 
 - name: "Coin: Birth (Ninja)"
   root: "Coin: Birth (Ninja)"
+  regions:
+    - region-birth-northeast
   key: location-coin-birth-ninja
   tags:
     - coin
@@ -1326,6 +1345,8 @@
 
 - name: "Coin: Birth (Leaning Pillar)"
   root: "Coin: Birth (Southeast)"
+  regions:
+    - region-birth-southeast
   key: location-coin-birth-southeast
   tags:
     - coin
@@ -1333,6 +1354,8 @@
 
 - name: "Coin: DC (Entrance)"
   root: "Coin: Dimensional"
+  regions:
+    - region-dc-grail
   key: location-coin-dimensional
   tags:
     - coin
@@ -1340,6 +1363,8 @@
 
 - name: "Coin: Endless"
   root: "Coin: Endless"
+  regions:
+    - region-endless-3f-upper
   key: location-coin-endless
   tags:
     - coin
@@ -1347,6 +1372,8 @@
 
 - name: "Coin: Extinction"
   root: "Coin: Extinction"
+  regions:
+    - region-extinction-left-main
   key: location-coin-extinction
   tags:
     - coin
@@ -1354,6 +1381,8 @@
 
 - name: "Coin: Goddess (Fairy Point)"
   root: "Coin: Goddess (Fairy)"
+  regions:
+    - region-goddess-lower
   key: location-coin-goddess-fairy
   tags:
     - coin
@@ -1361,6 +1390,8 @@
 
 - name: "Coin: Goddess (Shield Trap)"
   root: "Coin: Goddess (Shield)"
+  regions:
+    - region-goddess-grail
   key: location-coin-goddess-shield
   tags:
     - coin
@@ -1368,6 +1399,8 @@
 
 - name: "Coin: Graveyard (Top)"
   root: "Coin: Graveyard"
+  regions:
+    - region-graveyard-west
   key: location-coin-graveyard
   tags:
     - coin
@@ -1375,6 +1408,8 @@
 
 - name: "Coin: Guidance (Shuriken A)"
   root: "Coin: Guidance (One)"
+  regions:
+    - region-guidance-main
   key: location-coin-guidance-one
   tags:
     - coin
@@ -1382,6 +1417,8 @@
 
 - name: "Coin: Guidance (Shuriken B)"
   root: "Coin: Guidance (Two)"
+  regions:
+    - region-guidance-main
   key: location-coin-guidance-two
   tags:
     - coin
@@ -1389,6 +1426,8 @@
 
 - name: "Coin: Guidance (Trap)"
   root: "Coin: Guidance (Trap)"
+  regions:
+    - region-guidance-main
   key: location-coin-guidance-trap
   tags:
     - coin
@@ -1396,6 +1435,8 @@
 
 - name: "Coin: Illusion (Katana)"
   root: "Coin: Illusion (Katana)"
+  regions:
+    - region-illusion-middle
   key: location-coin-illusion-katana
   tags:
     - coin
@@ -1403,6 +1444,8 @@
 
 - name: "Coin: Illusion (Spikes)"
   root: "Coin: Illusion (Spikes)"
+  regions:
+    - region-illusion-lower
   key: location-coin-illusion-spikes
   tags:
     - coin
@@ -1410,6 +1453,8 @@
 
 - name: "Coin: Inferno (Lava)"
   root: "Coin: Inferno (Lava)"
+  regions:
+    - region-inferno-main
   key: location-coin-inferno-lava
   tags:
     - coin
@@ -1417,6 +1462,8 @@
 
 - name: "Coin: Inferno Annex (Spikes)"
   root: "Coin: Inferno (Spikes)"
+  regions:
+    - region-inferno-annex
   key: location-coin-inferno-spikes
   tags:
     - coin
@@ -1424,6 +1471,8 @@
 
 - name: "Coin: Mausoleum"
   root: "Coin: Mausoleum"
+  regions:
+    - region-mausoleum
   key: location-coin-mausoleum
   tags:
     - coin
@@ -1431,6 +1480,8 @@
 
 - name: "Coin: Moonlight"
   root: "Coin: Moonlight"
+  regions:
+    - region-moonlight-eden
   key: location-coin-moonlight
   tags:
     - coin
@@ -1438,6 +1489,8 @@
 
 - name: "Coin: Ruin"
   root: "Coin: Ruin"
+  regions:
+    - region-ruin-spirits
   key: location-coin-ruin
   tags:
     - coin
@@ -1445,6 +1498,8 @@
 
 - name: "Coin: Shrine"
   root: "Coin: Shrine"
+  regions:
+    - region-shrine-main
   key: location-coin-shrine
   tags:
     - coin
@@ -1452,6 +1507,8 @@
 
 - name: "Coin: Spring"
   root: "Coin: Spring"
+  regions:
+    - region-spring-main
   key: location-coin-spring
   tags:
     - coin
@@ -1459,6 +1516,8 @@
 
 - name: "Coin: Sun (Pyramid/Bomb)"
   root: "Coin: Sun (Pyramid)"
+  regions:
+    - region-sun-main
   key: location-coin-sun-pyramid
   tags:
     - coin
@@ -1466,6 +1525,8 @@
 
 - name: "Coin: Surface (Ruin Path)"
   root: "Coin: Surface (Ruin Path)"
+  regions:
+    - region-surface-ruin-path-upper
   key: location-coin-surface-ruin-path
   tags:
     - coin
@@ -1473,6 +1534,8 @@
 
 - name: "Coin: Surface (Seal)"
   root: "Coin: Surface (Seal)"
+  regions:
+    - region-surface-main
   key: location-coin-surface-seal
   tags:
     - coin
@@ -1480,6 +1543,8 @@
 
 - name: "Coin: Surface (Waterfall)"
   root: "Coin: Surface (Waterfall)"
+  regions:
+    - region-surface-main
   key: location-coin-surface-waterfall
   tags:
     - coin
@@ -1487,6 +1552,8 @@
 
 - name: "Coin: Twin (Escape)"
   root: "Coin: Twin (Escape)"
+  regions:
+    - region-twin-upper-left
   key: location-coin-twin-escape
   tags:
     - coin
@@ -1494,6 +1561,8 @@
 
 - name: "Coin: Twin (Below Zu)"
   root: "Coin: Twin (Lower)"
+  regions:
+    - region-twin-lower
   key: location-coin-twin-lower
   tags:
     - coin
@@ -1501,6 +1570,8 @@
 
 - name: "Coin: Twin (Peryton Witches)"
   root: "Coin: Twin (Witches)"
+  regions:
+    - region-twin-lower
   key: location-coin-twin-witches
   tags:
     - coin
@@ -1508,6 +1579,8 @@
 
 - name: "Check: Illusion Trap Chest"
   root: "Trap: Exploding"
+  regions:
+    - region-illusion-dracuet
   key: location-trap-exploding
   tags:
     - trap
@@ -1515,6 +1588,8 @@
 
 - name: "Check: Graveyard Trap Chest"
   root: "Trap: Graveyard"
+  regions:
+    - region-graveyard-west
   key: location-trap-graveyard
   tags:
     - trap
@@ -1522,6 +1597,8 @@
 
 - name: "Check: Inferno Trap Orb"
   root: "Trap: Inferno Orb"
+  regions:
+    - region-inferno-main
   key: location-trap-inferno-orb
   tags:
     - trap
@@ -1529,6 +1606,8 @@
 
 - name: "Check: Twin Trap Ankh Jewel"
   root: "Trap: Twin Ankh"
+  regions:
+    - region-twin-loop
   key: location-trap-twin-ankh
   tags:
     - trap

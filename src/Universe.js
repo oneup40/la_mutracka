@@ -6,13 +6,14 @@ import locationDefs from './universe/locations.yaml';
 import npcDefs from './universe/npcs.yaml';
 
 class Field {
-    constructor({name, key, icon, tags}) {
+    constructor({name, key, icon, index, tags}) {
         let tagValues = (tags === undefined ? [] : Array.from(tags));
         let tagSet = new Set(tagValues);
 
         this.name = name;
         this.key = key;
         this.icon = (icon === undefined ? null : icon);
+        this.index = index;
         this.tags = tagSet;
     }
 }
