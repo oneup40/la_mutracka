@@ -1,0 +1,524 @@
+.Task {
+    display: flex;
+    justify-content: center;
+    padding: 1.5em;
+}
+
+.Task button {
+    width: 10em;
+}
+
+.task-root {
+    color: white;
+    background-color: dodgerblue;
+    margin: 0.25em 0 0.25em 0.5em;
+    padding: 0.5em 2.5em 0.5em 2.5em;
+    border-radius: 0.25em;
+    font-weight: bold;
+}
+
+.task-root:hover {
+    cursor: pointer;
+    filter: brightness(1.2);
+}
+
+.task-root::after {
+    content: "  ➢";
+}
+
+.task-root-overlay {
+    background-color: rgba(0,0,0,0.15);
+}
+
+.task-root-content {
+    /*background-color: white;*/
+}
+
+.task-choice {
+    color: white;
+    background-color: dodgerblue;
+    margin: 0.2em 0 0.2em 0.5em;
+    padding: 0.25em 0.5em 0.25em 0.5em;
+    border-radius: 0.25em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.task-choice:hover {
+    cursor: pointer;
+    filter: brightness(1.2);
+}
+
+.task-choice-field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+        "sf .  .  . "
+        "f1 f2 f3 f4"
+        "f5 f6 f7 f8"
+        "b1 b2 b3 b4"
+        "b5 b6 b7 b8";
+}
+
+.task-choice.start-region {
+    display: grid;
+    grid-template-columns: 2em 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+        "icon field"
+        "icon region";
+}
+
+.region-field-icon {
+    filter: invert(100%);
+    grid-area: icon;
+}
+
+.region-field-icon.region-backside {
+    transform: scaleX(-1);
+}
+
+.region-field-name {
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+    grid-area: field;
+}
+
+.region-name {
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+    grid-area: region;
+}
+
+.field-surface {
+    grid-area: sf;
+}
+
+.field-guidance {
+    grid-area: f1;
+}
+
+.field-mausoleum {
+    grid-area: f2;
+}
+
+.field-sun {
+    grid-area: f3;
+}
+
+.field-spring {
+    grid-area: f4;
+}
+
+.field-inferno {
+    grid-area: f5;
+}
+
+.field-extinction {
+    grid-area: f6;
+}
+
+.field-twin,
+.region-twin-poison-1 {
+    grid-area: f7;
+}
+
+.field-endless {
+    grid-area: f8;
+}
+
+.field-shrine {
+    grid-area: sh;
+}
+
+.field-illusion {
+    grid-area: b1;
+}
+
+.field-graveyard {
+    grid-area: b2;
+}
+
+.field-moonlight {
+    grid-area: b3;
+}
+
+.field-goddess {
+    grid-area: b4;
+}
+
+.field-ruin {
+    grid-area: b5;
+}
+
+.field-birth {
+    grid-area: b6;
+}
+
+.region-twin-lower {
+    grid-area: b7;
+}
+
+.field-dc {
+    grid-area: b8;
+}
+
+.field-surface-time {
+    grid-area: t1;
+}
+
+.field-guidance-time {
+    grid-area: t2;
+}
+
+.field-mausoleum-time {
+    grid-area: t3;
+}
+
+.field-hell-temple {
+    grid-area: hl;
+}
+
+.task-choice-weapon-grid {
+    display: grid;
+    grid-template-rows: [whip] 1fr
+                        [nonwhip] 1fr
+                        [sub1] 1fr
+                        [sub2] 1fr
+}
+
+.task-choice.whip {
+    grid-column: 1;
+    grid-row: whip;
+}
+
+.task-choice.chain-whip {
+    grid-column: 2;
+    grid-row: whip;
+}
+
+.task-choice.flail-whip {
+    grid-column: 3;
+    grid-row: whip;
+}
+
+.task-choice.knife {
+    grid-column: 1;
+    grid-row: nonwhip;
+}
+
+.task-choice.key-sword {
+    grid-column: 2;
+    grid-row: nonwhip;
+}
+
+.task-choice.axe {
+    grid-column: 3;
+    grid-row: nonwhip;
+}
+
+.task-choice.katana {
+    grid-column: 4;
+    grid-row: nonwhip;
+}
+
+.task-choice.shuriken {
+    grid-column: 1;
+    grid-row: sub1;
+}
+
+.task-choice.rolling-shuriken {
+    grid-column: 2;
+    grid-row: sub1;
+}
+
+.task-choice.earth-spear {
+    grid-column: 3;
+    grid-row: sub1;
+}
+
+.task-choice.flare-gun {
+    grid-column: 4;
+    grid-row: sub1;
+}
+
+.task-choice.bomb {
+    grid-column: 5;
+    grid-row: sub1;
+}
+
+.task-choice.chakram {
+    grid-column: 1;
+    grid-row: sub2;
+}
+
+.task-choice.caltrops {
+    grid-column: 2;
+    grid-row: sub2;
+}
+
+.task-choice.pistol {
+    grid-column: 3;
+    grid-row: sub2;
+}
+
+@media {
+    .task-choice-connection-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+            "sf .  .  .  .  .  .  . "
+            "f1 f2 f3 f4 f5 f6 f7 f8"
+            "sh .  .  .  .  .  .  . "
+            "b1 b2 b3 b4 b5 b6 b7 b8"
+            "t1 t2 t3 .  .  .  .  . "
+            "hl .  .  .  .  .  .  . ";
+    }
+}
+
+@media (max-width: 1200px) {
+    .task-choice-connection-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+            "sf .  .  . "
+            "f1 f2 f3 f4"
+            "f5 f6 f7 f8"
+            "sh .  .  ."
+            "b1 b2 b3 b4"
+            "b5 b6 b7 b8"
+            "t1 t2 t3 . "
+            "hl .  .  . ";
+    }
+}
+
+.task-choice-connection-field {
+    color: white;
+    background-color: #1780e0;
+    margin: 0.2em;
+    padding: 0.25em 0 0.25em 0;
+    border-radius: 0.25em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.field-label {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-bottom: solid 1px;
+}
+
+.task-choice.connection {
+    text-align: left;
+    width: 100%;
+    margin: 0.2em 0;
+    padding: 0;
+}
+
+.connection-name {
+    padding: 0 0.2em;
+}
+
+.task-choice-npc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+        "imp itm shp phi";
+}
+
+.task-choice-philosopher-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+        "phi";
+}
+
+.task-choice-item-category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas:
+        "wep sub use itm"
+        "sel sft msc .  ";
+}
+
+.task-choice-weapon-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas:
+        "whp chw flw .  "
+        "knf key axe kat";
+}
+
+.task-choice-subweapon-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas:
+        "shk rsh esp flr bmb"
+        "chk cal gun sld .  ";
+}
+
+.task-choice-usable-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-areas:
+        "scn djd min mag cog"
+        "lmp pch drg cry vsl"
+        "pep wmn etn srp .  "
+        "tal dry mtl .   .  ";
+}
+
+.task-choice-item-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    grid-template-areas:
+        "lap .   .   .   glv"
+        "grl pen .   hel grp"
+        "mir eye rng scl gnt"
+        "trs anc .   .   .  "
+        ".   pln ocr fth bkd"
+        "fcl .   bts frt twn"
+        "brc .   .   dim ice";
+}
+
+.task-choice-seal-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    grid-template-areas:
+        "org brt lif dth";
+}
+
+.task-choice-software-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-areas:
+        "rdr .   ymp yst"
+        ".   .   tor gld"
+        "man .   .   dth"
+        "rnd .   mov mek"
+        ".   mrc mra lam";
+}
+
+.task-choice-npc-grid .category,
+.task-choice-philosopher-grid .category,
+.task-choice-item-category-grid .category {
+    color: white;
+    background-color: #1780e0;
+    margin: 0.2em;
+    padding: 0.25em 0 0.25em 0;
+    border-radius: 0.25em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.task-choice-npc-grid .category.important,
+.task-choice-philosopher-grid .category.important {
+    grid-area: imp;
+}
+
+.task-choice-npc-grid .category.item,
+.task-choice-philosopher-grid .category.item {
+    grid-area: itm;
+}
+
+.task-choice-npc-grid .category.shop,
+.task-choice-philosopher-grid .category.shop {
+    grid-area: shp;
+}
+
+.task-choice-npc-grid .category.philosopher,
+.task-choice-philosopher-grid .category.philosopher {
+    grid-area: phi;
+}
+
+.task-choice-npc-grid .task-choice,
+.task-choice-philosopher-grid .task-choice,
+.task-choice-item-category-grid .task-choice {
+    text-align: left;
+    width: 100%;
+    margin: 0.2em 0;
+    padding: 0;
+}
+
+.task-choice-item-category-grid .category.weapon {
+    grid-area: wep;
+}
+
+.task-choice-item-category-grid .category.subweapon {
+    grid-area: sub;
+}
+
+.task-choice-item-category-grid .category.usable {
+    grid-area: use;
+}
+
+.task-choice-item-category-grid .category.item {
+    grid-area: itm;
+}
+
+.task-choice-item-category-grid .category.seal {
+    grid-area: sel;
+}
+
+.task-choice-item-category-grid .category.software {
+    grid-area: sft;
+}
+
+.task-choice-item-category-grid .category.misc {
+    grid-area: msc;
+}
+
+.task-choice-weapon-grid .whip {
+    grid-area: whp;
+}
+
+.task-choice-weapon-grid .chain-whip {
+    grid-area: chw;
+}
+
+.task-choice-weapon-grid .flail-whip {
+    grid-area: flw;
+}
+
+.task-choice-weapon-grid .knife {
+    grid-area: knf;
+}
+
+.task-choice-weapon-grid .key-sword {
+    grid-area: key;
+}
+
+.task-choice-weapon-grid .axe {
+    grid-area: axe;
+}
+
+.task-choice-weapon-grid .katana {
+    grid-area: kat;
+}
+
+.task-choice-subweapon-grid {
+    & .shuriken { grid-area: shk; }
+    & .rolling-shuriken { grid-area: rsh; }
+    & .earth-spear { grid-area: esp; }
+    & .flare-gun { grid-area: flr; }
+    & .bomb { grid-area: bmb; }
+
+    & .chakram { grid-area: chk; }
+    & .caltrops { grid-area: cal; }
+    & .pistol { grid-area: gun; }
+    & .angel-shield { grid-area: sld; }
+}

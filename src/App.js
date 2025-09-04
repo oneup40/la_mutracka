@@ -619,9 +619,11 @@ function App() {
         let excludedReqs = new Set();
         switch (gameSettings.difficulty) {
             case 'medium':
+                console.log('excluding bosses_hard reqs');
                 excludedReqs.add('bosses_hard');
                 break;
             case 'hard':
+                console.log('excluding bosses_medium reqs');
                 excludedReqs.add('bosses_medium');
                 break;
             default:

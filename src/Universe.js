@@ -18,6 +18,7 @@ class Field {
     }
 }
 let fields = {};
+console.log(fieldDefs);
 fields.all = fieldDefs.map(def => new Field(def));
 fields.byKey = new Map(fields.all.map(field => [field.key, field]));
 
