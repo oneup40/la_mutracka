@@ -1,0 +1,14 @@
+.tasks-list {
+    margin-left: 1em;
+    display: grid;
+    grid-template-columns: fit-content(80%);
+    grid-auto-flow: row;
+}
+
+.field-tasks-list {
+    grid-column-start: 1;
+}
+
+.field-tasks-list .field-name {
+    font: 12px;
+}

@@ -4,7 +4,7 @@ import store from 'store2';
 
 import {ReqList, RequirementsLoader} from './RequirementsLoader.js';
 import RequirementsList from './RequirementsList.js';
-import {StartRegionTask, StartWeaponTask, TransitionTask, NPCTask, AwakenTask, ItemCheckTask, ShopItemTask, SealCheckTask, WinTask} from './Task.js';
+import {TaskList} from './TaskList.js';
 import {defaultSettings, GameSettings} from './GameSettings.js';
 import Status from './Status.js';
 
@@ -995,33 +995,12 @@ function App() {
                 importantNPCs={importantNPCs}
                 startingRegion={startingRegion}
             />
-            <div className='tasks-list'>
-                {tasks.map(task => {
-                    switch (task.type) {
-                        case 'start-region':
-                            return <StartRegionTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
-                        case 'start-weapon':
-                            return <StartWeaponTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
-                        case 'transition':
-                            return <TransitionTask key={task.key} id={task.key} connection={task.connection} connectionMap={connectionMap} onSubmit={onTaskSubmit}/>;
-                        case 'npc':
-                            return <NPCTask key={task.key} id={task.key} location={task.location} onSubmit={onTaskSubmit}/>;
-                        case 'awaken':
-                            return <AwakenTask key={task.key} id={task.key} access={access} location={task.location} onSubmit={onTaskSubmit}/>;
-                        case 'check-item':
-                            return <ItemCheckTask key={task.key} id={task.key} location={task.location} onSubmit={onTaskSubmit}/>;
-                        case 'shop-item':
-                            return <ShopItemTask key={task.key} id={task.key} location={task.location} index={task.shopIndex} onSubmit={onTaskSubmit}/>;
-                        case 'seal-check':
-                            return <SealCheckTask key={task.key} id={task.key} location={task.location} access={access} onSubmit={onTaskSubmit}/>;
-                        case 'win':
-                            return <WinTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
-                        default:
-                            // console.error('unknown task type:', task.type);
-                            return null;
-                    }
-                })}
-            </div>
+            <TaskList
+                tasks={tasks}
+                onTaskSubmit={onTaskSubmit}
+                connectionMap={connectionMap}
+                access={access}
+            />
             <RequirementsList reqs={activeReqs} accessible={access} />
         </div>
     );
