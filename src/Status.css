@@ -91,7 +91,8 @@
 }
 
 .field-status.field-shrine {
-    grid-row: 4;
+    grid-row: 1;
+    grid-column: 2;
 }
 
 .field-status.field-shrine .field-name::before {
@@ -169,22 +170,23 @@
 }
 
 .field-status.field-surface-time {
-    grid-row: 7;
+    grid-row: 4;
     grid-column: 1;
 }
 
 .field-status.field-guidance-time {
-    grid-row: 7;
+    grid-row: 4;
     grid-column: 2;
 }
 
 .field-status.field-mausoleum-time {
-    grid-row: 7;
+    grid-row: 4;
     grid-column: 3;
 }
 
 .field-status.field-hell-temple {
-    grid-row: 8;
+    grid-row: 1;
+    grid-column: 3;
 }
 
 .field-name {
