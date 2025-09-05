@@ -356,21 +356,49 @@ class TaskData {
         });
     }
 
-    locationIndex() {
+    region() {
         let region = null;
+
         if (this.location !== null && this.location.regions.length > 0) {
             region = this.location.regions[0];
         } else if (this.connection !== null) {
             region = this.connection.region;
         } else {
+            region = null;
+        }
+
+        return region;
+    }
+
+    field() {
+        let region = this.region();
+        if (region === null) {
+            return null;
+        }
+
+        return region.field;
+    }
+
+    fieldName() {
+        let field = this.field();
+        if (field === null) {
+            return '';
+        }
+
+        return field.name;
+    }
+
+    fieldIndex() {
+        let field = this.field();
+        if (field === null) {
             return -1;
         }
 
-        return region.field.index;
+        return field.index;
     }
 
     static compare(a, b) {
-        let n = a.locationIndex() - b.locationIndex();
+        let n = a.fieldIndex() - b.fieldIndex();
 
         if (n === 0) {
             n = a.type.localeCompare(b.type);
