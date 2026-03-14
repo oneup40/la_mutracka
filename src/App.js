@@ -6,7 +6,7 @@ import {ReqList, RequirementsLoader} from './RequirementsLoader.js';
 import RequirementsList from './RequirementsList.js';
 import {TaskList} from './TaskList.js';
 import {defaultSettings, GameSettings} from './GameSettings.js';
-import Status from './Status.js';
+import {FieldStatus, MiscStatus, AmmoStatus, NPCStatus, ShopStatus} from './Status.js';
 
 import Universe from './Universe.js';
 

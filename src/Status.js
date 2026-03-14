@@ -39,7 +39,7 @@ function FieldConnectionStatus({connection, connectionMap}) {
     return <li className="connection-item">{connection.name} {dirEmoji} {dst.region.field.name} {dst.name}</li>;
 }
 
-function FieldStatus({field, connectionMap, shrineDistance, mulbrukDistance}) {
+function FieldStatusEntry({field, connectionMap, shrineDistance, mulbrukDistance}) {
     const connections = useMemo(
         () => {
             return {
@@ -66,22 +66,6 @@ function FieldStatus({field, connectionMap, shrineDistance, mulbrukDistance}) {
                 {connections.right.map(conn => <FieldConnectionStatus key={conn.key} connection={conn} connectionMap={connectionMap} />)}
                 {connections.down.map(conn => <FieldConnectionStatus key={conn.key} connection={conn} connectionMap={connectionMap} />)}
                 {connections.door.map(conn => <FieldConnectionStatus key={conn.key} connection={conn} connectionMap={connectionMap} />)}
-            </ul>
-        </div>
-    );
-}
-
-function AmmoStatus({ammo, ammoSources}) {
-    let sources = ammoSources.get(ammo.key);
-    if (sources === undefined) {
-        sources = [];
-    }
-
-    return (
-        <div className={"ammo-status " + ammo.key}>
-            <div className="ammo-name">{ammo.name}</div>
-            <ul className="ammo-sources-list">
-                {sources.map(loc => <li key={loc.key} className='ammo-sources-item'>{loc.name}</li>)}
             </ul>
         </div>
     );
@@ -263,47 +247,13 @@ function calculateMulbrukDistances({mulbrukField, connectionMap}) {
     return distances;
 }
 
-/*function calculateFieldDistances({startField, connectionMap}) {
-    let q = [{field: startField, distance: 0}];
-    let distances = new Map([
-        [startField.key, {field: startField, distance: 0}]
-    ]);
-
-    while (q.length > 0) {
-        let {field, distance} = q[0];
-        q = q.slice(1);
-
-        Array.from(connectionMap.entries()).forEach(([srcKey, dst]) => {
-            let src = Universe.connections.byKey.get(srcKey);
-            if (src === undefined) {
-                console.error(`unknown src key ${srcKey}`);
-            }
-
-            console.log('src', src);
-
-            let srcField = src.region.field;
-            let dstField = dst.region.field;
-
-            if (srcField === field) {
-                if (!distances.has(dstField.key)) {
-                    q.push({field: dstField, distance: distance + 1});
-                    distances.set(dstField.key, {field: dstField, distance: distance + 1});
-                }
-            }
-        });
-    }
-
-    return distances;
-}*/
-
-function Status({connectionMap, ammoSources, ankhJewels, sacredOrbs, importantNPCs, startingRegion}) {
+export function FieldStatus({connectionMap, importantNPCs, startingRegion}) {
     const mulbrukDistances = useMemo(() => {
         let mulbruk = importantNPCs.get('npc-mulbruk');
         if (mulbruk === undefined) {
             return new Map();
         }
 
-        // return calculateFieldDistances({startField: mulbruk.location.regions[0].field, connectionMap});
         return calculateMulbrukDistances({mulbrukField: mulbruk.location.regions[0].field, connectionMap});
     }, [importantNPCs, connectionMap]);
 
@@ -313,60 +263,110 @@ function Status({connectionMap, ammoSources, ankhJewels, sacredOrbs, importantNP
         }
 
         return calculateShrineDistances({zipField: startingRegion.field, connectionMap});
-        /*let shrine = Universe.fields.byKey.get('field-shrine');
-        return calculateFieldDistances({startField: shrine, connectionMap});*/
     }, [connectionMap, startingRegion]);
 
     return (
-        <div className="status">
-            <fieldset>
-                <legend>Misc</legend>
-                <div>Ankh Jewels: {ankhJewels}</div>
-                <div>Max HP: {32 * (1 + sacredOrbs)}</div>
-            </fieldset>
-            <fieldset>
-                <legend>Fields</legend>
-                <div className="field-status-grid">
-                    {Universe.fields.all.map(field => {
-                        let mulbrukDistance = null;
-                        let shrineDistance = null;
+        <fieldset>
+            <legend>Fields</legend>
+            <div className="field-status-grid">
+                {Universe.fields.all.map(field => {
+                    let mulbrukDistance = null;
+                    let shrineDistance = null;
 
-                        let x = mulbrukDistances.get(field.key);
-                        if (x !== undefined) {
-                            mulbrukDistance = x.distance;
-                        }
+                    let x = mulbrukDistances.get(field.key);
+                    if (x !== undefined) {
+                        mulbrukDistance = x.distance;
+                    }
 
-                        x = shrineDistances.get(field.key);
-                        if (x !== undefined) {
-                            shrineDistance = x.distance;
-                        }
+                    x = shrineDistances.get(field.key);
+                    if (x !== undefined) {
+                        shrineDistance = x.distance;
+                    }
 
-                        return <FieldStatus
-                                    key={field.key}
-                                    field={field}
-                                    connectionMap={connectionMap}
-                                    mulbrukDistance={mulbrukDistance}
-                                    shrineDistance={shrineDistance}
-                                />;
-                    })}
-                </div>
-            </fieldset>
+                    return <FieldStatusEntry
+                                key={field.key}
+                                field={field}
+                                connectionMap={connectionMap}
+                                mulbrukDistance={mulbrukDistance}
+                                shrineDistance={shrineDistance}
+                            />;
+                })}
+            </div>
+        </fieldset>
+    );
+}
 
-            <fieldset>
-                <legend>Ammo</legend>
-                <div className='ammo-status-grid'>
-                    {Universe.items.byCategory('ammo').map(item => <AmmoStatus key={item.key} ammo={item} ammoSources={ammoSources}/>)}
-                </div>
-            </fieldset>
+export function MiscStatus({ankhJewels, sacredOrbs}) {
+    return (
+        <fieldset>
+            <legend>Misc</legend>
+            <div>Ankh Jewels: {ankhJewels}</div>
+            <div>Max HP: {32 * (1 + sacredOrbs)}</div>
+        </fieldset>
+    );
+}
 
-            <fieldset>
-                <legend>Important NPCs</legend>
-                <ul className="npc-list">
-                    {Array.from(importantNPCs.values()).map(({npc, location}) => <li key={npc.key}>{npc.name}: {location.name}</li>)}
-                </ul>
-            </fieldset>
+function AmmoStatusEntry({ammo, ammoSources}) {
+    let sources = ammoSources.get(ammo.key);
+    if (sources === undefined) {
+        sources = [];
+    }
+
+    return (
+        <div className={"ammo-status " + ammo.key}>
+            <div className="ammo-name">{ammo.name}</div>
+            <ul className="ammo-sources-list">
+                {[...sources].map(loc => <li key={loc.key} className='ammo-sources-item'>{loc.name}</li>)}
+            </ul>
         </div>
     );
 }
 
-export default Status;
+export function AmmoStatus({ammoSources}) {
+    return (
+        <fieldset>
+            <legend>Ammo</legend>
+            <div className='ammo-status-grid'>
+                {Universe.items.byCategory('ammo').map(item => <AmmoStatusEntry key={item.key} ammo={item} ammoSources={ammoSources}/>)}
+            </div>
+        </fieldset>
+    );
+}
+
+export function ShopStatus({shops}) {
+    let contents = [];
+    for (let shop of shops.values()) {
+        let lines = [];
+        console.log(shop.items);
+        for (let item of shop.items) {
+            let line = <li class='shop-status-item' key={`${shop.key}-${lines.length - 1}`}>{item.name}</li>;
+            lines.push(line);
+        }
+        contents.push(
+            <div class='shop-status-entry' key={shop.location.key}>
+                <div class='shop-status-shop'>{shop.location.name}</div>
+                <ul>{lines}</ul>
+            </div>
+        );
+    }
+
+    return (
+        <fieldset>
+            <legend>Shops</legend>
+            <div className='shop-status-grid'>
+                {contents}
+            </div>
+        </fieldset>
+    );
+}
+
+export function NPCStatus({importantNPCs}) {
+    return (
+        <fieldset>
+            <legend>Important NPCs</legend>
+            <ul className="npc-list">
+                {Array.from(importantNPCs.values()).map(({npc, location}) => <li key={npc.key}>{npc.name}: {location.name}</li>)}
+            </ul>
+        </fieldset>
+    );
+}
