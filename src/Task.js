@@ -4,16 +4,16 @@ import Popup from 'reactjs-popup';
 
 import Universe from './Universe.js';
 
-export function StartRegionTask({id, onSubmit}) {
+export function StartRegionTask({task, onSubmit}) {
     let onClick = useCallback(region => {
         if (onSubmit) {
             onSubmit({
                 newRoots: region.startRoots(),
-                completedTasks: [id],
+                completedTasks: [task],
                 startingRegion: region
             });
         }
-    }, [id, onSubmit]);
+    }, [task, onSubmit]);
  
     return (
         <Popup
@@ -46,7 +46,7 @@ export function StartRegionTask({id, onSubmit}) {
     );
 }
 
-export function StartWeaponTask({id, onSubmit}) {
+export function StartWeaponTask({task, onSubmit}) {
     let onClick = useCallback(item => {
         let newRoots = [item.root];
         if (item.hasAmmo()) {
@@ -60,10 +60,10 @@ export function StartWeaponTask({id, onSubmit}) {
         if (onSubmit) {
             onSubmit({
                 newRoots,
-                completedTasks: [id]
+                completedTasks: [task]
             });
         }
-    }, [id, onSubmit]);
+    }, [task, onSubmit]);
 
     return (
         <Popup
@@ -131,18 +131,18 @@ function ConnectionList({dstConns, onClick}) {
     );
 }
 
-export function TransitionTask({id, connection, connectionMap, onSubmit}) {
-    let srcConn = connection;
+export function TransitionTask({task, connectionMap, onSubmit}) {
+    let srcConn = task.connection;
 
     let onClick = useCallback(dstConn => {
         if (onSubmit) {
             onSubmit({
                 newRoots: [dstConn.root],
                 newConnections: [[srcConn, dstConn]],
-                completedTasks: [id]
+                completedTasks: [task]
             });
         }
-    }, [srcConn, id, onSubmit]);
+    }, [srcConn, task, onSubmit]);
 
     let dstConns = srcConn.candidates()
                    .filter(dstConn => dstConn !== srcConn)
@@ -158,7 +158,7 @@ export function TransitionTask({id, connection, connectionMap, onSubmit}) {
             break;
     }
 
-    if (connectionMap.has(connection.key)) {
+    if (connectionMap.has(task.connection.key)) {
         return null;
     } else {
         return (
@@ -194,19 +194,19 @@ export function ChoiceCategory({name, nameKey, choices, onClick}) {
     )
 }
 
-export function NPCTask({id, location, onSubmit}) {
+export function NPCTask({task, onSubmit}) {
     let onClick = useCallback(key => {
         let e = {
-            completedTasks: [id]
+            completedTasks: [task]
         };
 
         if (key.startsWith('dummy-')) {
             switch (key) {
                 case 'dummy-shop':
-                    e.newShops = [location];
+                    e.newShops = [task.location];
                     break;
                 case 'dummy-sleeping':
-                    e.newSleepingPhilosophers = [location];
+                    e.newSleepingPhilosophers = [task.location];
                     break;
                 case 'dummy-generic':
                     break;
@@ -223,18 +223,18 @@ export function NPCTask({id, location, onSubmit}) {
             e.newRoots = [npc.root];
 
             if (npc.tags.has('shop')) {
-                e.newShops = [location];
+                e.newShops = [task.location];
             }
 
             if (npc.tags.has('revisit')) {
-                e.newNPCs = [[npc, location]];
+                e.newNPCs = [[npc, task.location]];
             }
         }
 
         if (onSubmit) {
             onSubmit(e);
         }
-    }, [id, location, onSubmit]);
+    }, [task, onSubmit]);
 
     let miscChoices = Universe.npcs.withTag('important').map(npc => new Choice(npc));
     let itemChoices = Universe.npcs.withTag('item').map(npc => new Choice(npc));
@@ -248,7 +248,7 @@ export function NPCTask({id, location, onSubmit}) {
     return (
         <Popup
             className='task-root'
-            trigger={<div className='task-root'>NPC: {location.name}</div>}
+            trigger={<div className='task-root'>NPC: {task.location.name}</div>}
             position='right center'
             arrow={false}
         >
@@ -267,7 +267,7 @@ if (ocarina === undefined) {
     console.error('Unable to find philosophers-ocarina item');
 }
 
-export function AwakenTask({id, access, location, onSubmit}) {
+export function AwakenTask({task, access, onSubmit}) {
     let onClick = useCallback(key => {
         if (onSubmit) {
             let npc = Universe.npcs.byKey.get(key);
@@ -277,10 +277,10 @@ export function AwakenTask({id, access, location, onSubmit}) {
 
             onSubmit({
                 newRoots: [npc.root],
-                completedTasks: [id]
+                completedTasks: [task]
             });
         }
-    }, [id, onSubmit]);
+    }, [task, onSubmit]);
 
     if (access.has(ocarina.root)) {
         let philoChoices = Universe.npcs.withTag('philosopher').map(npc => new Choice(npc));
@@ -288,7 +288,7 @@ export function AwakenTask({id, access, location, onSubmit}) {
         return (
             <Popup
                 className='task-root'
-                trigger={<div className='task-root'>Awaken Philosopher: {location.name}</div>}
+                trigger={<div className='task-root'>Awaken Philosopher: {task.location.name}</div>}
                 position='right center'
                 arrow={false}
             >
@@ -325,10 +325,10 @@ function ItemCategory ({name, category, onClick}) {
     );
 }
 
-export function ItemCheckTask({id, location, onSubmit}) {
+export function ItemCheckTask({task, onSubmit}) {
     let onClick = useCallback(key => {
         let e = {
-            completedTasks: [id]
+            completedTasks: [task]
         };
 
         switch (key) {
@@ -354,7 +354,7 @@ export function ItemCheckTask({id, location, onSubmit}) {
         if (onSubmit) {
             onSubmit(e);
         }
-    }, [id, onSubmit]);
+    }, [task, onSubmit]);
 
     let miscChoices = [
         new Choice({name: 'Ankh Jewel', key: 'ankh-jewel'}),
@@ -366,7 +366,7 @@ export function ItemCheckTask({id, location, onSubmit}) {
     return (
         <Popup
             className='task-root'
-            trigger={<div className='task-root'>{location.name}</div>}
+            trigger={<div className='task-root'>{task.location.name}</div>}
             position='right center'
             arrow={false}
         >
@@ -384,10 +384,10 @@ export function ItemCheckTask({id, location, onSubmit}) {
     );
 }
 
-export function ShopItemTask({id, location, index, onSubmit}) {
+export function ShopItemTask({task, onSubmit}) {
     let onClick = useCallback(key => {
         let e = {
-            completedTasks: [id]
+            completedTasks: [task]
         };
 
         switch (key) {
@@ -406,9 +406,10 @@ export function ShopItemTask({id, location, index, onSubmit}) {
                 }
 
                 e.newRoots = [item.root];
+                e.newShopItems = [[item, task.location]];
 
                 if (item.category === 'ammo') {
-                    e.newAmmos = [[item, location]];
+                    e.newAmmos = [[item, task.location]];
                 }
 
                 if (item.category === 'seal') {
@@ -422,7 +423,7 @@ export function ShopItemTask({id, location, index, onSubmit}) {
         if (onSubmit) {
             onSubmit(e);
         }
-    }, [id, location, onSubmit]);
+    }, [task, onSubmit]);
 
     let miscChoices = [
         new Choice({name: 'Ankh Jewel', key: 'ankh-jewel'}),
@@ -436,7 +437,7 @@ export function ShopItemTask({id, location, index, onSubmit}) {
     return (
         <Popup
             className='task-root'
-            trigger={<div className='task-root'>Shop: {location.name} Item {index}</div>}
+            trigger={<div className='task-root'>Shop: {task.location.name} Item {task.shopIndex}</div>}
             position='right center'
             arrow={false}
         >
@@ -455,19 +456,19 @@ export function ShopItemTask({id, location, index, onSubmit}) {
     );
 }
 
-export function SealCheckTask({id, location, access, onSubmit}) {
+export function SealCheckTask({task, access, onSubmit}) {
     let onClick = useCallback(item => {
         let newSealMappings = new Map([
-            [location.root, item]
+            [task.location.root, item]
         ]);
 
         if (onSubmit) {
             onSubmit({
                 newSealMappings,
-                completedTasks: [id],
+                completedTasks: [task],
             });
         }
-    }, [id, location, onSubmit]);
+    }, [task, onSubmit]);
 
     if (Universe.items.byCategory('seal').every(item => access.has(item.root))) {
         return null;
@@ -475,7 +476,7 @@ export function SealCheckTask({id, location, access, onSubmit}) {
         return (
             <Popup
                 className='task-root'
-                trigger={<div className='task-root'>Seal: {location.name}</div>}
+                trigger={<div className='task-root'>Seal: {task.location.name}</div>}
                 position='right center'
                 arrow={false}
             >

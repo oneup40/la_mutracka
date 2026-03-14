@@ -401,7 +401,7 @@
 - name: Surface [Time] NPC
   root: "NPCL: 8bit Elder"
   regions:
-    - region-surface-main
+    - region-surface-time
   key: location-npc-elder-time
   tags:
     - npc

@@ -8,23 +8,23 @@ function FieldTaskList({fieldName, tasks, onTaskSubmit, connectionMap, access}) 
             {tasks.map(task => {
                 switch (task.type) {
                     case 'start-region':
-                        return <StartRegionTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
+                        return <StartRegionTask task={task} id={task.key} onSubmit={onTaskSubmit}/>;
                     case 'start-weapon':
-                        return <StartWeaponTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
+                        return <StartWeaponTask task={task} id={task.key} onSubmit={onTaskSubmit}/>;
                     case 'transition':
-                        return <TransitionTask key={task.key} id={task.key} connection={task.connection} connectionMap={connectionMap} onSubmit={onTaskSubmit}/>;
+                        return <TransitionTask task={task} id={task.key} connectionMap={connectionMap} onSubmit={onTaskSubmit}/>;
                     case 'npc':
-                        return <NPCTask key={task.key} id={task.key} location={task.location} onSubmit={onTaskSubmit}/>;
+                        return <NPCTask task={task} id={task.key} onSubmit={onTaskSubmit}/>;
                     case 'awaken':
-                        return <AwakenTask key={task.key} id={task.key} access={access} location={task.location} onSubmit={onTaskSubmit}/>;
+                        return <AwakenTask task={task} id={task.key} access={access} onSubmit={onTaskSubmit}/>;
                     case 'check-item':
-                        return <ItemCheckTask key={task.key} id={task.key} location={task.location} onSubmit={onTaskSubmit}/>;
+                        return <ItemCheckTask task={task} id={task.key} onSubmit={onTaskSubmit}/>;
                     case 'shop-item':
-                        return <ShopItemTask key={task.key} id={task.key} location={task.location} index={task.shopIndex} onSubmit={onTaskSubmit}/>;
+                        return <ShopItemTask task={task} id={task.key} onSubmit={onTaskSubmit}/>;
                     case 'seal-check':
-                        return <SealCheckTask key={task.key} id={task.key} location={task.location} access={access} onSubmit={onTaskSubmit}/>;
+                        return <SealCheckTask task={task} id={task.key} access={access} onSubmit={onTaskSubmit}/>;
                     case 'win':
-                        return <WinTask key={task.key} id={task.key} onSubmit={onTaskSubmit}/>;
+                        return <WinTask task={task} id={task.key} onSubmit={onTaskSubmit}/>;
                     default:
                         // console.error('unknown task type:', task.type);
                         return null;
@@ -35,7 +35,6 @@ function FieldTaskList({fieldName, tasks, onTaskSubmit, connectionMap, access}) 
 }
 
 export function TaskList({tasks, onTaskSubmit, connectionMap, access}) {
-    console.log(onTaskSubmit);
     let taskMap = new Map();
     tasks.forEach(task => {
         let fndx = task.fieldIndex();
@@ -54,7 +53,6 @@ export function TaskList({tasks, onTaskSubmit, connectionMap, access}) {
             fieldName = 'Misc';
         }
 
-        console.log(key, value);
         fields.push(
             <FieldTaskList 
                 id={key}

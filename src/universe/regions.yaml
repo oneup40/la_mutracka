@@ -317,6 +317,8 @@
   root: 'Location: Graveyard of the Giants [Grail]'
   field: field-graveyard
   key: region-graveyard-grail
+  tags:
+    - grail-tablet
 
 - name: East 
   root: 'Location: Graveyard of the Giants [East]'

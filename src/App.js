@@ -2,6 +2,9 @@ import './App.css';
 import {useCallback, useState, useMemo, useEffect, Fragment} from 'react';
 import store from 'store2';
 
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+
 import {ReqList, RequirementsLoader} from './RequirementsLoader.js';
 import RequirementsList from './RequirementsList.js';
 import {TaskList} from './TaskList.js';
@@ -404,12 +407,12 @@ class TaskData {
             n = a.type.localeCompare(b.type);
         }
 
-        if (n === 0 && a.shopIndex !== null && b.shopIndex !== null) {
-            n = a.shopIndex - b.shopIndex;
-        }
-
         if (n === 0) {
             n = a.key.localeCompare(b.key);
+        }
+
+        if (n === 0 && a.shopIndex !== null && b.shopIndex !== null) {
+            n = a.shopIndex - b.shopIndex;
         }
 
         if (n === 0) {
@@ -439,6 +442,7 @@ function App() {
     let [sleepingPhilosophers, setSleepingPhilosophers] = useState(new Map());
     let [shops, setShops] = useState(new Map());
 
+    let [undoStack, setUndoStack] = useState([]);
     let [completedTasks, setCompletedTasks] = useState(new Set());
 
     let [stateLoaded, setStateLoaded] = useState(false);
@@ -505,13 +509,28 @@ function App() {
             setSleepingPhilosophers(sp);
 
             let s = new Map();
-            for (let locKey of persistState.shops) {
-                let location = Universe.locations.byKey.get(locKey);
-                s.set(locKey, location);
+            for (let [locKey, itemKeys] of persistState.shops) {
+                let items = itemKeys.map((key) => Universe.items.byKey.get(key));
+                let location = null;
+                if (locKey === 'location-starting-shop') {
+                    location = new Universe.Location({
+                        name: 'Starting Shop',
+                        root: null,
+                        regions: [sr],
+                        key: 'location-starting-shop'
+                    });
+                } else {
+                    location = Universe.locations.byKey.get(locKey);
+                }
+                s.set(locKey, {location, items});
             }
             setShops(s);
 
-            setCompletedTasks(new Set(persistState.completedTasks));
+            let ct = new Map();
+            for (let task of persistState.completedTasks) {
+                ct.set(task.key, task);
+            }
+            setCompletedTasks(ct);
 
             setStateLoaded(true);
         }
@@ -549,7 +568,7 @@ function App() {
         store.transact(persistKey, o => {
             let asSave = [];
             for (let [itemKey, locations] of ammoSources) {
-                asSave.push([itemKey, locations.map(loc => loc.key)]);
+                asSave.push([itemKey, [...locations].map(loc => loc.key)]);
             }
 
             return {
@@ -627,9 +646,13 @@ function App() {
 
     useEffect(() => {
         store.transact(persistKey, o => {
+            let s_shops = Array.from(shops.entries()).map(([locKey, shop]) => {
+                let items = Array.from(shop.items.values()).map((item) => item.key);
+                return [locKey, items];
+            });
             return {
                 ...o,
-                shops: Array.from(shops.keys())
+                shops: s_shops
             };
         });
     }, [shops]);
@@ -638,7 +661,7 @@ function App() {
         store.transact(persistKey, o => {
             return {
                 ...o,
-                completedTasks: Array.from(completedTasks)
+                completedTasks: Array.from(completedTasks.values())
             };
         });
     }, [completedTasks]);
@@ -647,11 +670,9 @@ function App() {
         let excludedReqs = new Set();
         switch (gameSettings.difficulty) {
             case 'medium':
-                console.log('excluding bosses_hard reqs');
                 excludedReqs.add('bosses_hard');
                 break;
             case 'hard':
-                console.log('excluding bosses_medium reqs');
                 excludedReqs.add('bosses_medium');
                 break;
             default:
@@ -787,46 +808,41 @@ function App() {
             tasks.push(TaskData.newAwakenTask(location));
         });
 
-        Array.from(shops.entries()).forEach(([_, location]) => {
+        Array.from(shops.entries()).forEach(([_, {location}]) => {
             for (let i = 1; i <= 3; ++i) {
                 tasks.push(TaskData.newShopItemTask(location, i));
             }
         });
-
-        if (startingRegion !== null && startingRegion.isAlternateStart()) {
-            let synthLoc = new Universe.Location({
-                name: 'Starting Shop',
-                root: null,
-                regions: [startingRegion],
-                key: 'location-starting-shop'
-            });
-
-            for (let i = 1; i <= 3; ++i) {
-                tasks.push(TaskData.newShopItemTask(synthLoc, i));
-            }
-        }
 
         window.tasks = tasks.filter(task => !completedTasks.has(task.key))
                     .sort(TaskData.compare);
         return tasks.filter(task => !completedTasks.has(task.key))
                     .sort(TaskData.compare);
 
-    }, [access, startingRegion, sleepingPhilosophers, shops, completedTasks]);
+    }, [access, sleepingPhilosophers, shops, completedTasks]);
 
-    function addRoots(roots) {
+    function modifyRoots({roots, remove}) {
         setRoots(r => {
             let nextR = new Set(r);
             for (let root of roots) {
-                nextR.add(root);
+                if (remove) {
+                    nextR.delete(root);
+                } else {
+                    nextR.add(root);
+                }
             }
             return nextR;
         });
     }
 
-    function addSealMapping({item, node}) {
+    function modifySealMapping({item, node, remove}) {
         setSealMappings(sealMappings => {
             let nextNodes = new Set(sealMappings.get(item.key));
-            nextNodes.add(node);
+            if (remove) {
+                nextNodes.delete(node);
+            } else {
+                nextNodes.add(node);
+            }
 
             let nextSealMappings = new Map(sealMappings);
             nextSealMappings.set(item.key, nextNodes);
@@ -835,114 +851,203 @@ function App() {
         });
     }
 
-    function connect(src, dst) {
+    function modifyConnect({src, dst, remove}) {
         setConnectionMap(cm => {
             let nextCm = new Map(cm);
 
             if (src.isSource() && dst.isDestination()) {
-                nextCm.set(src.key, dst);
+                if (remove) {
+                    nextCm.delete(src.key);
+                } else {
+                    nextCm.set(src.key, dst);
+                }
             }
 
             if (dst.isSource() && src.isDestination()) {
-                nextCm.set(dst.key, src);
+                if (remove) {
+                    nextCm.delete(dst.key);
+                } else {
+                    nextCm.set(dst.key, src);
+                }
             }
 
             return nextCm;
         });
     }
 
-    function addAmmo({item, location}) {
+    function modifyAmmo({item, location, remove}) {
         setAmmoSources(as => {
             let nextAs = new Map(as);
 
+            // don't mutate the set either, copy it
             let sourceList = nextAs.get(item.key);
             if (sourceList === undefined) {
-                sourceList = [];
-                nextAs.set(item.key, sourceList);
+                sourceList = new Set();
+            } else {
+                sourceList = new Set(sourceList);
             }
 
-            sourceList.push(location);
+            if (remove) {
+                sourceList.delete(location);
+            } else {
+                sourceList.add(location);
+            }
+
+            nextAs.set(item.key, sourceList);
 
             return nextAs;
         });
     }
 
-    function addNPC({npc, location}) {
+    function modifyNPC({npc, location, remove}) {
         setImportantNPCs(npcs => {
             let nextNPCs = new Map(npcs);
-            nextNPCs.set(npc.key, {npc, location});
+            if (remove) {
+                nextNPCs.delete(npc.key);
+            } else {
+                nextNPCs.set(npc.key, {npc, location});
+            }
             return nextNPCs;
         });
     }
 
-    function addSleepingPhilosopher(location) {
+    function modifySleepingPhilosopher({location, remove}) {
         setSleepingPhilosophers(sp => {
             let nextSp = new Map(sp);
-            nextSp.set(location.key, location);
+            if (remove) {
+                nextSp.delete(location.key);
+            } else {
+                nextSp.set(location.key, location);
+            }
             return nextSp;
         });
     }
 
-    function addShop(location) {
+    function modifyShop({location, remove}) {
         setShops(s => {
             let nextS = new Map(s);
-            nextS.set(location.key, location);
+            if (remove) {
+                nextS.delete(location.key);
+            } else {
+                let newShop = {location, items: new Set()}
+                nextS.set(location.key, newShop);
+            }
             return nextS;
         });
     }
 
-    let onTaskSubmit = useCallback((args) => {
-        if (args.newRoots !== undefined) {
-            addRoots(args.newRoots);
+    function modifyShopItem({location, item, remove}) {
+        setShops(s => {
+            let nextShops = new Map(s);
+            let curShop = nextShops.get(location.key);
+
+            let nextShop = {
+                location: curShop.location,
+                items: new Set(curShop.items)
+            };
+
+            if (remove) {
+                nextShop.items.delete(item);
+            } else {
+                nextShop.items.add(item);
+            }
+
+            nextShops.set(location.key, nextShop);
+            return nextShops;
+        });
+    }
+
+    let handleTask = useCallback(({result, remove}) => {
+        if (result.newRoots !== undefined) {
+            modifyRoots({roots: result.newRoots, remove});
         }
 
-        if (args.newSleepingPhilosophers !== undefined) {
-            args.newSleepingPhilosophers.forEach(location => addSleepingPhilosopher(location));
+        if (result.newSleepingPhilosophers !== undefined) {
+            result.newSleepingPhilosophers.forEach(location => modifySleepingPhilosopher({location, remove}));
         }
 
-        if (args.newShops !== undefined) {
-            args.newShops.forEach(location => addShop(location));
+        if (result.newShops !== undefined) {
+            result.newShops.forEach(location => modifyShop({location, remove}));
         }
 
-        if (args.newAnkhJewels !== undefined) {
-            setAnkhJewels(n => n + args.newAnkhJewels);
+        if (result.newShopItems !== undefined) {
+            result.newShopItems.forEach(([item,location]) => modifyShopItem({location, item, remove}));
         }
 
-        if (args.newSacredOrbs !== undefined) {
-            setSacredOrbs(n => n + args.newSacredOrbs);
-        }
-
-        if (args.completedTasks !== undefined) {
-            for (let completedTask of args.completedTasks) {
-                setCompletedTasks(tasks => {
-                    let nextTasks = new Set(tasks);
-                    nextTasks.add(completedTask);
-                    return nextTasks;
-                });
+        if (result.newAnkhJewels !== undefined) {
+            if (remove) {
+                setAnkhJewels(n => n - result.newAnkhJewels);
+            } else {
+                setAnkhJewels(n => n + result.newAnkhJewels);
             }
         }
 
-        if (args.startingRegion !== undefined) {
-            setStartingRegion(args.startingRegion);
+        if (result.newSacredOrbs !== undefined) {
+            if (remove) {
+                setSacredOrbs(n => n - result.newSacredOrbs);
+            } else{
+                setSacredOrbs(n => n + result.newSacredOrbs);
+            }
         }
 
-        if (args.newSealMappings !== undefined) {
-            Array.from(args.newSealMappings.entries()).forEach(([node, item]) => addSealMapping({item, node}));
+        if (result.completedTasks !== undefined) {
+            setCompletedTasks(cts => {
+                let nextCts = new Map(cts);
+                for (let ct of result.completedTasks) {
+                    if (remove) {
+                        nextCts.delete(ct.key);
+                    } else {
+                        nextCts.set(ct.key, ct);
+                    }
+                }
+                return nextCts;
+            });
         }
 
-        if (args.newConnections !== undefined) {
-            args.newConnections.forEach(([src, dst]) => connect(src, dst));
+        if (result.startingRegion !== undefined) {
+            let synthLoc = new Universe.Location({
+                name: 'Starting Shop',
+                root: null,
+                regions: [result.startingRegion],
+                key: 'location-starting-shop'
+            });
+
+            if (remove) {
+                modifyShop({location: synthLoc, remove});
+                setStartingRegion(null);
+            } else {
+                setStartingRegion(result.startingRegion);
+                modifyShop({location: synthLoc, remove});
+            }
         }
 
-        if (args.newAmmos !== undefined) {
-            args.newAmmos.forEach(([item, location]) => addAmmo({item, location}));
+        if (result.newSealMappings !== undefined) {
+            Array.from(result.newSealMappings.entries()).forEach(([node, item]) => modifySealMapping({item, node, remove}));
         }
 
-        if (args.newNPCs !== undefined) {
-            args.newNPCs.forEach(([npc, location]) => addNPC({npc, location}));
+        if (result.newConnections !== undefined) {
+            result.newConnections.forEach(([src, dst]) => modifyConnect({src, dst, remove}));
         }
 
+        if (result.newAmmos !== undefined) {
+            result.newAmmos.forEach(([item, location]) => modifyAmmo({item, location, remove}));
+        }
+
+        if (result.newNPCs !== undefined) {
+            result.newNPCs.forEach(([npc, location]) => modifyNPC({npc, location, remove}));
+        }
+
+        if (!remove) {
+            // don't add undone tasks back to undo stack!
+            setUndoStack(us => {
+                let nextUs = us.slice();
+                nextUs.push(result);
+                return nextUs;
+            });
+        }
     }, []);
+
+    let onTaskSubmit = useCallback((result) => handleTask({result, remove: false}), [handleTask]);
 
     let onReqsLoaded = useCallback(({reqs}) => {
         let itemReqs = reqs.get('item');
@@ -959,7 +1064,7 @@ function App() {
     }, [setAllReqs]);
 
     let onSelectableItemsChanged = useCallback(({selected}) => {
-        addRoots(selected.keys());
+        modifyRoots({roots: selected.keys(), remove: false});
     }, []);
 
     let onGameSettingsChanged = useCallback(({key, value}) => {
@@ -970,38 +1075,82 @@ function App() {
 
     let onClearState = useCallback(() => {
         store.set(persistKey, {});
+        setUndoStack([]);
         setStateLoaded(false);
     }, []);
 
+    let onUndo = useCallback(() => {
+        if (undoStack.length === 0) {
+            return;
+        }
+
+        let lastResult = undoStack[undoStack.length - 1];
+        // Array.pop without mutating the array
+        setUndoStack(us => us.slice(0, -1));
+
+        handleTask({result: lastResult, remove: true});
+    }, [undoStack, handleTask]);
+
     return (
         <div className="App">
-            <button onClick={onClearState}>Clear State</button>
-            <GameSettings settings={gameSettings} onChange={onGameSettingsChanged}/>
-            <fieldset>
-                <SelectableItemList name='Settings' choices={settings} selected={access} onChange={onSelectableItemsChanged}/>
-                <SelectableItemList name='Weapons' choices={weaponChoices} selected={access} onChange={onSelectableItemsChanged}/>
-                <SelectableItemList name='Subweapons' choices={subweaponChoices} selected={access} onChange={onSelectableItemsChanged}/>
-                <SelectableItemList name='Usable Items' choices={usableChoices} selected={access} onChange={onSelectableItemsChanged}/>
-                <SelectableItemList name='Items' choices={itemChoices} selected={access} onChange={onSelectableItemsChanged}/>
-                <SelectableItemList name='Seals' choices={sealChoices} selected={access} onChange={onSelectableItemsChanged}/>
-                <SelectableItemList name='Software' choices={softwareChoices} selected={access} onChange={onSelectableItemsChanged}/>
-            </fieldset>
             <RequirementsLoader onLoaded={onReqsLoaded} />
-            <Status
-                connectionMap={connectionMap}
-                ammoSources={ammoSources}
-                ankhJewels={ankhJewels}
-                sacredOrbs={sacredOrbs}
-                importantNPCs={importantNPCs}
-                startingRegion={startingRegion}
-            />
-            <TaskList
-                tasks={tasks}
-                onTaskSubmit={onTaskSubmit}
-                connectionMap={connectionMap}
-                access={access}
-            />
-            <RequirementsList reqs={activeReqs} accessible={access} />
+            <Tabs defaultIndex={1}>
+                <TabList>
+                    <Tab>Game Settings</Tab>
+                    <Tab>Tracker</Tab>
+                    <Tab>Shops</Tab>
+                    <Tab>(debug) Logic Values</Tab>
+                    <Tab>(debug) Logic</Tab>
+                </TabList>
+
+                {/* Game Settings */}
+                <TabPanel>
+                    <button onClick={onClearState}>Clear State</button>
+                    <GameSettings settings={gameSettings} onChange={onGameSettingsChanged}/>
+                </TabPanel>
+
+                {/* Tracker */}
+                <TabPanel>
+                    <MiscStatus ankhJewels={ankhJewels} sacredOrbs={sacredOrbs} />
+                    <FieldStatus
+                        connectionMap={connectionMap}
+                        importantNPCs={importantNPCs}
+                        startingRegion={startingRegion}
+                    />
+                    <AmmoStatus ammoSources={ammoSources} />
+                    <NPCStatus importantNPCs={importantNPCs} />
+                    <button onClick={onUndo}>Undo</button>
+                    <TaskList
+                        tasks={tasks}
+                        onTaskSubmit={onTaskSubmit}
+                        connectionMap={connectionMap}
+                        access={access}
+                    />
+                </TabPanel>
+
+                {/* Shops */}
+                <TabPanel>
+                    <ShopStatus shops={shops}/>
+                </TabPanel>
+
+                {/* (debug) Logic Values */}
+                <TabPanel>
+                    <fieldset>
+                        <SelectableItemList name='Settings' choices={settings} selected={access} onChange={onSelectableItemsChanged}/>
+                        <SelectableItemList name='Weapons' choices={weaponChoices} selected={access} onChange={onSelectableItemsChanged}/>
+                        <SelectableItemList name='Subweapons' choices={subweaponChoices} selected={access} onChange={onSelectableItemsChanged}/>
+                        <SelectableItemList name='Usable Items' choices={usableChoices} selected={access} onChange={onSelectableItemsChanged}/>
+                        <SelectableItemList name='Items' choices={itemChoices} selected={access} onChange={onSelectableItemsChanged}/>
+                        <SelectableItemList name='Seals' choices={sealChoices} selected={access} onChange={onSelectableItemsChanged}/>
+                        <SelectableItemList name='Software' choices={softwareChoices} selected={access} onChange={onSelectableItemsChanged}/>
+                    </fieldset>
+                </TabPanel>
+
+                {/* (debug) Logic */}
+                <TabPanel>
+                    <RequirementsList reqs={activeReqs} accessible={access} />
+                </TabPanel>
+            </Tabs>
         </div>
     );
 }
@@ -1027,8 +1176,6 @@ export default App;
 // done:
 // TODO: philosopher visited events
 // TODO: fix seal locations (many-to-one)
-// TODO: mekuri NPC option
-// TODO: mini doll NPC option
 // TODO: Ankh Jewel: 9
 // TODO: Bosses Defeated: 8
 // TODO: add Treasures item
@@ -1036,11 +1183,9 @@ export default App;
 // TODO: inferno trap orb
 // TODO: check alternate jewels default, normal boss
 // TODO: Go mode
-// TODO: skip seal tasks when having all 4
 // TODO: fix endless one-way direction
 // TODO: fix NPC: The Fairy Queen
 // TODO: escape chest default
-// TODO: remove SealCheck tasks when last seal is found
 // TODO: show transitions
 // TODO: reciprocal connections
 // TODO: connection choices
@@ -1053,9 +1198,7 @@ export default App;
 // TODO: hide transitions to self
 // TODO: important NPC status
 // TODO: don't hide transitions for many-to-one
-// TODO: fix boss difficulty reqs
 // TODO: Sacred Orb roots < N
-// TODO: save/clear state
 
 // Feather isn't logic for Coin: Mauso???
 // Test Flail Whip check w/, w/o feather
